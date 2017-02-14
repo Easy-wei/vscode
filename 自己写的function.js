@@ -437,4 +437,3 @@ math_tools["round"] = function(number, decimals) {
     return s_x;
 };
 
-//测试同步过程如何
