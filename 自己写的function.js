@@ -86,7 +86,6 @@ var sum_formula = {
 };
 // 开跟形式
 
-
 var root = {
     str: function(n = ` n`) {
         var a = 1;
@@ -437,3 +436,5 @@ math_tools["round"] = function(number, decimals) {
     }
     return s_x;
 };
+
+//测试同步过程如何
