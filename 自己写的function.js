@@ -14,7 +14,7 @@ function math_ngcd() {
         }
         a = math_tools.gcd(math.abs(arry[i]), a);
     }
-    return arry[arry.length];
+    return a;
 }
 
 // arry的随机调用
