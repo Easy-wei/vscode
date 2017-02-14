@@ -1,5 +1,5 @@
 function toTex(matrix) {
-    return tex(`\\begin{bmatrix}` + matrix.map(function(line) {
+    return tex(`\\begin{bmatrix}` + matrix.map(function (line) {
         return line.join(`&`);
     }).join(`\\cr`) + `\\end{bmatrix}`);
 }
@@ -14,7 +14,7 @@ function math_ngcd() {
         }
         a = math_tools.gcd(math.abs(arry[i]), a);
     }
-    return arry[arry.length];
+    return a;
 }
 
 // arry的随机调用
@@ -22,8 +22,8 @@ x1 = p[Math.floor(Math.random() * p.length)];
 
 //多答案的表达
 `[answers min='0' max='4' label_0='C=' label_2='` + tex('\\and') + `']`
-    //冒泡算法
-    //已经有了，可以用arr.sort()
+//冒泡算法
+//已经有了，可以用arr.sort()
 function bubble_sort(arry) {
     len = arry.length;
     k = len;
@@ -48,7 +48,7 @@ function bubble_sort(arry) {
 
 //frac
 var frac = {
-    str: function(a, b) {
+    str: function (a, b) {
         var com = math_tools.gcd(math.abs(a), math.abs(b));
         if (b === 0) {
             throw "the denominator can not be 0";
@@ -60,7 +60,7 @@ var frac = {
         return (a * b >= 0) ? (j === 0) ? `` + k : `\\dfrac{` + math.abs(a) + `}{` + math.abs(b) + `}` :
             (j === 0) ? `-` + k : `-\\dfrac{` + math.abs(a) + `}{` + math.abs(b) + `}`;
     },
-    tex: function(a, b) {
+    tex: function (a, b) {
         return tex(frac.str(a, b));
     },
 };
@@ -74,21 +74,20 @@ var sum_formula = {
         `to calculate<br><br>`,
     f3: `Using the formula ` + sum_tex(1, `n`, `r`, `r^3`) + tex(`=\\,\\dfrac{n^{2}}{4}(n+1)^{2}\\space`) +
         `to calculate<br><br>`,
-    r1: function(n = ` n`) {
+    r1: function (n = ` n`) {
         return tex(`\\dfrac{` + n + `}{2}(` + n + `+` + 1 + `)`);
     },
-    r2: function(n = ` n`) {
+    r2: function (n = ` n`) {
         return tex(`\\dfrac{` + n + `}{6}(` + n + `+1)(2\\times` + n + `+1)`);
     },
-    r3: function(n = ` n`) {
+    r3: function (n = ` n`) {
         return tex(`\\dfrac{` + n + `^{2}}{4}(` + n + `+1)^2`);
     },
 };
 // 开跟形式
 
-
 var root = {
-    str: function(n = ` n`) {
+    str: function (n = ` n`) {
         var a = 1;
         var b = 1;
         if (typeof n === "string") {
@@ -117,20 +116,20 @@ var root = {
             return (n == 1) ? [a, a, 1] : [a + `\\sqrt{` + n + `}`, a, `\\sqrt{` + n + `}`];
         }
     },
-    tex: function(n) {
+    tex: function (n) {
         return tex(root.str(n)[0]);
     },
 
-    integer_part: function(n) {
+    integer_part: function (n) {
         return root.str(n)[1];
     },
-    sqrt_part: function(n) {
+    sqrt_part: function (n) {
         return root.str(n)[2];
     },
 };
 
 math_visuals.quadratic = {
-    str: function(a, b, c) {
+    str: function (a, b, c) {
         if ((math_tools.quadratic(a, b, c)[0] * 10) % 1 !== 0) {
             return ` p^{}_1=\\,\\dfrac{` + (-b) + `+` + math_visuals.root.str(b * b - 4 * a * c) + `}{` + 2 * a + `}\\space
                 p^{}_2=\\,\\dfrac{` + (-b) + `-` + math_visuals.root.str(b * b - 4 * a * c) + `}{` + 2 * a + `}`;
@@ -139,7 +138,7 @@ math_visuals.quadratic = {
                 `p^{}_2=\\,` + math_tools.quadratic(a, b, c)[1];
         }
     },
-    tex: function(a, b, c) {
+    tex: function (a, b, c) {
         return tex(math_visuals.quadratic.str(a, b, c));
     },
 };
@@ -178,13 +177,13 @@ self.ordered_answer = true;
 
 //一元二次方程解的形式：一下四个函数要一块用的 分别是test函数，quadratic对象，root对象，math_ngcd()四个。
 var quadratic = {
-    str: function(a, b, c) {
+    str: function (a, b, c) {
         if (((math_tools.quadratic(a, b, c)[0]) * 10) % 1 !== 0) {
             return ` x_1=\\,` + `\\dfrac{` + (-b) + `+` + root.str(b * b + `-4\\times` + a + `\\times` + c) + `}{2\\times` + a + `}\\space
             x_2=\\,` + `\\dfrac{` + (-b) + `-` + root.str(b * b + `-4\\times` + a + `\\times` + c) + `}{2\\times` + a + `}`;
         }
     },
-    tex: function(a, b, c) {
+    tex: function (a, b, c) {
         return tex(quadratic.str);
     },
 };
@@ -210,7 +209,7 @@ function test(n) {
 }
 
 math_quadratic = {
-    str: function(a, b, c) {
+    str: function (a, b, c) {
         var m = Number(math_tools.quadratic(a, b, c)[0]);
         var k = math.pow(b, 2) - 4 * a * c;
         if (k > 0) {
@@ -236,14 +235,14 @@ math_quadratic = {
         }
 
     },
-    tex: function(a, b, c) {
+    tex: function (a, b, c) {
         return tex(math_quadratic.str(a, b, c));
     },
 };
 
 
 math_visuals.root = {
-    process: function(n = ` n`) {
+    process: function (n = ` n`) {
         var a = 1;
         var b = 1;
         if (typeof n === "string") {
@@ -277,16 +276,16 @@ math_visuals.root = {
             return (n == 1) ? [a, a, 1] : [a + `\\sqrt{` + n + `}`, a, `\\sqrt{` + n + `}`];
         }
     },
-    str: function(n) {
+    str: function (n) {
         return `` + math_visuals.root.process(n)[0];
     },
-    tex: function(n) {
+    tex: function (n) {
         return tex(math_visuals.root.str(n));
     },
-    integer_part: function(n) {
+    integer_part: function (n) {
         return math_visuals.root.process(n)[1];
     },
-    sqrt_part: function(n) {
+    sqrt_part: function (n) {
         return math_visuals.root.process(n)[2];
     },
 };
@@ -299,17 +298,18 @@ function inter_bisection(x, y) { //interval bisection
     var b = y;
     var c;
     var arry = [
-        [`a`, `f(a)`, `b`, `f(b)`, `c`, `f(c)`]
+        [tex(`a`), tex(`f(a)`), tex(`b`), tex(`f(b)`), tex(`\\dfrac{a+b}{2}`), tex(`f\\Bigl(\\dfrac{a+b}{2}\\Bigr)`)]
     ];
     for (var i = 0; i < 10; i++) {
         c = (a + b) / 2;
         var arry1 = [];
         arry1[0] = math.round(a, 4);
-        arry1[1] = math.round(f(a), 4);
-        arry1[2] = math.round(b, 4);
-        arry1[3] = math.round(f(b), 4);
-        arry1[4] = math.round(c, 4);
-        arry1[5] = math.round(f(c), 4);
+        arry1[1] = math_tools.round(f(a), 4);
+        arry1[2] = math_tools.round(b, 4);
+        arry1[3] = math_tools.round(f(b), 4);
+        arry1[4] = math_tools.round(c, 4);
+        arry1[5] = math_tools.round(f(c), 4);
+        arry.push(arry1);
         if (f(a) * f(c) < 0) {
             if (math.round(a, 1) == math.round(c, 1)) {
                 ans = math.round(c, 1);
@@ -335,17 +335,17 @@ function linear_interpolation(x, y) { //linear interpolation
     var b = y;
     var c;
     var arry = [
-        [`a`, `f(a)`, `b`, `f(b)`, `c`, `f(c)`]
+        [tex(`a`), tex(`f(a)`), tex(`b`), tex(`f(b)`), tex(`x^{}_n`), tex(`f(x^{}_n)`)]
     ];
     for (var i = 0; i < 10; i++) {
         c = (a * math.abs(f(b)) + b * math.abs(f(a))) / (math.abs(f(a)) + math.abs(f(b)));
         var arry1 = [];
-        arry1[0] = math.round(a, 4);
-        arry1[1] = math.round(f(a), 4);
-        arry1[2] = math.round(b, 4);
-        arry1[3] = math.round(f(b), 4);
-        arry1[4] = math.round(c, 4);
-        arry1[5] = math.round(f(c), 4);
+        arry1[0] = math.round(a, 3);
+        arry1[1] = math.round(f(a), 3);
+        arry1[2] = math.round(b, 3);
+        arry1[3] = math.round(f(b), 3);
+        arry1[4] = math.round(c, 3);
+        arry1[5] = math.round(f(c), 3);
         arry.push(arry1);
         if (f(a) * f(c) < 0) {
             if (math.round(b, 1) == math.round(c, 1)) {
@@ -364,6 +364,7 @@ function linear_interpolation(x, y) { //linear interpolation
             b = b;
         }
     }
+    ans = math.round(c, 1);
     return arry;
 }
 
@@ -391,13 +392,15 @@ function diff_iteration(x) { //differential_interation
 }
 
 function arry_to_table(arry) {
-    return `<table border='1' cellspacing='0'  cellpadding='5'><tr><td align='center'>` + arry.map(function(line) {
+    return `<table border='1' cellspacing='0'  cellpadding='5'><tr><td align='center'>` + arry.map(function (line) {
         return line.join(`</td ><td align='center'>`);
     }).join(`</tr><tr><td align='center'>`) + `</td ></tr></table>`;
 }
 
-math_visuals['array_to_table'] = function(array) {
-    return `<table border='1' cellspacing='0'  cellpadding='5'><tr><td>` + array.map(function(line) { return line.join(`</td><td>`); }).join(`</tr><tr><td>`) + `</td></tr></table>`;
+math_visuals['array_to_table'] = function (array) {
+    return `<table border='1' cellspacing='0'  cellpadding='5'><tr><td>` + array.map(function (line) {
+        return line.join(`</td><td>`);
+    }).join(`</tr><tr><td>`) + `</td></tr></table>`;
 }
 
 function changeTwoDecimal_f(x) {
@@ -420,7 +423,7 @@ function changeTwoDecimal_f(x) {
 }
 
 
-math_tools["round"] = function(number, decimals) {
+math_tools["round"] = function (number, decimals) {
     if (decimals == null) {
         decimals = 0;
     }
@@ -437,4 +440,9 @@ math_tools["round"] = function(number, decimals) {
     }
     return s_x;
 };
+<<<<<<< HEAD
 //我是来测试同步如何的
+=======
+
+  (Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)
+>>>>>>> 538b83e7f1beaad15b2c6fb68f8ca5fae745cb19
