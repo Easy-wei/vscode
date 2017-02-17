@@ -440,9 +440,5 @@ math_tools["round"] = function (number, decimals) {
     }
     return s_x;
 };
-<<<<<<< HEAD
-//我是来测试同步如何的
-=======
 
-  (Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)
->>>>>>> 538b83e7f1beaad15b2c6fb68f8ca5fae745cb19
+
