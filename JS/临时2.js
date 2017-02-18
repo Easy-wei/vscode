@@ -1,190 +1,102 @@
- do {
-     var v1 = math_tools.rand_int(2, 9);
-     var v2 = math_tools.rand_int(-50, 50, [-1, 0, 1]);
-     var v3 = math_tools.rand_int(-50, 50, [-1, 0, 1]);
-     var v4 = math_tools.rand_int(-50, 50, [-1, 0, 1]);
-     var root = math_tools.polynomial(1, 0, v3, v4); //一元多次方程求根
-     root = Number(root.sort()[root.length - 1]);
-     var range_start = Math.floor(root);
-     var range_end = range_start + 1;
- }
- while (isNaN(root) || (range_start * range_end) === 0 || f(range_start) * f(range_end) === 0);
- var range_near = (math.abs(f(range_start)) > math.abs(f(range_end))) ? range_end : range_start;
- var range_far = (math.abs(f(range_start)) < math.abs(f(range_end))) ? range_end : range_start;
+function f(x) {
+    var answer = math.pow(x, 3) + v2 * math.pow(x, 2) + v1 * math.pow(x, 1) + v;
+    return answer;
+}
 
- function f(x) {
-     var answer = math.pow(x, 3) + v3 * x + v4;
-     return answer;
- }
+function g(x) {
+    var answer = 3 * math.pow(x, 2) + 2 * v2 * x + v1;
+    return answer;
+}
 
- function g(x) {
-     var answer = 3 * math.pow(x, 2) + v3;
-     return answer;
- }
- var equation = `x^{3}` + v3.signed() + `x` + v4.signed();
- var equation1 = `3x^2` + v3.signed();
+do {
+    var v3 = math_tools.rand_int(2, 9);
+    var v2 = math_tools.rand_int(-10, 10, [-1, 0, 1]);
+    var v1 = math_tools.rand_int(-50, 50, [-1, 0, 1]);
+    var v = math_tools.rand_int(-50, 50, [-1, 0, 1]);
+    var root = math_tools.polynomial(1, v2, v1, v); //一元多次方程求根x^3+v2x^2+v1x+v
+    root = Number(root.sort()[root.length - 1]);
+    var range_start = Math.floor(root);
+    var range_end = range_start + 1;
+    var range_near = (math.abs(f(range_start)) >= math.abs(f(range_end))) ? range_end : range_start;
+    var k = math_tools.rand_int(1, 2);
+}
+while (isNaN(root) || f(range_near) / g(range_near) * 1000 % 1 === 0);
 
- self.ordered_answer = true;
- self.precision = 4;
- var ans;
+var equation = `x^{3}` + v2.signed() + `x^{2}` + v1.signed() + `x` + v.signed();
+var equation1 = `3x^2` + (2 * v2).signed() + `x` + v1.signed();
 
- var a = Math.floor(root);
- var b = a + 1;
- var x = math_tools.round(root, 0);
+self.ordered_answer = true;
+self.precision = 4;
 
- function diff_iteration(x) { //differential_interation
-     var x1 = x;
-     var arry = [
-         [tex(`x`), tex(`f(x)`), tex(`f'(x)`), tex(`x^{}_n`)]
-     ];
-     for (var i = 0; i < 10; i++) {
-         var arry1 = [];
-         x1 = x - f(x) / g(x);
-         arry1[0] = math.round(x, 4);
-         arry1[1] = math.round(f(x), 4);
-         arry1[2] = math.round(g(x), 4);
-         arry1[3] = math.round(x1, 4);
-         arry.push(arry1);
-         if (math_tools.round(x, 2) == math_tools.round(x1, 2)) {
-             ans = math_tools.round(x, 2);
-             break;
-         }
-         x = x1;
-     }
-     return arry;
- }
- var arry = diff_iteration(x);
- var arry2 = [];
- for (var i = 1; i < arry.length; i++) {
-     for (var j = 0; j < arry[i].length; j++) {
-         arry2.push(arry[i][j]);
-     }
- }
+self.text = function () {
+    return tex(`f( x )=` + equation) + `
 
- var rows = 0;
- input_change = function () {
+` + tex(`x^{}_0=` + range_near) + ` is a first approximation to a root of this equation
 
-     module_0_input_complete();
- };
+Use the Newton-Raphson process ` + times + ` to obtain a ` + th + ` approximation, ` + tex(x_n) + `
 
- add_row = function (cell_count) {
+(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)
 
-     var table = document.getElementById("table");
-
-     var row = table.insertRow(-1);
-
-     var i = 0;
-
-     while (i < cell_count) {
-
-         var cell = row.insertCell(i);
-
-         cell.innerHTML = '<span id="i_' + rows + '_' + i + '" class="book_math_input"></span>';
-
-         var input = new math_input({
-             input_div: 'i_' + rows + '_' + i,
-             keyboard_div: "keyboard",
-             "change_callback": input_change,
-         });
-
-         answer_keyboards.push(input);
-
-         i += 1;
-     }
-     rows += 1;
-     if (rows > 1) {
-         // Show the remove button if rows > 1
-         $("#remove_row_button").show();
-     }
-     module_0_input_complete();
- };
-
- remove_row = function (cell_count) {
-     var i = 0;
-     while (i < cell_count) {
-         delete answer_keyboards[answer_keyboards.length - i - 1];
-         i += 1;
-     }
-     document.getElementById("table").deleteRow(-1);
-     rows += -1;
-
-     // Hide the remove button if we only have one row or less
-     if (rows <= 1) {
-         $("#remove_row_button").hide();
-     }
-     module_0_input_complete();
- };
+` + tex(x_n) + tex(`=[answer]`);
+};
 
 
- self.text = function () {
-     return `<style media="screen" type="text/css"> table.input_table, table.input_table td {border: 1px solid #444;border-collapse: collapse;} .input_table .book_math_input {border: none;}</style>` +
+var x_n;
+var times;
+var th;
+var next_conent;
+var x1 = math_tools.round(range_near - f(range_near) / g(range_near), 3);
+var ans;
+switch (k) {
+    case 1:
+        times = `once`;
+        th = `second`;
+        x_n = `x^{}_1`;
+        content = ``;
+        ans = x1;
+        break;
+    case 2:
+        times = `twice`;
+        x_n = `x^{}_2`;
+        th = `third`;
+        var x2 = math_tools.round(x1 - f(x1) / g(x1), 3);
+        ans = x2;
+        content = (tex(`f(x^{}_1)=f(` + x1 + `)=` + math.round(f(x1), 3)) + `<br>` +
 
-         `Show that the equation ` + tex(equation + `=0`) + ` has a root between ` + range_start + ` and ` + range_end +
+            tex(`f'(x^{}_1)=f'(` + x1 + `)=` + math.round(g(x1), 3)) + `<br>` +
 
-         `<br>Find the root correct to two decimal places using the Newton-Raphson process.<br>` +
+            tex(`x^{}_2=x^{}_1-\\dfrac{f(x^{}_1)}{f'(x^{}_1)}=` + x1 + `-\\dfrac{` + math.round(f(x1), 3) + `}{` + math.round(g(x1), 3) + `}=` + x2)) + ((x2 == x1 - f(x1) / g(x1)) ? `` : ` (to ` + tex(`3`) + ` dp)`);
+        break;
+}
 
-         `(if the input is irrational number,Keeping four decimal places)<br>` +
+self.step = function (wrong_answer, step) {
+    steps = [
+        `The formula for the Newton-Raphson process is ` + tex(`x^{}_{n+1} = x^{}_n-\\dfrac{f(x^{}_n)}{f'(x^{}_n)}`),
 
-         `<p class="book_button" ontouchstart="touch_start(event)" onclick="add_row(4)">Add row</p> 
-           <p id="remove_row_button" class="book_button" ontouchstart="touch_start(event)" onclick="remove_row(4)">Remove row</p>
-          <table id="table" class='input_table'>
-          <tr><td><b>` + tex(`x`) + `</b></td><td><b>` + tex(`f(x)`) + `</b></td><td><b>` + tex(`f'(x)`) +
-         `</b></td><td><b>` + tex(`x^{}_n`) + `</b></td></tr>
-          </table>`;
+        `Since ` + tex(`f( x )=` + equation),
 
- };
+        tex(`f'(x)=` + equation1),
 
+        `Using ` + tex(`x^{}_0=` + range_near),
 
- self.post_load = function () {
-     add_row(4);
-     // Hide the remove button since we only have 1 row
-     $("#remove_row_button").hide();
- };
- c1 = (range_start * math.abs(f(range_end)) + range_end * math.abs(f(range_start))) / (math.abs(f(range_start)) + math.abs(f(range_end)));
- self.step = function (wrong_answer, step) {
-     steps = [
-         `Let ` + tex(`f(x)=` + equation),
+        tex(`f(x^{}_0)=f(` + range_near + `)=` + f(range_near)) + (math_tools.round(f(range_near), 3) === f(range_near) ? `` : ` (to ` + tex(`3`) + ` dp)`),
 
-         tex(`\\therefore\\,f(` + range_start + `)=` + f(range_start)) + tex(`\\,\\,\\,f(` + range_end + `)=` + f(range_end)),
+        tex(`f'(x^{}_0)=f'(` + range_near + `)=` + g(range_near)) + (math_tools.round(g(range_near), 3) === g(range_near) ? `` : ` (to ` + tex(`3`) + ` dp)`),
 
-         (f(range_start) > 0) ? tex(`f(` + range_start + `)` + `>0>` + `f(` + range_end + `)`) : tex(`f(` + range_start + `)` + `<0<` + `f(` + range_end + `)`),
+        tex(`x^{}_1=x^{}_0-\\dfrac{f(x^{}_0)}{f'(x^{}_0)}=` + range_near + `-\\dfrac{` + f(range_near) + `}{` + g(range_near) + `}=`) + range_near + ((-f(range_near) * g(range_near) < 0) ? `` : tex(` + `)) + math_visuals.fraction.tex(-f(range_near), g(range_near)),
 
-         `Since there is a change of a sign between ` + tex(`f(` + range_start + `)`) + ` and ` + tex(`f(` + range_end + `)`),
+        tex(`x^{}_1=` + x1) + (math_tools.round(range_near - f(range_near) / g(range_near), 3) === (range_near - f(range_near) / g(range_near)) ? `` : ` (to ` + tex(`3`) + ` dp)`),
 
-         `equation ` + tex(equation + `=0`) + ` has a root in the interval[` + range_start + `,` + range_end + `]`,
+        content
 
-         `then using the Newton-Raphson process to work out ` + tex(`x^{}_1`) + `<br>`,
+    ];
+    return steps[step];
+};
 
-         (math.abs(f(range_start)) > math.abs(f(range_end))) ? tex(`\\because\\,\\,` + `|f(` + range_start + `)|>|f(` + range_end + `)|`) + `<br>` +
+self.misconception = function (answer) {
+    return 0; // Default
+};
 
-         tex(`\\therefore\\,\\,` + range_end) + ` is closer to the correct answer` :
-         tex(`\\because\\,\\,` + `|f(` + range_start + `)|<|f(` + range_end + `)|`) + `<br>` +
-         tex(`\\therefore\\,\\,` + range_start) + ` is closer to the correct answer`,
-
-
-         `Using ` + tex(`x^{}_0=` + range_near),
-
-         tex(`x^{}_1=x^{}_0-\\dfrac{f(` + range_near + `)}{f'(` + range_near + `)}`),
-
-         (f(range_near) * g(range_near) > 0) ? tex(`x^{}_1=` + range_near + `-`) + math_visuals.fraction.tex(f(range_near), g(range_near)) :
-         tex(`x^{}_1=` + range_near + `+`) + math_visuals.fraction.tex(-f(range_near), g(range_near)),
-
-         tex(`x^{}_1=` + arry[1][3]),
-
-         `Then using the same way to make the table of values. Let the interval (a,b) be the interval in which the root lies. `,
-
-         math_visuals.array_to_table(diff_iteration(x)),
-
-         `Hence answer ` + ans + `<br>`,
-
-     ];
-     return steps[step];
- };
-
- self.misconception = function (answer) {
-     return 0; // Default
- };
-
- self.correct_answers = function () {
-     return arry2;
- };
+self.correct_answers = function () {
+    return [ans];
+};

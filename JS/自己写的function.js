@@ -441,4 +441,8 @@ math_tools["round"] = function (number, decimals) {
     return s_x;
 };
 
+<<<<<<< HEAD:JS/自己写的function.js
 
+=======
+  `(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)<br>`
+>>>>>>> b2d81f0843cc0f726d904f0479dba047ae2f2ac1:自己写的function.js
