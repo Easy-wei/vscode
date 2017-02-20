@@ -441,4 +441,36 @@ math_tools["round"] = function (number, decimals) {
     return s_x;
 };
 
-  `(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)<br>`
+`(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)<br>`
+
+function prime(x) {
+    var a = [2];
+    for (var i = 3; i <= x; i++) {
+        for (var j = Math.floor(Math.pow(x, 0.5)); j > 2; j--) {
+            if (i % j === 0) {
+                break;
+            }
+            a.push(i)
+        }
+    }
+    return a;
+}
+console.log(prime(100));
+
+function prime(num){
+    var i,k;
+    var arr = [];
+    for(i=2; i<=num; i++){
+      arr.push(i);
+    }
+    for(i=0; i<arr.length; i++){
+      for(k=i+1; k<arr.length; k++){
+        if(arr[k]%arr[i]===0){
+          arr.splice(k,1);
+        }
+      }
+    }
+    return arr;
+  }
+
+console.log(prime(100));
