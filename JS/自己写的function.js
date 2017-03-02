@@ -477,6 +477,7 @@ math_tools["round"] = function (number, decimals) {
     return s_x;
 };
 
+<<<<<<< HEAD:自己写的function.js
 `(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)<br>`
 
 
@@ -658,3 +659,10 @@ function diff_random(num, min = 1, max = 10) {
     }
     return array;
 }
+=======
+<<<<<<< HEAD:JS/自己写的function.js
+
+=======
+  `(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)<br>`
+>>>>>>> b2d81f0843cc0f726d904f0479dba047ae2f2ac1:自己写的function.js
+>>>>>>> 12f6551020ab1c5324b09c8d1e2d192852d3aaf6:JS/自己写的function.js
