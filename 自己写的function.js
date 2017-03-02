@@ -128,18 +128,38 @@ var root = {
     },
 };
 
-math_visuals.quadratic = {
-    str: function (a, b, c) {
-        if ((math_tools.quadratic(a, b, c)[0] * 10) % 1 !== 0) {
-            return ` p^{}_1=\\,\\dfrac{` + (-b) + `+` + math_visuals.root.str(b * b - 4 * a * c) + `}{` + 2 * a + `}\\space
-                p^{}_2=\\,\\dfrac{` + (-b) + `-` + math_visuals.root.str(b * b - 4 * a * c) + `}{` + 2 * a + `}`;
-        } else {
-            return `p^{}_1=\\,` + math_tools.quadratic(a, b, c)[0] + `\\space\\space\\space` +
-                `p^{}_2=\\,` + math_tools.quadratic(a, b, c)[1];
+math_visuals["quadratic"] = {
+    test: function (n) {
+        return (n == 1) ? `` : (n == -1) ? `-` : n;
+    },
+    str: function (a, b, c, x = `x`) { //
+        var k = math.pow(b, 2) - 4 * a * c;
+        if (k > 0) {
+            var k1 = math_visuals.root.integer_part(k);
+            if (math.pow(k1, 2) == k) {
+                return x + `^{}_1=\\,` + math_visuals.fraction.str((-b + k1), 2 * a) +
+                    `\\space\\space ` + x + `^{}_2=\\,` + math_visuals.fraction.str((-b - k1), 2 * a);
+            }
+            var k2 = math_visuals.root.sqrt_part(k);
+            var com = math_ngcd(b, k1, 2 * a);
+            b = b / com;
+            k1 = k1 / com;
+            var k3 = math.abs(a * 2 / com);
+            return (a > 0) ? (k3 == 1) ? x + `^{}_1=\\,` + (-b) + `+` + math_visuals.quadratic.test(k1) + k2 + `\\space
+
+                         ` + x + `^{}_2=\\,` + (-b) + `-` + math_visuals.quadratic.test(k1) + k2 :
+                x + `^{}_1=\\,\\dfrac{` + (-b) + `+` + math_visuals.quadratic.test(k1) + k2 + `}{` + k3 + `}\\space
+                         ` + x + `^{}_2=\\,\\dfrac{` + (-b) + `-` + math_visuals.quadratic.test(k1) + k2 + `}{` + k3 + `}` :
+                (k3 == 1) ? x + `^{}_1=\\,` + (b) + `-` + math_visuals.quadratic.test(k1) + k2 + `\\space
+                         ` + x + `^{}_2=\\,` + (b) + `+` + math_visuals.quadratic.test(k1) + k2 :
+                x + `^{}_1=\\,-\\dfrac{` + (-b) + `+` + math_visuals.quadratic.test(k1) + k2 + `}{` + k3 + `}\\space
+                         ` + x + `^{}_2=\\,\\dfrac{` + (b) + `+` + math_visuals.quadratic.test(k1) + k2 + `}{` + k3 + `}`;
+        } else if (k === 0) {
+            return x + `^{}_1=\\,` + math_visuals.fraction.str(-b, 2 * a);
         }
     },
     tex: function (a, b, c) {
-        return tex(math_visuals.quadratic.str(a, b, c));
+        return tex(math_quadratic.str(a, b, c));
     },
 };
 
@@ -296,6 +316,7 @@ math_visuals.root = {
 function inter_bisection(x, y) { //interval bisection
     var a = x;
     var b = y;
+    var k = 0; //控制最多运行几层的变量//其实也可以把这个变量放到参数中来控制循环次数
     var c;
     var arry = [
         [tex(`a`), tex(`f(a)`), tex(`b`), tex(`f(b)`), tex(`\\dfrac{a+b}{2}`), tex(`f\\Bigl(\\dfrac{a+b}{2}\\Bigr)`)]
@@ -326,6 +347,10 @@ function inter_bisection(x, y) { //interval bisection
             a = c;
             b = b;
         }
+        k += 1; //控制最多运行多少层
+        if (k > 1) {
+            break;
+        } //控制次数的地方
     }
     return arry;
 }
@@ -333,6 +358,7 @@ function inter_bisection(x, y) { //interval bisection
 function linear_interpolation(x, y) { //linear interpolation
     var a = x;
     var b = y;
+    var k = 0; //控制最多运行几层的变量//其实也可以把这个变量放到参数中来控制循环次数
     var c;
     var arry = [
         [tex(`a`), tex(`f(a)`), tex(`b`), tex(`f(b)`), tex(`x^{}_n`), tex(`f(x^{}_n)`)]
@@ -363,16 +389,21 @@ function linear_interpolation(x, y) { //linear interpolation
             a = c;
             b = b;
         }
+        k += 1; //控制最多运行多少层
+        if (k > 1) {
+            break;
+        } //控制次数的地方
     }
     ans = math.round(c, 1);
     return arry;
 }
 
 //线性微分法
-function diff_iteration(x) { //differential_interation
+function diff_iteration(x, y = 1) { //differential_interation.
     var x1 = x;
+    var k = 0; //y负责控制循环次数，只要控制k大于等于y，那就break掉
     var arry = [
-        [`x`, `f(x)`, `f'(x)`, `x`]
+        [tex(`x`), tex(`f(x)`), tex(`f'(x)`), tex(`x_{n}`)]
     ];
     for (var i = 0; i < 10; i++) {
         var arry1 = [];
@@ -387,6 +418,11 @@ function diff_iteration(x) { //differential_interation
             break;
         }
         x = x1;
+        k += 1;
+        if (k >= y) {
+            ans = math_tools.round(x1, 2);
+            break;
+        }
     }
     return arry;
 }
@@ -443,34 +479,182 @@ math_tools["round"] = function (number, decimals) {
 
 `(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)<br>`
 
-function prime(x) {
-    var a = [2];
-    for (var i = 3; i <= x; i++) {
-        for (var j = Math.floor(Math.pow(x, 0.5)); j > 2; j--) {
-            if (i % j === 0) {
+
+//求质数的方法1的错误，原因：在核心区域
+function prime(num) {
+    var i, k;
+    var arr = [];
+    var arr2 = [];
+    for (i = 2; i <= num; i++) {
+        arr.push(i);
+    }
+    for (i = 0; i < arr.length; i++) {
+        for (k = 2; k < Math.ceil(Math.pow(arry[i], 0.5)); k++) {
+            if (arr[i] % k === 0) {
+                arr.splice(i, 1); //改变的了数组个数，导致部分数下标被更改却没有被轮到计算
+            }
+        }
+    }
+    return arr;
+}
+
+//求质数的方法1的正确方法
+function prime(num) {
+    var i, k;
+    var arr = [];
+    for (i = 2; i <= num; i++) {
+        arr.push(i);
+    }
+    var arr2 = [];
+    for (i = 0; i < arr.length; i++) {
+        for (k = i + 1; k < arr.length; k++) {
+            if (arr[k] % arr[i] === 0) {
+                arr.splice(k, 1); //虽然都是和上面一块是删除的，但是不一样的在于这个删除当前i项后面的那些值
+            }
+        }
+    }
+    return arr;
+}
+
+//求质数的方法2 比较良好
+function prime(num) {
+    var arr = [2];
+    for (var i = 3; i <= num; i++) {
+        var k = 0;
+        for (var j = 0; j < arr.length; j++) {
+            if (i % arr[j] === 0) {
+                k = 1;
                 break;
             }
-            a.push(i)
+        }
+        if (k == 1) continue;
+        else arr.push(i);
+    }
+    return arr;
+}
+//更好些,开跟和用以前的质数结合起来
+function prime(num) {
+    var arr = [2];
+    for (var i = 3; i <= num; i++) {
+        var k = 0;
+        for (var j = 0; arr[j] < Math.pow(num, 0.5); j++) {
+            if (i % arr[j] === 0) {
+                k = 1;
+                break;
+            }
+        }
+        if (k == 1) continue;
+        else arr.push(i);
+    }
+    return arr;
+}
+//小泉写的,最基础的版本
+function prime(x) {
+    for (var i = 3; i < x; i++) {
+        for (var f = 2; f <= i - 1; f++) {
+            if (i % f === 0) {
+                break;
+            }
+            if (f == i - 1) {
+                a.push(i);
+            }
         }
     }
     return a;
 }
-console.log(prime(100));
 
-function prime(num){
-    var i,k;
-    var arr = [];
-    for(i=2; i<=num; i++){
-      arr.push(i);
+
+function polynomial() {
+    var array = Array.prototype.slice.call(arguments);
+    var array_to_str;
+    if (array[0] == 1) {
+        array[0] = ``;
     }
-    for(i=0; i<arr.length; i++){
-      for(k=i+1; k<arr.length; k++){
-        if(arr[k]%arr[i]===0){
-          arr.splice(k,1);
+    for (var i = 0; i < array.length - 1; i++) {
+        if (typeof (array[i]) == 'number') {
+            switch (array[i]) {
+                case 1:
+                    array[i] = `+`;
+                    break;
+                case -1:
+                    array[i] = `-`;
+                    break;
+                case 0:
+                    array.splice(i, 1);
+                    array.splice(i, 1);
+                    i = i - 1; //因为删除了某两项，导致i要减一，然后break到循环，然后加1，继续验证。
+                    break;
+                default:
+                    array[i] = array[i].signed();
+            }
         }
-      }
     }
-    return arr;
-  }
+    if (array[array.length - 1] === 0) {
+        array[array.length - 1] = ``
+    }
+    if (typeof (array[array.length - 1]) == 'number') {
+        array[array.length - 1] = array[array.length - 1].signed();
+    }
+    array_to_str = array.join(``);
+    return array_to_str;
+}
 
-console.log(prime(100));
+//核心区域的那个删除蛮有风险的，所以更换了一个更有保险的措施如下
+
+function polynomial() {
+    var array = Array.prototype.slice.call(arguments);
+    var array_to_str;
+    if (array[0] == 1) {
+        array[0] = ``;
+    }
+    for (var i = 0; i < array.length - 1; i++) {
+        if (typeof (array[i]) == 'number') {
+            switch (array[i]) {
+                case 1:
+                    array[i] = `+`;
+                    break;
+                case -1:
+                    array[i] = `-`;
+                    break;
+                case 0:
+                    array[i] = ``;
+                    array[i + 1] = ``;
+                    break;
+                default:
+                    array[i] = array[i].signed();
+            }
+        }
+    }
+    if (array[array.length - 1] === 0) {
+        array[array.length - 1] = ``;
+    }
+    if (typeof (array[array.length - 1]) == 'number') {
+        array[array.length - 1] = array[array.length - 1].signed();
+    }
+    array_to_str = array.join(``);
+    return array_to_str;
+}
+
+function diff_random(num, min = 1, max = 10) {
+    var array = [];
+    var k = 0;
+    var a;
+    array.push(math.randomInt(min, max));
+    for (var i = 1; i < num; i++) {
+        k = 0;
+        a = math_tools.rand_int(min, max);
+        for (var j = 0; j < array.length; j++) {
+            if (a == array[j]) {
+                k = 1;
+                break;
+            }
+        }
+        if (k == 1) {
+            i = i - 1; //又是这里的坑，导致如果k==1，continue了，数组却没添加上元素，i却也跟着上去了，所以这种情况下，i要－1
+            continue;
+        } else {
+            array.push(a);
+        }
+    }
+    return array;
+}

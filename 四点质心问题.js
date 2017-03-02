@@ -50,42 +50,36 @@ do {
     var m1 = math_tools.rand_int(1, 6);
     var m2 = math_tools.rand_int(1, 6);
     var m3 = math_tools.rand_int(1, 6);
-    var m4 = math_tools.rand_int(2, 6);
-    var x_array = [0, 0, 0];
-    var y_array = diff_random(3);
+    var m4 = math_tools.rand_int(1, 6);
+    var x_array = diff_random(4);
+    var y_array = diff_random(4);
     var array = [ //格式是：质量，坐标（x，y）。也就是[m,[x,y]]
         [m1, [x_array[0], y_array[0]]],
         [m2, [x_array[1], y_array[1]]],
         [m3, [x_array[2], y_array[2]]],
+        [m4, [x_array[3], y_array[3]]],
     ];
     var coordinate = centre_cal(array);
-    var y_m4 = sum_my / m4;
 }
-while (coordinate[0] % 1 !== 0 || coordinate[1] % 1 !== 0 || y_m4 % 1 !== 0);
-console.log(y_m4);
-
+while (coordinate[0] % 1 !== 0 || coordinate[1] % 1 !== 0);
+console.log(coordinate);
 self.text = function () {
-    return `Particles of mass ~` + array[0][0] + `kg,` + array[1][0] + `kg ~ and ~` + array[2][0] + `kg~ lie on the ~y~-axis at the points with coordinates  
-
-~(` + array[0][1][0] + ` , ` + array[0][1][1] + `)~, ~ (` + array[1][1][0] + ` , ` + array[1][1][1] + `)~ and ~ (` + array[2][1][0] + ` , ` + array[2][1][1] + `)~ respectively
-
-Another particle of mass ~` + m4 + `kg~,
-
-is added to the system so that the centre of mass of all four particles is at the origin. 
-
-Find the postion of this particle.
-
-		~\\bigl([answer style='inline'] , [answer style='inline']\\bigr)~`;
+    return `Find the position of the centre of mass of four particles of masses ~` + array[0][0] + `kg\\,\\,` + array[1][0] + `kg\\,\\,` + array[2][0] + `kg\\,` +
+        `~ and ~` + array[3][0] + `kg ` + `~ placed on the ~x~-axis at the points
+(` + array[0][1][0] + ` , ` + array[0][1][1] + `) (` + array[1][1][0] + ` , ` + array[1][1][1] + `) (` + array[2][1][0] + ` , ` + array[2][1][1] + `) (` + array[3][1][0] + ` , ` + array[3][1][1] + `) respectively.
+		([answer style='inline'] , [answer style='inline'])`;
 };
 
 
 self.step = function (wrong_answer, step) {
     var steps = [
 
-        `The sum of the masses ~\\displaystyle\\sum m^{}_{i}=m^{}_{1}+m^{}_{2}+m^{}_{3}~`,
-        `~=` + m1 + `+` + m2 + `+` + m3 + `=` + (sum_m) + `~`,
+        `~\\displaystyle\\sum m_{i}=m_{1}+m_{2}+m_{3}+m_{4}=` + m1 + `+` + m2 + `+` + m3 + `+` + m4 + `~`,
+        `~=` + (sum_m) + `~`,
 
         /*  
+        `We can find ~\\bar x~, the average ~x~-coordinate, using the formula ~\\displaystyle\\sum_{}^{}m^{}_{i}x_^{}_{i}=\\bar x\\sum_{}^{}m_{i}~`,
+
         `~\\displaystyle\\sum_{}^{}m_{i}x_{i}=\\bar x\\sum_{}^{}m_{i}~`,
 
         `~\\displaystyle\\sum_{}^{}m_{i}x_{i}~`,
@@ -95,15 +89,17 @@ self.step = function (wrong_answer, step) {
         `~\\bar x=\\dfrac{` + sum_mx + `}{` + sum_m + `}~`,
         `~\\bar x=` + coordinate[0] + `~`,
         */
-
         `We can find ~\\bar y~, the average ~y~-coordinate, using the formula ~\\displaystyle\\sum_{}^{}m^{}_{i}y^{}_{i}=\\bar y\\sum_{}^{}m_{i}~`,
-        `~\\displaystyle\\sum_{}^{}m^{}_{i}y^{}_{i}=` + m1 + `\\times` + array[0][1][1] + `+` + m2 + `\\times` + array[1][1][1] + `+` + m3 + `\\times` + array[2][1][1] + `=` + (sum_my) + `~`,
-        `~\\bar y=\\displaystyle\\dfrac{\\sum_{}^{}m^{}_{i}y^{}_{i}}{\\sum_{}^{}m^{}_{i}}~`,
+        `~\\displaystyle\\sum_{}^{}m_{i}y_{i}=\\bar y\\sum_{}^{}m_{i}~`,
+        `~\\displaystyle\\sum_{}^{}m_{i}y_{i}~`,
+        `~=` + m1 + `\\times` + array[0][1][1] + `+` + m2 + `\\times` + array[1][1][1] + `+` + m3 + `\\times` + array[2][1][1] + `+` + m4 + `\\times` + array[3][1][1] + `~`,
+        `~=` + (sum_my) + `~`,
+        `~\\bar y=\\displaystyle\\dfrac{\\sum_{}^{}m_{i}y_{i}}{\\sum_{}^{}m_{i}}~`,
         `~\\bar y=\\dfrac{` + sum_my + `}{` + sum_m + `}~`,
         `~\\bar y=` + coordinate[1] + `~`,
-        `Because the ~x~-coordinates are all ~0~, ~\\bar x=` + coordinate[0] + `~`,
 
-        `The centre of mass is therefore ~(` + coordinate[0] + `,` + coordinate[1] + `)~`
+
+        `Then centre of mass is (` + coordinate[0] + `,` + coordinate[1] + `)`
     ];
     return steps[step];
 };
@@ -113,5 +109,5 @@ self.misconception = function (answer) {
 };
 
 self.correct_answers = function () {
-    return [0, y_m4];
+    return coordinate;
 };

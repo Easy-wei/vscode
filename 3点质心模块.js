@@ -50,7 +50,6 @@ do {
     var m1 = math_tools.rand_int(1, 6);
     var m2 = math_tools.rand_int(1, 6);
     var m3 = math_tools.rand_int(1, 6);
-    var m4 = math_tools.rand_int(2, 6);
     var x_array = [0, 0, 0];
     var y_array = diff_random(3);
     var array = [ //格式是：质量，坐标（x，y）。也就是[m,[x,y]]
@@ -59,21 +58,13 @@ do {
         [m3, [x_array[2], y_array[2]]],
     ];
     var coordinate = centre_cal(array);
-    var y_m4 = sum_my / m4;
 }
-while (coordinate[0] % 1 !== 0 || coordinate[1] % 1 !== 0 || y_m4 % 1 !== 0);
-console.log(y_m4);
-
+while (coordinate[0] % 1 !== 0 || coordinate[1] % 1 !== 0);
+console.log(coordinate);
 self.text = function () {
-    return `Particles of mass ~` + array[0][0] + `kg,` + array[1][0] + `kg ~ and ~` + array[2][0] + `kg~ lie on the ~y~-axis at the points with coordinates  
+    return `Three masses ~` + array[0][0] + `kg,` + array[1][0] + `kg ~ and ~` + array[2][0] + `kg~ are  placed  at the points with coordinates ~(` + array[0][1][0] + ` , ` + array[0][1][1] + `)~, ~ (` + array[1][1][0] + ` , ` + array[1][1][1] + `)~ and ~ (` + array[2][1][0] + ` , ` + array[2][1][1] + `)~ respectively
 
-~(` + array[0][1][0] + ` , ` + array[0][1][1] + `)~, ~ (` + array[1][1][0] + ` , ` + array[1][1][1] + `)~ and ~ (` + array[2][1][0] + ` , ` + array[2][1][1] + `)~ respectively
-
-Another particle of mass ~` + m4 + `kg~,
-
-is added to the system so that the centre of mass of all four particles is at the origin. 
-
-Find the postion of this particle.
+Find the coordinates of ~G~, the centre of mass the three masses
 
 		~\\bigl([answer style='inline'] , [answer style='inline']\\bigr)~`;
 };
@@ -113,5 +104,5 @@ self.misconception = function (answer) {
 };
 
 self.correct_answers = function () {
-    return [0, y_m4];
+    return coordinate;
 };
