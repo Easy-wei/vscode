@@ -69,7 +69,6 @@ Find the coordinates of ~G~, the centre of mass the three masses
 		~\\bigl([answer style='inline'] , [answer style='inline']\\bigr)~`;
 };
 
-
 self.step = function (wrong_answer, step) {
     var steps = [
 

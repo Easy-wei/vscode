@@ -659,6 +659,19 @@ function diff_random(num, min = 1, max = 10) {
     }
     return array;
 }
+function diff_random2(num, min = 1, max = 10) {
+    var array = [];
+    var k = 0;
+    var a;
+    array.push(math.randomInt(min, max));
+    for (var i = 1; i < num; i++) {
+        a=math.randomInt(min,max);
+        if (a not in array){
+            array.push(a);
+        }
+    }
+    return array;
+}
 =======
 <<<<<<< HEAD:JS/自己写的function.js
 
