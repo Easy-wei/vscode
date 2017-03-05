@@ -477,8 +477,11 @@ math_tools["round"] = function (number, decimals) {
     return s_x;
 };
 
-<<<<<<< HEAD:自己写的function.js
-`(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)<br>`
+<<
+<<
+<<
+<
+HEAD: 自己写的function.js `(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)<br>`
 
 
 //求质数的方法1的错误，原因：在核心区域
@@ -659,23 +662,37 @@ function diff_random(num, min = 1, max = 10) {
     }
     return array;
 }
+
 function diff_random2(num, min = 1, max = 10) {
     var array = [];
-    var k = 0;
     var a;
     array.push(math.randomInt(min, max));
     for (var i = 1; i < num; i++) {
-        a=math.randomInt(min,max);
-        if (a not in array){
+        a = math.randomInt(min, max);
+        if (array.indexOf(a) == -1) {
             array.push(a);
+        } else {
+            i = i - 1;
+            continue;
         }
     }
     return array;
 }
-=======
-<<<<<<< HEAD:JS/自己写的function.js
 
-=======
-  `(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)<br>`
->>>>>>> b2d81f0843cc0f726d904f0479dba047ae2f2ac1:自己写的function.js
->>>>>>> 12f6551020ab1c5324b09c8d1e2d192852d3aaf6:JS/自己写的function.js
+
+
+<<
+<<
+<
+HEAD: JS / 自己写的function.js
+
+    ===
+    ===
+    =
+    `(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)<br>` >>>
+    >>>
+    >
+    b2d81f0843cc0f726d904f0479dba047ae2f2ac1: 自己写的function.js >>>
+    >>>
+    >
+    12 f6551020ab1c5324b09c8d1e2d192852d3aaf6: JS / 自己写的function.js

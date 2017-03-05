@@ -113,11 +113,10 @@ Find the coordinates of the centre of mass of the three particles.
 console.log(coordinate_range);
 self.post_load = function () {
   var g1 = new graphic({'input_element': "graph_1",  'low_x': coordinate_range[0],    'high_x': coordinate_range[1] , 'low_y': coordinate_range[2],    'high_y': coordinate_range[3]      });
-
   g1.add_element({'type': 'dot',    'pos': [array[0][1][0],array[0][1][1]] });
   g1.add_element({'type': 'label', 'pos': [array[0][1][0],array[0][1][1]+1.2], 'text': 'A'});
-    g1.add_element({'type': 'label', 'pos': [array[0][1][0],array[0][1][1]+0.5], 'text': array[0][0]+'kg'});
-    g1.add_element({'type': 'label', 'pos': [array[0][1][0],array[0][1][1]-1], 'text': '('+array[0][1][0]+','+array[0][1][1]+')'});
+  g1.add_element({'type': 'label', 'pos': [array[0][1][0],array[0][1][1]+0.5], 'text': array[0][0]+'kg'});
+  g1.add_element({'type': 'label', 'pos': [array[0][1][0],array[0][1][1]-1], 'text': '('+array[0][1][0]+','+array[0][1][1]+')'});
   g1.add_element({'type': 'dot',    'pos': [array[1][1][0],array[1][1][1]] });
   g1.add_element({'type': 'label', 'pos': [array[1][1][0],array[1][1][1]+0.5], 'text': 'B'});
   g1.add_element({'type': 'dot',    'pos': [array[2][1][0],array[2][1][1]] });
