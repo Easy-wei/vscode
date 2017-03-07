@@ -5,23 +5,15 @@ var sum_m, sum_mx, sum_my;
 
 function diff_random(num, min = 1, max = 10) {
     var array = [];
-    var k = 0;
     var a;
     array.push(math.randomInt(min, max));
     for (var i = 1; i < num; i++) {
-        k = 0;
-        a = math_tools.rand_int(min, max);
-        for (var j = 0; j < array.length; j++) {
-            if (a == array[j]) {
-                k = 1;
-                break;
-            }
-        }
-        if (k == 1) {
-            i = i - 1; //又是这里的坑，导致如果k==1，continue了，数组却没添加上元素，i却也跟着上去了，所以这种情况下，i要－1
-            continue;
-        } else {
+        a = math.randomInt(min, max);
+        if (array.indexOf(a) == -1) {
             array.push(a);
+        } else {
+            i = i - 1;
+            continue;
         }
     }
     return array;

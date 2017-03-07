@@ -25,6 +25,7 @@ function centre_cal(array) {
   var m = 0;
   for (var i = 0; i < array.length; i++) {
     m += array[i][0];
+    x += array[i][0] * array[i][1][0];
     y += array[i][0] * array[i][1][1];
   }
   sum_m = m;
@@ -39,23 +40,27 @@ function centre_cal(array) {
 
 do {
   var m1 = math_tools.rand_int(1, 6);
-  var m2 = math.randomInt(1,6);
-  var m3 = math.randomInt(1,6);
-  var x_array=diff_random(3,1,9);
-  var y_array=diff_random(3,1,9);
+  var m2 = m1;
+  var m3 = m1;
+  var m4 = m1;
+  var x_array=diff_random(4,1,9);
+  var y_array=diff_random(4,1,9);
   var array = [ //格式是：质量，坐标（x，y）。也就是[m,[x,y]]
     [m1, [x_array[0], y_array[0]]],
     [m2, [x_array[1], y_array[1]]],
 	[m3, [x_array[2], y_array[2]]],
+	[m4, [x_array[3], y_array[3]]],
   ];
   var coordinate = centre_cal(array);
 }
 while (coordinate[0] % 1 !== 0 || coordinate[1] % 1 !== 0);
 console.log(coordinate);
 self.text = function () {
-  return `<div id="graph_1"></div>A system of three particles consists of  equal mass are situated ar the points
+  return `<div id="graph_1"></div>Four particles of equal mass are situated ar the points
 
-~(` + array[0][1][0] + ` , ` + array[0][1][1] + `), (` + array[1][1][0] + ` , ` + array[1][1][1] + `),~ and~(` + array[2][1][0] + ` , ` + array[2][1][1] + `)~respectively.
+~(` + array[0][1][0] + ` , ` + array[0][1][1] + `), (` + array[1][1][0] + ` , ` + array[1][1][1] + `),~
+
+~(` + array[2][1][0] + ` , ` + array[2][1][1] + `)~ and ~(` + array[3][1][0] + ` , ` + array[3][1][1] + `)~respectively.
 
 Find the coordinates of the centre of mass of the particles.
 
@@ -82,6 +87,10 @@ self.post_load = function () {
   
   g1.add_element({'type': 'label', 'pos': [array[2][1][0]-0.5,array[2][1][1]+0.5], 'text': 'C'});
   
+  g1.add_element({'type': 'dot',    'pos': [array[3][1][0],array[3][1][1]] });
+  
+  g1.add_element({'type': 'label', 'pos': [array[3][1][0],array[3][1][1]+0.5], 'text': 'D'});
+  
   //g1.add_element({'type': 'dot',    'pos': [coordinate[0],coordinate[1]] });//答案坐标点
   
   g1.draw();
@@ -90,19 +99,62 @@ self.post_load = function () {
 
 self.step = function (wrong_answer, step) {
   var steps = [
+	
+	`<div id='graph_6'></div>`,
+	
 	`Assuming that the mass is ~m~`,
     `The sum of the masses ~\\displaystyle\\sum m^{}_{i}=4m~`,
 	
 	`~m~`+math_visuals.matrix.tex([[array[0][1][0]],[array[0][1][1]]])+`~+m~`+math_visuals.matrix.tex([[array[1][1][0]],[array[1][1][1]]])+
-	`~+m~`+math_visuals.matrix.tex([[array[2][1][0]],[array[2][1][1]]])+`~=4m~`+math_visuals.matrix.tex([[`\\bar x`],[`\\bar y`]]),
+	`~+m~`+math_visuals.matrix.tex([[array[2][1][0]],[array[2][1][1]]])+`~+m~`+math_visuals.matrix.tex([[array[3][1][0]],[array[3][1][1]]])+
+	`~=4m~`+math_visuals.matrix.tex([[`\\bar x`],[`\\bar y`]]),
 	
-	`~\\therefore\\,~`+math_visuals.matrix.tex([[(array[0][1][0]+`+`+array[1][1][0]+`+`+array[2][1][0])],[(array[0][1][1]+`+`+array[1][1][1]+`+`+array[2][1][1])]])+`~=4~`+math_visuals.matrix.tex([[`\\bar x`],[`\\bar y`]]),
+	`~\\therefore\\,~`+math_visuals.matrix.tex([[(array[0][1][0]+`+`+array[1][1][0]+`+`+array[2][1][0]+`+`+array[3][1][0])],
+												[(array[0][1][1]+`+`+array[1][1][1]+`+`+array[2][1][1]+`+`+array[3][1][1])]])+`~=4~`+math_visuals.matrix.tex([[`\\bar x`],[`\\bar y`]]),
 
     `It's easy to find the `+math_visuals.matrix.tex([[`\\bar x`],[`\\bar y`]])+`~=~`+math_visuals.matrix.tex([[coordinate[0]],[coordinate[1]]]),
 
     `The centre of mass is therefore ~(` + coordinate[0] + `,` + coordinate[1] + `)~`
   ];
   return steps[step];
+};
+
+self.step_js = function (wrong_answer, step) {
+    if (step === 0) {
+        console.log(`aa`);
+        return function () {
+            g6 = new graphic({
+                'input_element': "graph_6",'low_x': coordinate_range[0],    'high_x': coordinate_range[1] , 
+						'low_y': coordinate_range[2],    'high_y': coordinate_range[3] });
+            g6.add_element({
+                'type': 'grid'            });
+            g6.draw();
+        };
+    } else if (step === 1) {
+        console.log(`zz`);
+        return function () {
+  g6.add_element({'type': 'dot',    'pos': [array[0][1][0],array[0][1][1]] });
+  
+  g6.add_element({'type': 'label', 'pos': [array[0][1][0]-0.5,array[0][1][1]+0.5], 'text': 'A'});
+  
+  g6.add_element({'type': 'dot',    'pos': [array[1][1][0],array[1][1][1]] });
+  
+  g6.add_element({'type': 'label', 'pos': [array[1][1][0],array[1][1][1]+0.5], 'text': 'B'});
+  
+  g6.add_element({'type': 'dot',    'pos': [array[2][1][0],array[2][1][1]] });
+  
+  g6.add_element({'type': 'label', 'pos': [array[2][1][0]-0.5,array[2][1][1]+0.5], 'text': 'C'});
+  
+  g6.add_element({'type': 'dot',    'pos': [array[3][1][0],array[3][1][1]] });
+  
+  g6.add_element({'type': 'label', 'pos': [array[3][1][0],array[3][1][1]+0.5], 'text': 'D'});
+  
+  g6.add_element({'type': 'dot',    'pos': [coordinate[0],coordinate[1]] });//答案坐标点
+		  
+  g6.add_element({'type': 'label', 'pos': [coordinate[0],coordinate[1]+0.5], 'text': 'G'});
+            g6.draw();
+        };
+    }
 };
 
 self.misconception = function (answer) {
