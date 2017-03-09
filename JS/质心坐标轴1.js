@@ -39,48 +39,14 @@ function centre_cal(array) {
 }
 
 var v1 = math.randomInt(1, 5);
-var x_array=[];
-var y_array=[];
+
 
 do {
-  switch (v1) {
-    case 1:
-      function1 = `~x-y=0~`;
-      x_array = diff_random(2, 1, 8);
-	  x_array.push(0);
-	  x_array = math.sort(x_array);
-      y_array = x_array.map(function (x) { return x;});
-      coordinate_range = [-3, 8, -3, 9];
-      break;
-    case 2:
-      function1 = `~y-2x=0~`;
-      x_array = diff_random(2, 1, 5);
-	  x_array.push(0);
-	  x_array = math.sort(x_array);
-      y_array = x_array.map(function (x) { return x * 2;});
-      coordinate_range = [-3, 6, -3, 11];
-      break;
-    case 3:
-      function1 = `~y-3x=0~`;
-      x_array = diff_random(2, 1, 3);
-	  x_array.push(0);
-	  x_array = math.sort(x_array);
-      y_array = x_array.map(function (x) { return x * 3;});
-      coordinate_range = [-5, 5, -3, 10];
-      break;
-    case 4:
-      function1 = `~x+y=0~`;
-      x_array = diff_random(2, 1, 7);
-	  x_array.push(0);
-	  x_array = math.sort(x_array);
-      y_array = x_array.map(function (x) { return -x;});
-      coordinate_range = [-3, 8, -8, 8];
-      break;
-  }
-
   var m1 = math_tools.rand_int(1, 6);
   var m2 = math_tools.rand_int(1, 6);
   var m3 = math_tools.rand_int(1, 6);
+  var x_array=diff_random(3,-6,9);
+  var y_array=diff_random(3,-6,9);
   var array = [ //格式是：质量，坐标（x，y）。也就是[m,[x,y]]
     [m1, [x_array[0], y_array[0]]],
     [m2, [x_array[1], y_array[1]]],
@@ -88,12 +54,13 @@ do {
   ];
   var coordinate = centre_cal(array);
 }
-while (coordinate[0] % 1 !== 0 || coordinate[1] % 1 !== 0);
+while (coordinate[0] % 1 !== 0 || coordinate[1] % 1 !== 0||(array[1][1][1]-array[0][1][1])/(array[1][1][0]-array[0][1][0])==(array[2][1][1]-array[0][1][1])/(array[2][1][0]-array[0][1][0]));
+//上述三点不能一线
 console.log(coordinate);
 self.text = function () {
   return `<div id="graph_1"></div>Three particles ~A, B~ and ~C~ have masses ~` + array[0][0] + `kg,` + array[1][0] + `kg ~ and ~` + array[2][0] + `kg~ respectively.
 
-The particles are placed on the line with equation `+function1+`. Particles ~A, B~ and ~C~ are  at the points with coordinates 
+The particles are placed on the line with equation `+`. Particles ~A, B~ and ~C~ are  at the points with coordinates 
 
 ~(` + array[0][1][0] + ` , ` + array[0][1][1] + `)~, ~ (` + array[1][1][0] + ` , ` + array[1][1][1] + `)~ and ~ (` + array[2][1][0] + ` , ` + array[2][1][1] + `)~ respectively.
 
@@ -101,25 +68,28 @@ Find the coordinates of the centre of mass of the three particles.
 
 		~\\bigl([answer style='inline'] , [answer style='inline']\\bigr)~`;
 };
+//动态坐标轴
+coordinate_range=[((math.min(x_array)>0)?-3:math.min(x_array)-3),((math.max(x_array)<0)?3:math.max(x_array)+3),((math.min(y_array)>0)?-3:math.min(y_array)-3),((math.max(y_array)<0)?3:math.max(y_array)+3)];
 
-console.log(coordinate_range);
 self.post_load = function () {
   var g1 = new graphic({'input_element': "graph_1",  'low_x': coordinate_range[0],    'high_x': coordinate_range[1] , 'low_y': coordinate_range[2],    'high_y': coordinate_range[3]      });
   g1.add_element({'type': 'grid',    'x_label': 'x Real',    'y_label': 'y Imaginary'  });
   g1.add_element({'type': 'dot',    'pos': [array[0][1][0],array[0][1][1]] });
-  g1.add_element({'type': 'label', 'pos': [array[0][1][0]-0.5,array[0][1][1]+0.5], 'text': 'A'});
+  g1.add_element({'type': 'label', 'pos': [array[0][1][0]+0.5,array[0][1][1]+0.5], 'text': 'A'});
   g1.add_element({'type': 'dot',    'pos': [array[1][1][0],array[1][1][1]] });
   g1.add_element({'type': 'label', 'pos': [array[1][1][0],array[1][1][1]+0.5], 'text': 'B'});
   g1.add_element({'type': 'dot',    'pos': [array[2][1][0],array[2][1][1]] });
   g1.add_element({'type': 'label', 'pos': [array[2][1][0],array[2][1][1]+0.5], 'text': 'C'});
-  g1.add_element({'type': 'line_stroked',    'start': [array[0][1][0], array[0][1][1]],    'end': [array[2][1][0], array[2][1][1]]  });
+  g1.add_element({'type': 'line',    'start': [array[0][1][0], array[0][1][1]],    'end': [array[2][1][0], array[2][1][1]]  });
+  g1.add_element({'type': 'line',    'start': [array[0][1][0], array[0][1][1]],    'end': [array[1][1][0], array[1][1][1]]  });
+  g1.add_element({'type': 'line',    'start': [array[1][1][0], array[1][1][1]],    'end': [array[2][1][0], array[2][1][1]]  });
   g1.draw();
 };
 
 
 self.step = function (wrong_answer, step) {
   var steps = [
-	`the particles are placed on the line with equation `+function1,
+	`the particles are placed on the line with equation `,
 	`draw in the coordinate, show in the steps `,
 	`label the angle between ~CA~ and ~x~axis as ~\\alpha~`,
 	`The length of ~AB~ is  ~\\dfrac{`+array[1][1][0]+`}{cos\\alpha}~`,

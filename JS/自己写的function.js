@@ -253,7 +253,6 @@ math_quadratic = {
             return (m % 1 === 0) ? `a^{}=\\,` + math_tools.quadratic(a, b, c)[0] :
                 math_visuals.fraction.str(-b, 2 * a);
         }
-
     },
     tex: function (a, b, c) {
         return tex(math_quadratic.str(a, b, c));
@@ -679,12 +678,38 @@ function diff_random2(num, min = 1, max = 10) {
     return array;
 }
 
+triangular_make = {
+        //array的数据结构就是[[0.0],[0,3,][3,0],['graph_1']]//它才是id对应项目]]这样的三个坐标点，然后生成坐标图,最后一点是用来确定用哪个坐标图
+        main:function (array) {
+            var x_array=[];
+            var y_array=[];
+            for (var i=0 ; i<array.length-1 ;i++){
+                x_array.push(array[i][0]);
+                y_array.push(array[i][1]);
+            }
+            self.post_load = function () {
+                var g;
+                g = new graphic({'input_element': array[array.length-1][0], 'low_x': math.min(x_array)-2,'high_x': math.max(y_array)+2,'low_y': math.min(y_array)-2,'high_y': math.max(y_array)+2,});
+                //g.add_element({'type': 'grid',});
+                g.add_element({'type': 'dot','pos': array[0]});
+                g.add_element({'type': 'dot','pos': array[1]});
+                g.add_element({'type': 'dot','pos': array[2]});
+                g.add_element({                'type': 'label',                'pos': [array[0][0], array[0][1] - 0.7],                'text': 'A'            });
+                g.add_element({                'type': 'label',                'pos': [array[1][0], array[1][1] - 0.7],                'text': 'B'            });
+                g.add_element({                'type': 'label',                'pos': [array[2][0]+0.5, array[2][1] + 0.5],                'text': 'C'            });            
+                g.add_element({                'type': 'line',                'start': array[0],                'end': array[1]            });
+                g.add_element({                'type': 'line',                'start': array[1],                'end': array[2]            });
+                g.add_element({                'type': 'line',                'start': array[2],                'end': array[0]            });
+                //g.add_element({                'type': 'line_stroked',                'start': array[2],                'end': [0,0]            });
+                g.draw();
+            };
+        },
+};
 
-
-<<
-<<
-<
-HEAD: JS / 自己写的function.js
+    <<
+    <<
+    <
+    HEAD: JS / 自己写的function.js
 
     ===
     ===
