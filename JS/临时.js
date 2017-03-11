@@ -1,114 +1,62 @@
-self.ordered_answer = true;
-self.precision = 2;
+math_graphic={
+    graphic:function(array=[['g1'],[-6,6],[-6,6]]){//重新开图一定要注意这句话//array的必要格式为[[第一个是id变量,函数内部使用id],[坐标点1],[坐标点2]]
+		g1 = new graphic({'input_element': array[0][0], 'low_x': array[1][0],'high_x': array[1][1],'low_y': array[2][0],'high_y': array[2][1],});
+    },
+    draw:function(){
+		g1.draw();
+    },
+    grid:function(){
+		g1.add_element({'type': 'grid',});
+    },
+    dot:function(array=[[0,0]]){
+		g1.add_element({'type': 'dot','pos': array[0]});
+    },
+    label:function(array=[[-0.3,-0.3],['O']]){//[[id][坐标点1][要输入的标示量]]
+		g1.add_element({'type': 'label','pos': array[0],'text': array[1]});
+    },
+    line:function(array=[[0,0],[0,1]]){
+		g1.add_element({'type': 'line','start': array[0],'end': array[1]});
+    },
+};
 
-var sum_m, sum_mx, sum_my;
+var v1=math.randomInt(3,6);
+var v2=math.randomInt(3,8);
+array_lines=[[0,0],[0,1],[2,1],[2,v1],[3,v1],[3,1],[v2,1],[v2,0]];
 
-function diff_random(num, min = 1, max = 10) {
-    var array = [];
-    var a;
-    array.push(math.randomInt(min, max));
-    for (var i = 1; i < num; i++) {
-        a = math.randomInt(min, max);
-        if (array.indexOf(a) == -1) {
-            array.push(a);
-        } else {
-            i = i - 1;
-            continue;
-        }
+function lines_make(array) {
+    for (var i = 1; i < array.length ; i++) {
+      g1.add_element({'type': 'line','start': array[i-1],'end': array[i]});
     }
-    return array;
+    g1.add_element({'type': 'line','start': array[array.length-1],'end': array[0]});
 }
 
-function centre_cal(array) {
-  var x = 0;
-  var y = 0;
-  var m = 0;
-  for (var i = 0; i < array.length; i++) {
-    m += array[i][0];
-    y += array[i][0] * array[i][1][1];
-  }
-  sum_m = m;
-  sum_mx = x;
-  sum_my = y;
-  x = x / m;
-  y = y / m;
-  var array1 = [];
-  array1.push(x, y);
-  return array1;
-}
-
-do {
-  var m1 = math_tools.rand_int(1, 6);
-  var m2 = math.randomInt(1,6);
-  var m3 = math.randomInt(1,6);
-  var x_array=diff_random(3,1,9);
-  var y_array=diff_random(3,1,9);
-  var array = [ //格式是：质量，坐标（x，y）。也就是[m,[x,y]]
-    [m1, [x_array[0], y_array[0]]],
-    [m2, [x_array[1], y_array[1]]],
-	[m3, [x_array[2], y_array[2]]],
-  ];
-  var coordinate = centre_cal(array);
-}
-while (coordinate[0] % 1 !== 0 || coordinate[1] % 1 !== 0);
-console.log(coordinate);
-self.text = function () {
-  return `<div id="graph_1"></div>A system of three particles consists of  equal mass are situated ar the points
-
-~(` + array[0][1][0] + ` , ` + array[0][1][1] + `), (` + array[1][1][0] + ` , ` + array[1][1][1] + `),~ and~(` + array[2][1][0] + ` , ` + array[2][1][1] + `)~respectively.
-
-Find the coordinates of the centre of mass of the particles.
-
-		~\\bigl([answer style='inline'] , [answer style='inline']\\bigr)~`;
-};
-
-
-coordinate_range = [-3, 12, -3, 12];//调节坐标轴的大小比例
+var array_coordinate=[['g1'],[-2,8],[-2,9]];
+	self.text = function() {
+		return `What is ?<div id='g1'></div>
+		[answer]`;
+	};
 self.post_load = function () {
-  var g1 = new graphic({'input_element': "graph_1",  'low_x': coordinate_range[0],    'high_x': coordinate_range[1] , 
-						'low_y': coordinate_range[2],    'high_y': coordinate_range[3]      });
-  
-  g1.add_element({'type': 'grid',    'x_label': 'x Real',    'y_label': 'y Imaginary'  });
-  
-  g1.add_element({'type': 'dot',    'pos': [array[0][1][0],array[0][1][1]] });
-  
-  g1.add_element({'type': 'label', 'pos': [array[0][1][0]-0.5,array[0][1][1]+0.5], 'text': 'A'});
-  
-  g1.add_element({'type': 'dot',    'pos': [array[1][1][0],array[1][1][1]] });
-  
-  g1.add_element({'type': 'label', 'pos': [array[1][1][0],array[1][1][1]+0.5], 'text': 'B'});
-  
-  g1.add_element({'type': 'dot',    'pos': [array[2][1][0],array[2][1][1]] });
-  
-  g1.add_element({'type': 'label', 'pos': [array[2][1][0]-0.5,array[2][1][1]+0.5], 'text': 'C'});
-  
-  //g1.add_element({'type': 'dot',    'pos': [coordinate[0],coordinate[1]] });//答案坐标点
-  
-  g1.draw();
+  math_graphic.graphic(array_coordinate);
+  math_graphic.grid();
+  math_graphic.label();
+  lines_make(array_lines);
+  math_graphic.draw();
 };
+self.step_js = function(wrong_answer, step){
 
-
-self.step = function (wrong_answer, step) {
-  var steps = [
-	`Assuming that the mass is ~m~`,
-    `The sum of the masses ~\\displaystyle\\sum m^{}_{i}=4m~`,
-	
-	`~m~`+math_visuals.matrix.tex([[array[0][1][0]],[array[0][1][1]]])+`~+m~`+math_visuals.matrix.tex([[array[1][1][0]],[array[1][1][1]]])+
-	`~+m~`+math_visuals.matrix.tex([[array[2][1][0]],[array[2][1][1]]])+`~=4m~`+math_visuals.matrix.tex([[`\\bar x`],[`\\bar y`]]),
-	
-	`~\\therefore\\,~`+math_visuals.matrix.tex([[(array[0][1][0]+`+`+array[1][1][0]+`+`+array[2][1][0])],[(array[0][1][1]+`+`+array[1][1][1]+`+`+array[2][1][1])]])+`~=4~`+math_visuals.matrix.tex([[`\\bar x`],[`\\bar y`]]),
-
-    `It's easy to find the `+math_visuals.matrix.tex([[`\\bar x`],[`\\bar y`]])+`~=~`+math_visuals.matrix.tex([[coordinate[0]],[coordinate[1]]]),
-
-    `The centre of mass is therefore ~(` + coordinate[0] + `,` + coordinate[1] + `)~`
-  ];
-  return steps[step];
 };
+	self.step = function(wrong_answer, step){
+		var steps = [
+			"First do this", 
+			"Then do that", 
+		];
+		return steps[step];
+	};
 
-self.misconception = function (answer) {
-  return 0; // Default
-};
+	self.misconception = function(answer){
+		return 0; // Default
+	};
 
-self.correct_answers = function () {
-  return coordinate;
-};
+	self.correct_answers = function() {
+		return [];
+	};
