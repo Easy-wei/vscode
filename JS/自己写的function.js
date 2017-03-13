@@ -224,9 +224,7 @@ function math_ngcd(a, b, c) {
     return arry[len - 1];
 }
 
-function test(n) {
-    return (n == 1) ? `` : (n == -1) ? `-` : n;
-}
+
 
 math_quadratic = {
     str: function (a, b, c) {
@@ -731,6 +729,25 @@ math_visuals.coordinate={
 
 self.post_load = function () {};
 self.step_js = function(wrong_answer, step){};
+
+
+num_form={
+    str: function (x){
+        return (x == 1) ? `` : (x == -1) ? `-` : x;
+    },
+    signed: function (x){
+        return (x == 1) ? `+` : (x == -1) ? `-` : x.signed();
+    },
+    tex:function(x){
+        return tex(``+str(x));
+    },
+};
+
+function test(n) {
+    return (n == 1) ? `` : (n == -1) ? `-` : n;
+}
+
+
 
     <<
     <<
