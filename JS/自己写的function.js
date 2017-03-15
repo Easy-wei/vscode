@@ -608,7 +608,18 @@ function polynomial() {
     if (array[0] == 1) {
         array[0] = ``;
     }
-    for (var i = 0; i < array.length - 1; i++) {
+    if (array[0] == 0) {
+        array.splice(0, 1);
+        i-=1;
+        if (typeof (array[0])=='string'){
+            array.splice(0, 1);
+            i-=1;
+        }
+    }
+    if (array[0]==-1){
+        array[0]=`-`;
+    }
+    for (var i = 1; i < array.length - 1; i++) {
         if (typeof (array[i]) == 'number') {
             switch (array[i]) {
                 case 1:
@@ -743,9 +754,7 @@ num_form={
     },
 };
 
-function test(n) {
-    return (n == 1) ? `` : (n == -1) ? `-` : n;
-}
+
 
 
 
