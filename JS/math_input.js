@@ -31,8 +31,10 @@ math_input = function (vars){
 		"equation_cx": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["c_var", "x_var", "left", "right", "del"]],
 		"equation_a": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "left", "right", "del"]],
 		"equation_ab": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "b_var", "left", "right", "del"]],
+		"equation_abxy": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "b_var", "x_var", "y_var", "left", "right", "del"]],
 		"equation_AB": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["A_var", "B_var", "left", "right", "del"]],
 		"equation_ex": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["e_var", "x_var", "left", "right", "del"]],
+		"equation_exk": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["e_var", "x_var", "k_var", "left", "right", "del"]],
 
 		"simple": 	[["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "pi", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["left", "right", "del"]],
 		"num_int": 	[["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], ["left", "right", "del"]],
@@ -124,7 +126,7 @@ math_input = function (vars){
 		"increase": {"visual": "+", "visual_katex": true, "hotkey": "", "value": function(element, instance){instance.change_selected(1);}, "type": 3},
 	};
 	
-	var possible_variables = ["A", "B", "C", "a", "b", "c", "e", "x", "y", "z", "n", "θ", "i", "j"];
+	var possible_variables = ["A", "B", "C", "a", "b", "c", "e", "x", "y", "z", "n", "θ", "i", "j", "k"];
 	
 	for(key in possible_variables){
 		possible_math_inputs[possible_variables[key]+"_var"] = {"visual": possible_variables[key], "visual_katex": true, "hotkey": possible_variables[key], "value": ["variable", parseInt(key), true], "type": 4, "move_cur": 1};
