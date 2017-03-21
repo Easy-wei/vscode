@@ -25,21 +25,24 @@ x1 = p[Math.floor(Math.random() * p.length)];
 //冒泡算法
 //已经有了，可以用arr.sort()
 function bubble_sort(arry) {
-    len = arry.length;
-    k = len;
+    var len = arry.length;
+    var a = 0;
+    var k1 = 0;
+    var k2 = 0;
+    var k = len;
     for (var i = 0; i < len; i++) {
-        var p = 1;
+        k2 = 0;
         for (var j = 1; j < k; j++) {
             if (arry[j - 1] > arry[j]) {
-                var a = 0;
                 a = arry[j];
                 arry[j] = arry[j - 1];
                 arry[j - 1] = a;
-                k = j;
-                p = 0;
+                k2 = 1;
+                k1 = j;
             }
         }
-        if (p == 1) {
+        k = k1;
+        if (k2 === 0) {
             break;
         }
     }
@@ -538,7 +541,7 @@ function prime(num) {
     var arr = [2];
     for (var i = 3; i <= num; i++) {
         var k = 0;
-        for (var j = 0; arr[j] < Math.pow(num, 0.5); j++) {
+        for (var j = 0; arr[j] < Math.ceil(Math.pow(num, 0.5)+1; j++) {
             if (i % arr[j] === 0) {
                 k = 1;
                 break;

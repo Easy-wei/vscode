@@ -1,55 +1,24 @@
-function polynomial() {
-    var array = Array.prototype.slice.call(arguments);
-    var array_to_str;
-    if (array[0] == 1) {
-        array[0] = ``;
-    }
-    if (array[0] == 0) {
-        array.splice(0, 1);
-        i-=1;
-        if (typeof (array[0])=='string'){
-            array.splice(0, 1);
-            i-=1;
-        }
-    }
-    if (array[0]==-1){
-        array[0]=`-`;
-    }
-    for (var i = 1; i < array.length - 1; i++) {
-        if (typeof (array[i]) == 'number') {
-            switch (array[i]) {
-                case 1:
-                    array[i] = `+`;
-                    break;
-                case -1:
-                    array[i] = `-`;
-                    break;
-                case 0:
-                    array[i] = ``;
-                    array[i + 1] = ``;
-                    break;
-                default:
-                    array[i] = array[i].signed();
+function bubble_sort(arry) {
+    var len = arry.length;
+    var a = 0;
+    var k1 = 0;
+    var k2 = 0;
+    var k = len;
+    for (var i = 0; i < len; i++) {
+        k2 = 0;
+        for (var j = 1; j < k; j++) {
+            if (arry[j - 1] > arry[j]) {
+                a = arry[j];
+                arry[j] = arry[j - 1];
+                arry[j - 1] = a;
+                k2 = 1;
+                k1 = j;
             }
         }
+        k = k1;
+        if (k2 === 0) {
+            break;
+        }
     }
-    if (array[array.length - 1] === 0) {
-        array[array.length - 1] = ``;
-    }
-    if (typeof (array[array.length - 1]) == 'number') {
-        array[array.length - 1] = array[array.length - 1].signed();
-    }
-    array_to_str = array.join(``);
-    return array_to_str;
+    return arry;
 }
-
-exponentials = {
-    index:function(x='x'){
-        return polynomial(x='x');
-    },
-    str: function(a='e',x='x'){
-        return a+`^`+index(x);
-    },
-}
-
-
