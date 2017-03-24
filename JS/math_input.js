@@ -21,6 +21,7 @@ math_input = function (vars){
 	keyboard_presets = {
 		"full": 	[["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "pi", "e", "i", "+", "-", "*", "/"], ["^", "frac", "root", "cos", "sin", "tan", "()"], ["left", "right", "del"]],
 		"full_xy": 	[["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "pi", "e", "i", "+", "-", "*", "/"], ["^", "frac", "root", "cos", "sin", "tan", "()"], ["x_var", "y_var", "left", "right", "del"]],
+		"full_xyk": 	[["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "pi", "e", "i", "+", "-", "*", "/"], ["^", "frac", "root", "cos", "sin", "tan", "()"], ["x_var", "y_var", "k_var", "left", "right", "del"]],
 		"polynomial_n": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["n_var", "left", "right", "del"]],
 		"polynomial_x": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["x_var", "left", "right", "del"]],
 		"polynomial_xy": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["x_var", "y_var", "left", "right", "del"]],
@@ -32,9 +33,14 @@ math_input = function (vars){
 		"equation_a": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "left", "right", "del"]],
 		"equation_ab": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "b_var", "left", "right", "del"]],
 		"equation_abxy": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "b_var", "x_var", "y_var", "left", "right", "del"]],
+		"equation_abcxy": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "b_var", "c_var", "x_var", "y_var", "left", "right", "del"]],
 		"equation_AB": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["A_var", "B_var", "left", "right", "del"]],
 		"equation_ex": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["e_var", "x_var", "left", "right", "del"]],
 		"equation_exk": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["e_var", "x_var", "k_var", "left", "right", "del"]],
+		"equation_xyk": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["x_var", "y_var", "k_var", "left", "right", "del"]],
+
+		"equation_ln_x": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "ln", "root", "()"], ["x_var", "left", "right", "del"]],
+		"equation_log_x": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "log", "root", "()"], ["x_var", "left", "right", "del"]],
 
 		"simple": 	[["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "pi", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["left", "right", "del"]],
 		"num_int": 	[["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], ["left", "right", "del"]],
@@ -80,7 +86,7 @@ math_input = function (vars){
 		self.data = vars.value;
 	}
 
-	var reserved_values = ["main", "plus", "minus", "multi", "divide", "comma", "pow", "frac", "root", "cos", "sin", "tan", "paren", "inv", "variable", "number"];
+	var reserved_values = ["main", "plus", "minus", "multi", "divide", "comma", "pow", "frac", "root", "ln", "log", "cos", "sin", "tan", "paren", "inv", "variable", "number"];
 	var operators = ["plus", "minus", "multi", "divide"];
 	
 	// "Math types": 0 = string type, 1 = string and operators, 2 = functions
@@ -114,6 +120,8 @@ math_input = function (vars){
 		"^": {"visual": "a^b", "visual_katex": true, "hotkey": "^", "value": ["pow", false, "comma", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": true},
 		"frac": {"visual": "\\frac{a}{b}", "visual_katex": true, "hotkey": "f", "value": ["frac", false, "comma", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": true},
 		"root": {"visual": "\\sqrt[2]{a}", "visual_katex": true, "hotkey": "r", "value": ["root", ["number", "2", true], "comma", false, true], "type": 2, "with_selected": 3, "move_cur": 3, "eat_selected": false},
+		"ln": {"visual": "\\ln{(a)}", "visual_katex": true, "hotkey": "", "value": ["ln", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": false},
+		"log": {"visual": "\\log_{a}{b}", "visual_katex": true, "hotkey": "l", "value": ["log", ["number", "10", true], "comma", false, true], "type": 2, "with_selected": 3, "move_cur": 3, "eat_selected": false},
 		"cos": {"visual": "\\cos{(a)}", "visual_katex": true, "hotkey": "", "value": ["cos", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": false},
 		"sin": {"visual": "\\sin{(a)}", "visual_katex": true, "hotkey": "", "value": ["sin", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": false},
 		"tan": {"visual": "\\tan{(a)}", "visual_katex": true, "hotkey": "t", "value": ["tan", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": false},
@@ -180,6 +188,8 @@ math_input = function (vars){
 			"pow": {"pre": " pow(", "comma": " , ", "post": ")"},
 			"frac": {"pre": "((", "comma": ")/(", "post": "))"},
 			"root": {"pre": " root[", "comma": ", ", "post": "]"},
+			"ln": {"pre": " log(", "comma": "", "post": ",e)"},
+			"log": {"pre": "log((", "comma": "),(", "post": "))"},
 			"cos": {"pre": " cos(", "comma": "", "post": ")"},
 			"sin": {"pre": " sin(", "comma": "", "post": ")"},
 			"tan": {"pre": " tan(", "comma": "", "post": ")"},
@@ -396,6 +406,8 @@ math_input = function (vars){
 				{"con": function(i){return block_peice === "pow"}, "ins": function(i){return "{";}, "comma": "}^{", "end": function(i){return "}"}},
 				{"con": function(i){return block_peice === "frac"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\frac{";}, "comma": "}{", "end": function(i){return "}\\text{F"+(i-1)+"}"}},
 				{"con": function(i){return block_peice === "root"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\sqrt[";}, "comma": "]{", "end": function(i){return "}\\text{F"+(i-1)+"}"}},
+				{"con": function(i){return block_peice === "ln"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\ln{(";}, "end": function(i){return ")}\\text{F"+(i-1)+"}"}},
+				{"con": function(i){return block_peice === "log"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\log_{";}, "comma": "}{", "end": function(i){return "}\\text{F"+(i-1)+"}"}},
 				{"con": function(i){return block_peice === "cos"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\cos{(";}, "end": function(i){return ")}\\text{F"+(i-1)+"}"}},
 				{"con": function(i){return block_peice === "sin"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\sin{(";}, "end": function(i){return ")}\\text{F"+(i-1)+"}"}},
 				{"con": function(i){return block_peice === "tan"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\tan{(";}, "end": function(i){return ")}\\text{F"+(i-1)+"}"}},
