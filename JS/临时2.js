@@ -1,4 +1,4 @@
-num_form = {
+math_visuals['num_form'] = {
 	head: function (x) {
 		return (x == 1) ? `` : (x == -1) ? `-` : x;
 	},
