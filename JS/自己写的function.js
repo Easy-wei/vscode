@@ -760,7 +760,28 @@ num_form = {
 	},
 };
 
+var vec1 = [4,1];
+var vec2 = [math_tools.rand_int(-4, 4, [0]), math_tools.rand_int(-5, 5, [0])];
 
+self.text = function() {
+  return `Add the two vectors <div id="graph" style="margin: auto;"></div>`;
+};
+
+self.post_load = function(){
+  var end = function(time, vars){
+	return vars.end;
+  };
+  var g = new graphic({'input_element': "graph"});
+  g.add_element({'type': 'grid'});
+  g.add_element({'type': 'line_head_arrow', 'end': vec1, 'color': 'green'});
+  g.add_element({'type': 'line_head_arrow', 'end': vec2, 'color': 'red'});
+  g.add_element({'type': 'line_head_arrow', 'end': end});
+  end_point = g.add_element({'type': 'movable_point', 'pos': [2,2], 'name': 'end', 'snap': 1});//可移动式的光圈部分，和vars.end共同组成了移动矢量向量
+};//snap控制每次选择变化最小量比如，1到2或者1到3。
+
+self.check_answer = function(){
+  return (end_point.value[0] === vec1[0] + vec2[0] && end_point.value[1] === vec1[1] + vec2[1]);
+};
 
 
     <<

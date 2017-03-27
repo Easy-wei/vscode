@@ -147,7 +147,7 @@ graphic = function (vars){
 		}
 	}
 
-	var basic_rounded_box = function(vars){
+	var basic_rounded_rect = function(vars){
 		return function(time){
 			var pos = (typeof vars['pos'] === "function" ? vars['pos'](time) : vars['pos']);
 			var w = vars['width'] * vmin;
@@ -334,11 +334,26 @@ graphic = function (vars){
 		if(vars['type'] === "dot"){
 			self.shapes.push(basic_arc({'pos': vars['pos'], 'radius': 0.15, 'fill_color': vars['fill_color'], 'stroke': false}));
 		}
-				
+		
+		if(vars['type'] === "rounded_rect"){
+			self.shapes.push(basic_rounded_rect(vars));
+		}
+		
 		if(vars['type'] === "button_binary"){
 			self.pos = vars['pos'];
 			self.value = !(typeof vars['state'] === "undefined" ? true : vars['state']);
-			self.name = vars['name'];
+
+			if(typeof vars['name'] === "undefined"){
+				var i = 1;
+				while("button_"+i in self.parent.interactive_elements){
+					i += 1;
+				}
+				self.name = "button_"+i;
+			}else{
+				self.name = vars['name'];
+			}
+
+
 			self.on_change = vars['on_change'];
 			
 			if(typeof self.parent.interactive_elements[self.name] !== "undefined"){
@@ -353,11 +368,11 @@ graphic = function (vars){
 				self.shapes = [];
 
 				if(self.value){
-					self.shapes.push(basic_rounded_box({'pos': [self.pos[0]-0.1, self.pos[1]-0.1], 'width': 2.2, 'height': 1.2, 'radius': 0.6, "fill_color": "#4bd865", "stroke": false}));
+					self.shapes.push(basic_rounded_rect({'pos': [self.pos[0]-0.1, self.pos[1]-0.1], 'width': 2.2, 'height': 1.2, 'radius': 0.6, "fill_color": "#4bd865", "stroke": false}));
 					self.shapes.push(basic_arc({'pos': [self.pos[0]+1.5, self.pos[1]+0.5], 'radius': 0.5, 'fill_color': "#ffffff", 'stroke': false}));
 					self.hitbox = [self.pos[0]+1.5, self.pos[1]+0.5];
 				}else{
-					self.shapes.push(basic_rounded_box({'pos': [self.pos[0]-0.1, self.pos[1]-0.1], 'width': 2.2, 'height': 1.2, 'radius': 0.6, "fill_color": "#d8d9db", "stroke": false}));
+					self.shapes.push(basic_rounded_rect({'pos': [self.pos[0]-0.1, self.pos[1]-0.1], 'width': 2.2, 'height': 1.2, 'radius': 0.6, "fill_color": "#d8d9db", "stroke": false}));
 					self.shapes.push(basic_arc({'pos': [self.pos[0]+0.5, self.pos[1]+0.5], 'radius': 0.5, 'fill_color': "#ffffff", 'stroke': false}));
 					self.hitbox = [self.pos[0]+0.5, self.pos[1]+0.5];
 				}
@@ -380,7 +395,17 @@ graphic = function (vars){
 				var configs = 1/self.snap * self.size;
 				self.value = Math.round(self.raw_value * configs) / configs;
 			}
-			self.name = vars['name'];
+
+			if(typeof vars['name'] === "undefined"){
+				var i = 1;
+				while("slider_"+i in self.parent.interactive_elements){
+					i += 1;
+				}
+				self.name = "slider_"+i;
+			}else{
+				self.name = vars['name'];
+			}
+
 			self.on_change = vars['on_change'];
 			
 			self.parent.interactive_elements[self.name] = self;
@@ -404,9 +429,9 @@ graphic = function (vars){
 				
 				self.shapes = [];
 
-				self.shapes.push(basic_rounded_box({'pos': [self.pos[0]+0.35, self.pos[1]], 'width': 0.3, 'height': self.size * self.value, 'radius': 0.1, "fill_color": "#4bd865", "stroke_color": "#cccccc"}));
-				self.shapes.push(basic_rounded_box({'pos': [self.pos[0]+0.35, self.pos[1] + self.size * self.value], 'width': 0.3, 'height': self.size * (1 - self.value), 'radius': 0.1, "fill_color": "#ffffff", "stroke_color": "#cccccc"}));
-				self.shapes.push(basic_rounded_box({'pos': [self.pos[0]+0.2, self.pos[1] + self.size * self.value -0.4], 'width': 0.6, 'height': 0.8, 'radius': 0.1, "fill_color": "#ffffff", "stroke_color": "#cccccc"}));
+				self.shapes.push(basic_rounded_rect({'pos': [self.pos[0]+0.35, self.pos[1]], 'width': 0.3, 'height': self.size * self.value, 'radius': 0.1, "fill_color": "#4bd865", "stroke_color": "#cccccc"}));
+				self.shapes.push(basic_rounded_rect({'pos': [self.pos[0]+0.35, self.pos[1] + self.size * self.value], 'width': 0.3, 'height': self.size * (1 - self.value), 'radius': 0.1, "fill_color": "#ffffff", "stroke_color": "#cccccc"}));
+				self.shapes.push(basic_rounded_rect({'pos': [self.pos[0]+0.2, self.pos[1] + self.size * self.value -0.4], 'width': 0.6, 'height': 0.8, 'radius': 0.1, "fill_color": "#ffffff", "stroke_color": "#cccccc"}));
 
 				self.hitbox = [self.pos[0], self.pos[1] + self.size * self.value];
 			}
@@ -424,7 +449,16 @@ graphic = function (vars){
 				var configs = 1/self.snap * self.size;
 				self.value = Math.round(self.raw_value * configs) / configs;
 			}
-			self.name = vars['name'];
+			
+			if(typeof vars['name'] === "undefined"){
+				var i = 1;
+				while("slider_"+i in self.parent.interactive_elements){
+					i += 1;
+				}
+				self.name = "slider_"+i;
+			}else{
+				self.name = vars['name'];
+			}
 			self.on_change = vars['on_change'];
 			
 			self.parent.interactive_elements[self.name] = self;
@@ -448,9 +482,9 @@ graphic = function (vars){
 				
 				self.shapes = [];
 
-				self.shapes.push(basic_rounded_box({'pos': [self.pos[0], self.pos[1]+0.35], 'width': self.size * self.value, 'height': 0.3, 'radius': 0.1, "fill_color": "#4bd865", "stroke_color": "#cccccc"}));
-				self.shapes.push(basic_rounded_box({'pos': [self.pos[0] + self.size * self.value, self.pos[1]+0.35], 'width': self.size * (1 - self.value), 'height': 0.3, 'radius': 0.1, "fill_color": "#ffffff", "stroke_color": "#cccccc"}));
-				self.shapes.push(basic_rounded_box({'pos': [self.pos[0] + self.size * self.value -0.4, self.pos[1]+0.2], 'width': 0.8, 'height': 0.6, 'radius': 0.1, "fill_color": "#ffffff", "stroke_color": "#cccccc"}));
+				self.shapes.push(basic_rounded_rect({'pos': [self.pos[0], self.pos[1]+0.35], 'width': self.size * self.value, 'height': 0.3, 'radius': 0.1, "fill_color": "#4bd865", "stroke_color": "#cccccc"}));
+				self.shapes.push(basic_rounded_rect({'pos': [self.pos[0] + self.size * self.value, self.pos[1]+0.35], 'width': self.size * (1 - self.value), 'height': 0.3, 'radius': 0.1, "fill_color": "#ffffff", "stroke_color": "#cccccc"}));
+				self.shapes.push(basic_rounded_rect({'pos': [self.pos[0] + self.size * self.value -0.4, self.pos[1]+0.2], 'width': 0.8, 'height': 0.6, 'radius': 0.1, "fill_color": "#ffffff", "stroke_color": "#cccccc"}));
 				self.hitbox = [self.pos[0] + self.size * self.value, self.pos[1] + 0.5];
 
 			}
@@ -467,9 +501,17 @@ graphic = function (vars){
 				self.value = [Math.round(self.raw_value[0] * configs) / configs, Math.round(self.raw_value[1] * configs) / configs];
 			}
 			self.pos = self.value;
+			
+			if(typeof vars['name'] === "undefined"){
+				var i = 1;
+				while("point_"+i in self.parent.interactive_elements){
+					i += 1;
+				}
+				self.name = "point_"+i;
+			}else{
+				self.name = vars['name'];
+			}
 
-
-			self.name = vars['name'];
 			self.on_change = vars['on_change'];
 
 			self.parent.interactive_elements[self.name] = self;
@@ -550,15 +592,19 @@ graphic = function (vars){
 			self.fill = (typeof vars['fill'] === "undefined" ? false : vars['fill']);
 
 			var func = function(time){
-			  _graphic.ctx.beginPath();
+				_graphic.ctx.beginPath();
 				_graphic.ctx.strokeStyle = self.color;
-				var res = 3;
+				var res = 5;
 				var i = self.parent.low_x * res;
 				_graphic.ctx.moveTo(-99999, 99999);
 				
+				var element_variables = {};
+				for (key in self.parent.interactive_elements){
+					element_variables[key] = self.parent.interactive_elements[key].value;
+				}
 				while(i <= self.parent.high_x * res){
 					var x = i / res;
-					var y = vars['function'](x, time);
+					var y = vars['function'](x, time, element_variables);
 					_graphic.ctx.lineTo((x - _graphic.low_x) *vmin, (_graphic.height - y + _graphic.low_y) *vmin);
 					i += 1;
 				}
@@ -571,7 +617,7 @@ graphic = function (vars){
 				}
 			}
 			self.shapes.push(func);
-		}				
+		}
 	}
 
 	// Active functions
