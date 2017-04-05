@@ -1,43 +1,29 @@
-var v1 = math_tools.rand_int(1, 9);
-var v2 = math_tools.rand_int(-8, 9,[0]);
-var v3 = math_tools.rand_int(1, 9);
-var v4 = math_tools.rand_int(-8, 9,[0]);
-var v5 = math_tools.rand_int(1, 9);
-
-
-var f1=math_visuals.num_form.head(v2)+`x`;
-var f_1=math_visuals.num_form.head(v2);
-var g1=`e^{`+math_visuals.num_form.index(v1)+`x}`;
-var g_1=math_visuals.num_form.head(v1)+`e^{`+math_visuals.num_form.index(v1)+`x}`;
-
-self.text = function() {
-	return `Differentiate the following functions with respect to ~x~.
-~\\bold{a)}\\,\\,`+f1+g1+`~
-	[answer keyboard='equation_ex']`;
-};
-
-self.post_load = function(){
-  
-};
-
-self.step_js = function(wrong_answer, step){
-};
-
-self.step = function(wrong_answer, step){
-	var steps = [
-		`~y=f(x)g(x)~`,
-	  `~f(x)=`+f1+`\\,\\,\\,g(x)=`+g1+`~`,
-	  `~\\therefore \\dfrac{dy}{dx}=f'(x)g(x)+f(x)g'(x)~`,
-	  `~\\therefore \\,\\,=`+f_1+g1+`+(`+f1+g_1+`)~`,
-	  `~\\therefore \\,\\,=`+math_visuals.num_form.head(v2)+`(x+1)`+`e^{`+math_visuals.num_form.index(v1)+`x}~`,
-	];
-	return steps[step];
-};
-
-self.misconception = function(answer){
-	return 0; // Default
-};
-var ans=new expression(v2+`*({x}+1)*pow({e},`+v1+`*{x})`);
-self.correct_answers = function() {
-	return ans;
-};
+function polynomial() {
+	var array = Array.prototype.slice.call(arguments);
+	var array_to_str;
+	for (var j = 0; j < array.length - 1; j++) {
+		if (array[0] === 0) {
+			array.splice(0, 1);
+			if (typeof (array[0]) == 'string') {
+				array.splice(0, 1);
+			}
+		} else break;
+	}
+	array[0] = ((typeof (array[0]) == 'string') ? array[0] : math_visuals.num_form.head(array[0]));
+	for (var i = 1; i < array.length; i++) {
+		if (typeof (array[i]) == 'number') {
+			if (typeof (array[i + 1]) == `string`) {
+				if (array[i] === 0) {
+					array[i] = ``;
+					if (typeof (array[i + 1]) == 'string') {
+						array[i + 1] = ``;
+					}
+				} else {
+					array[i] = math_visuals.num_form.body(array[i]);
+				}
+			} else array[i] = math_visuals.num_form.end(array[i]);
+		}
+	}
+	array_to_str = array.join(``);
+	return array_to_str;
+}
