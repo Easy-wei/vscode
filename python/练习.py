@@ -45,7 +45,7 @@ def demo(list,k):
 a=[i for i in range(1,21)]
 print(demo(a,5))
 
-
+斐波那契
 def demo(t):
     array=[]
     a=1
@@ -53,9 +53,24 @@ def demo(t):
     while b<t:
         a=a+b
         array.append(a)
-        a,b=b,a
+        a,b=b,a+b#右侧ab两值都是比较old的那种，不会和左侧新值产生循环赋值问题（系统内部产生第三个变量作为寄存单位，如下例所示）
     return array
 
+print (demo(130))
+
+
+def demo(t):
+    array=[]
+    a=1
+    b=1#这种算法默认b每轮都比a大的那种。
+    c=0#c作为寄存中转单位
+    while b<t:
+        c=b
+        b=a+b
+        a=c#a赋予上一轮b的值
+        array.append(b)
+               
+    return array
 
 print (demo(130))
 
@@ -128,5 +143,33 @@ def demo(x):
 
 print(demo(100))
 
+
+#找到最大公约数和最小公倍数
+import math
+
+def demo(x,y):
+    a=math.gcd(x,y)
+    b=int(x*y/a)
+    return [a,b]
+    
+print (demo(6,8))
+
+
+import random
+
+def demo(array,x):
+    array1=[i for i in array if i<x]
+    array2=[j for j in array if j >x]
+    array1.append(x)
+    for j in array2:
+        array1.append(j)
+    return array1
+
+lis=list(range(1,10))
+random.shuffle(lis)
+print (lis)
+print (demo(lis,6))
 """
+
+
 
