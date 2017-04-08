@@ -76,4 +76,56 @@ print (lis)
 
 print (demo(lis))
 
+#杨辉三角
+
+def demo(t):
+    array=[[1],[1,1]]
+    for i in range (2,t):
+        array1=[]
+        for j in range(0,i+1):
+            if j==0:
+                array1.append(1)
+            elif j==(i):
+                array1.append(1)
+            else:
+                array1.append(array[i-1][j-1]+array[i-1][j])
+        array.append(array1)
+    return array
+
+lis=demo(10)
+for i in range (len(lis)):
+    print (lis[i])
+
 """
+
+#将任何正偶数输出为两个素数和形式
+
+def prime(x):
+    a=[2,3]
+    for i in range(2,x+1):
+        k=0
+        for j in a:
+            if i%j==0:
+                k=1
+                break
+        if k==1:
+            continue
+        else:
+            a.append(i)
+    return a
+
+def demo(x):
+    a=[]
+    print('d',x)
+    if x%2!=0:
+        print ('the input is not an even')
+    else:
+        for i in prime(int(x/2)):
+            if (x-i) in prime(x):
+                a.append( zip (i,x-i))
+            else:
+                continue
+    return a
+
+print(demo(20))
+
