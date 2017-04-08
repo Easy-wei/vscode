@@ -169,7 +169,26 @@ lis=list(range(1,10))
 random.shuffle(lis)
 print (lis)
 print (demo(lis,6))
+
+def demo(x):
+    a,b,c,d=0,0,0,0
+    for i in x:
+        if 'a'<=i<='z':
+            a=a+1
+        elif 'A'<=i<='Z':
+            b=b+1
+        elif 0<=int(i)<=9:
+            c=c+1
+        else :
+            d=d+1
+    return (a,b,c,d)
+    
+print (demo('dafdsfqwefewfreqgqiojfewJ192409439857321985JSjKJKDJSLAJLojsajsJSJ'))
+
+
 """
+from functools import reduce
+def demo(*x):
+    return(max(x),reduce(lambda c,d:c+d,x))
 
-
-
+print (demo(1,2,3,5,6,3,32,56,67,34,5,876,654))
