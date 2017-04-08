@@ -96,7 +96,7 @@ lis=demo(10)
 for i in range (len(lis)):
     print (lis[i])
 
-"""
+
 
 #将任何正偶数输出为两个素数和形式
 
@@ -116,16 +116,17 @@ def prime(x):
 
 def demo(x):
     a=[]
-    print('d',x)
     if x%2!=0:
         print ('the input is not an even')
     else:
         for i in prime(int(x/2)):
             if (x-i) in prime(x):
-                a.append( zip (i,x-i))
+                a.append((i,x-i))
             else:
                 continue
     return a
 
-print(demo(20))
+print(demo(100))
+
+"""
 
