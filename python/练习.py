@@ -29,7 +29,51 @@ def demo(a):
     return result
 print (demo('aDaaaadsdfdfdsfasdFADSFASDFDSfdadsfafsDFADd '))
 
-"""
+
 
 def demo(list,k):
-    list
+    if k>len(list):
+        print ('k is over the lenght of list')
+    x=list[:k]
+    x.reverse()
+    y=list[k:]
+    y.reverse()
+    r= x+y
+    r.reverse()
+    return r
+
+a=[i for i in range(1,21)]
+print(demo(a,5))
+
+
+def demo(t):
+    array=[]
+    a=1
+    b=1
+    while b<t:
+        a=a+b
+        array.append(a)
+        a,b=b,a
+    return array
+
+
+print (demo(130))
+
+
+import random
+
+def demo(lis):
+    a=min(lis)
+    for i in range (len(lis)-1):
+        if lis[i]==a:
+            b=i
+            break
+    return (a,b)
+
+lis=[random.randint(1,20) for i in range(20)]
+
+print (lis)
+
+print (demo(lis))
+
+"""

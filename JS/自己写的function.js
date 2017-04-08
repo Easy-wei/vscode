@@ -25,21 +25,24 @@ x1 = p[Math.floor(Math.random() * p.length)];
 //冒泡算法
 //已经有了，可以用arr.sort()
 function bubble_sort(arry) {
-    len = arry.length;
-    k = len;
+    var len = arry.length;
+    var a = 0;
+    var k1 = 0;
+    var k2 = 0;
+    var k = len;
     for (var i = 0; i < len; i++) {
-        var p = 1;
+        k2 = 0;
         for (var j = 1; j < k; j++) {
             if (arry[j - 1] > arry[j]) {
-                var a = 0;
                 a = arry[j];
                 arry[j] = arry[j - 1];
                 arry[j - 1] = a;
-                k = j;
-                p = 0;
+                k2 = 1;
+                k1 = j;
             }
         }
-        if (p == 1) {
+        k = k1;
+        if (k2 === 0) {
             break;
         }
     }
@@ -224,9 +227,7 @@ function math_ngcd(a, b, c) {
     return arry[len - 1];
 }
 
-function test(n) {
-    return (n == 1) ? `` : (n == -1) ? `-` : n;
-}
+
 
 math_quadratic = {
     str: function (a, b, c) {
@@ -540,7 +541,7 @@ function prime(num) {
     var arr = [2];
     for (var i = 3; i <= num; i++) {
         var k = 0;
-        for (var j = 0; arr[j] < Math.pow(num, 0.5); j++) {
+        for (var j = 0; arr[j] < Math.ceil(Math.pow(num, 0.5)+1; j++) {
             if (i % arr[j] === 0) {
                 k = 1;
                 break;
@@ -610,7 +611,18 @@ function polynomial() {
     if (array[0] == 1) {
         array[0] = ``;
     }
-    for (var i = 0; i < array.length - 1; i++) {
+    if (array[0] == 0) {
+        array.splice(0, 1);
+        i-=1;
+        if (typeof (array[0])=='string'){
+            array.splice(0, 1);
+            i-=1;
+        }
+    }
+    if (array[0]==-1){
+        array[0]=`-`;
+    }
+    for (var i = 1; i < array.length - 1; i++) {
         if (typeof (array[i]) == 'number') {
             switch (array[i]) {
                 case 1:
@@ -731,6 +743,145 @@ math_visuals.coordinate={
 
 self.post_load = function () {};
 self.step_js = function(wrong_answer, step){};
+
+
+num_form = {
+	head: function (x) {
+		return (x == 1) ? `` : (x == -1) ? `-` : x;
+	},
+	body: function (x) {
+		return (x == 1) ? `+` : (x == -1) ? `-` : x.signed();
+	},
+	end: function (x) {
+		return (x === 0) ? `` : x.signed();
+	},
+	index: function (x) {
+		return (x == 1) ? `` : x;
+	},
+};
+
+var vec1 = [4,1];
+var vec2 = [math_tools.rand_int(-4, 4, [0]), math_tools.rand_int(-5, 5, [0])];
+
+self.text = function() {
+  return `Add the two vectors <div id="graph" style="margin: auto;"></div>`;
+};
+
+self.post_load = function(){
+  var end = function(time, vars){
+	return vars.end;
+  };
+  var g = new graphic({'input_element': "graph"});
+  g.add_element({'type': 'grid'});
+  g.add_element({'type': 'line_head_arrow', 'end': vec1, 'color': 'green'});
+  g.add_element({'type': 'line_head_arrow', 'end': vec2, 'color': 'red'});
+  g.add_element({'type': 'line_head_arrow', 'end': end});
+  end_point = g.add_element({'type': 'movable_point', 'pos': [2,2], 'name': 'end', 'snap': 1});//可移动式的光圈部分，和vars.end共同组成了移动矢量向量
+};//snap控制每次选择变化最小量比如，1到2或者1到3。
+
+self.check_answer = function(){
+  return (end_point.value[0] === vec1[0] + vec2[0] && end_point.value[1] === vec1[1] + vec2[1]);
+};
+
+
+function polynomial() {
+    var array = Array.prototype.slice.call(arguments);
+    var array_to_str;    
+    if (array[0] == 0) {
+        array.splice(0, 1);
+        i-=1;
+        if (typeof (array[0])=='string'){
+            array.splice(0, 1);
+        }
+    }//这部分有问题，哪里来的i，但是保留下来，因为下面写的还好，构思还行。
+    (typeof (array[0])=='string')? array[0] : array[0]=math_visuals.num_form.head(array[0]);
+
+    for (var i = 1; i < array.length - 1; i++) {
+        if (typeof (array[i]) == 'number') {
+            switch (array[i]) {
+                case 1:
+                    array[i] = `+`;
+                    break;
+                case -1:
+                    array[i] = `-`;
+                    break;
+                case 0:
+                    array[i] = ``;
+                    array[i + 1] = ``;
+                    break;
+                default:
+                    array[i] = array[i].signed();
+            }
+        }
+    }
+    if (array[array.length - 1] === 0) {
+        array[array.length - 1] = ``;
+    }
+    if (typeof (array[array.length - 1]) == 'number') {
+        array[array.length - 1] = array[array.length - 1].signed();
+    }
+    array_to_str = array.join(``);
+    return array_to_str;
+}
+
+function polynomial() {
+	var array = Array.prototype.slice.call(arguments);
+	var array_to_str;
+	for (var j = 0; j < array.length - 1; j++) {
+		if (array[0] === 0) {
+			array.splice(0, 1);
+			if (typeof (array[0]) == 'string') {
+				array.splice(0, 1);
+			}
+		} else break;
+	}
+	array[0] = ((typeof (array[0]) == 'string') ? array[0] : math_visuals.num_form.head(array[0]));
+	for (var i = 1; i < array.length; i++) {
+		if (typeof (array[i]) == 'number') {
+			if (typeof (array[i + 1]) == `string`) {
+				if (array[i] === 0) {
+					array[i] = ``;
+					if (typeof (array[i + 1]) == 'string') {
+						array[i + 1] = ``;
+					}
+				} else array[i] = math_visuals.num_form.body(array[i]);
+
+			} else array[i] = math_visuals.num_form.end(array[i]);
+		}
+	}
+	array_to_str = array.join(``);
+	return array_to_str;
+}
+
+math_visuals['polynomial'] = function{
+	var array = Array.prototype.slice.call(arguments);
+	var array_to_str;
+	for (var j = 0; j < array.length - 1; j++) {
+		if (array[0] === 0) {
+			array.splice(0, 1);
+			if (typeof (array[0]) == 'string') {
+				array.splice(0, 1);
+			}
+		} else break;
+	}
+	array[0] = ((typeof (array[0]) == 'string') ? array[0] : math_visuals.num_form.head(array[0]));
+	for (var i = 1; i < array.length; i++) {
+		if (typeof (array[i]) == 'number') {
+			if (typeof (array[i + 1]) == `string`) {
+				if (array[i] === 0) {
+					array[i] = ``;
+					if (typeof (array[i + 1]) == 'string') {
+						array[i + 1] = ``;
+					}
+				} else array[i] = math_visuals.num_form.body(array[i]);
+
+			} else array[i] = math_visuals.num_form.end(array[i]);
+		}
+	}
+	array_to_str = array.join(``);
+	return array_to_str;
+}
+
 
     <<
     <<
