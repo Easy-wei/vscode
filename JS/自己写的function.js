@@ -568,87 +568,6 @@ function prime(x) {
 }
 
 
-function polynomial() {
-    var array = Array.prototype.slice.call(arguments);
-    var array_to_str;
-    if (array[0] == 1) {
-        array[0] = ``;
-    }
-    for (var i = 0; i < array.length - 1; i++) {
-        if (typeof (array[i]) == 'number') {
-            switch (array[i]) {
-                case 1:
-                    array[i] = `+`;
-                    break;
-                case -1:
-                    array[i] = `-`;
-                    break;
-                case 0:
-                    array.splice(i, 1);
-                    array.splice(i, 1);
-                    i = i - 1; //因为删除了某两项，导致i要减一，然后break到循环，然后加1，继续验证。
-                    break;
-                default:
-                    array[i] = array[i].signed();
-            }
-        }
-    }
-    if (array[array.length - 1] === 0) {
-        array[array.length - 1] = ``
-    }
-    if (typeof (array[array.length - 1]) == 'number') {
-        array[array.length - 1] = array[array.length - 1].signed();
-    }
-    array_to_str = array.join(``);
-    return array_to_str;
-}
-
-//核心区域的那个删除蛮有风险的，所以更换了一个更有保险的措施如下
-
-function polynomial() {
-    var array = Array.prototype.slice.call(arguments);
-    var array_to_str;
-    if (array[0] == 1) {
-        array[0] = ``;
-    }
-    if (array[0] == 0) {
-        array.splice(0, 1);
-        i-=1;
-        if (typeof (array[0])=='string'){
-            array.splice(0, 1);
-            i-=1;
-        }
-    }
-    if (array[0]==-1){
-        array[0]=`-`;
-    }
-    for (var i = 1; i < array.length - 1; i++) {
-        if (typeof (array[i]) == 'number') {
-            switch (array[i]) {
-                case 1:
-                    array[i] = `+`;
-                    break;
-                case -1:
-                    array[i] = `-`;
-                    break;
-                case 0:
-                    array[i] = ``;
-                    array[i + 1] = ``;
-                    break;
-                default:
-                    array[i] = array[i].signed();
-            }
-        }
-    }
-    if (array[array.length - 1] === 0) {
-        array[array.length - 1] = ``;
-    }
-    if (typeof (array[array.length - 1]) == 'number') {
-        array[array.length - 1] = array[array.length - 1].signed();
-    }
-    array_to_str = array.join(``);
-    return array_to_str;
-}
 
 function diff_random(num, min = 1, max = 10) {
     var array = [];
@@ -853,7 +772,7 @@ function polynomial() {
 	return array_to_str;
 }
 
-math_visuals['polynomial'] = function{
+math_visuals['polynomial'] = function(){
 	var array = Array.prototype.slice.call(arguments);
 	var array_to_str;
 	for (var j = 0; j < array.length - 1; j++) {
