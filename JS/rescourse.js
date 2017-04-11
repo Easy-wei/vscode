@@ -253,6 +253,19 @@ math_tools["gcd"] = function(a, b) {
     return math_tools.gcd(b, a % b);
 };
 
+// Shirlys function
+math_tools['ngcd']=function(){
+	var arry = Array.prototype.slice.call(arguments);
+	var a=arry[0];
+	for (var  i=0;i<arry.length;i++){
+		if (arry[i]==1||arry[i]===0){
+			return 1;
+		}
+		a=math_tools.gcd(math.abs(arry[i]),a);
+	}
+	return a;
+};
+
 math_tools["points_to_equation"] = function(points){
 	var matrix_rows = [];
 	for (var key in points){
@@ -327,19 +340,6 @@ math_visuals['fraction'] = {
   },
 };
  
-
-math_tools['ngcd']=function(){
-  var arry = Array.prototype.slice.call(arguments);
-  var a=arry[0];
-  for (var  i=0;i<arry.length;i++){
-        if (arry[i]==1||arry[i]===0){
-          return 1;
-        }
-    a=math_tools.gcd(math.abs(arry[i]),a);
-  }
-  return a;
-};
-
 math_visuals.root = {
   process:function(n=` n`){
       var a=1; 
@@ -392,39 +392,41 @@ math_visuals.root = {
 };
 
 math_visuals["quadratic"] ={
-  test:function(n){
-    return (n==1)?``:(n==-1)?`-`:n;
-  },
-  str:function (a,b,c,x=`x`){//
-        var k=math.pow(b,2)-4*a*c;
-      if (k>0){ 
-            var k1=math_visuals.root.integer_part(k);
-              if (math.pow(k1,2)==k){
-                  return x+`^{}_1=\\,`+math_visuals.fraction.str((-b+k1),2*a)+
-                   `\\space\\space `+x+`^{}_2=\\,`+math_visuals.fraction.str((-b-k1),2*a);
-              }
-            var k2=math_visuals.root.sqrt_part(k);
-            var com=math_ngcd(b,k1,2*a);
-            b=b/com;
-            k1=k1/com;
-            var k3=math.abs(a*2/com);
-             return (a>0)?(k3==1)?x+`^{}_1=\\,`+(-b)+`+`+math_visuals.quadratic.test(k1)+k2+`\\space
+	test:function(n){
+		return (n==1)?``:(n==-1)?`-`:n;
+	},
 
-                         `+x+`^{}_2=\\,`+(-b)+`-`+math_visuals.quadratic.test(k1)+k2:
-                             x+`^{}_1=\\,\\dfrac{`+(-b)+`+`+math_visuals.quadratic.test(k1)+k2+`}{`+k3+`}\\space
-                         `+x+`^{}_2=\\,\\dfrac{`+(-b)+`-`+math_visuals.quadratic.test(k1)+k2+`}{`+k3+`}`:
-                        (k3==1)?x+`^{}_1=\\,`+(b)+`-`+math_visuals.quadratic.test(k1)+k2+`\\space
-                         `+x+`^{}_2=\\,`+(b)+`+`+math_visuals.quadratic.test(k1)+k2:
-                             x+`^{}_1=\\,-\\dfrac{`+(-b)+`+`+math_visuals.quadratic.test(k1)+k2+`}{`+k3+`}\\space
-                         `+x+`^{}_2=\\,\\dfrac{`+(b)+`+`+math_visuals.quadratic.test(k1)+k2+`}{`+k3+`}`;
-      }
-    else if (k===0){
-        return x+`^{}_1=\\,`+math_visuals.fraction.str(-b,2*a);
-    }
-  },
-  tex:function (a,b,c){
-    return tex(math_quadratic.str(a,b,c));
-  },
+	str:function (a,b,c,x=`x`){//
+		var k=math.pow(b,2)-4*a*c;
+		if (k>0){ 
+			var k1=math_visuals.root.integer_part(k);
+			if (math.pow(k1,2)==k){
+				return x+`^{}_1=\\,`+math_visuals.fraction.str((-b+k1),2*a)+
+				`\\space\\space `+x+`^{}_2=\\,`+math_visuals.fraction.str((-b-k1),2*a);
+			}
+			var k2=math_visuals.root.sqrt_part(k);
+			var com=math_ngcd(b,k1,2*a);
+			b=b/com;
+			k1=k1/com;
+			var k3=math.abs(a*2/com);
+			return (a>0)?(k3==1)?x+`^{}_1=\\,`+(-b)+`+`+math_visuals.quadratic.test(k1)+k2+`\\space
+
+			`+x+`^{}_2=\\,`+(-b)+`-`+math_visuals.quadratic.test(k1)+k2:
+			x+`^{}_1=\\,\\dfrac{`+(-b)+`+`+math_visuals.quadratic.test(k1)+k2+`}{`+k3+`}\\space
+			`+x+`^{}_2=\\,\\dfrac{`+(-b)+`-`+math_visuals.quadratic.test(k1)+k2+`}{`+k3+`}`:
+			(k3==1)?x+`^{}_1=\\,`+(b)+`-`+math_visuals.quadratic.test(k1)+k2+`\\space
+			`+x+`^{}_2=\\,`+(b)+`+`+math_visuals.quadratic.test(k1)+k2:
+			x+`^{}_1=\\,-\\dfrac{`+(-b)+`+`+math_visuals.quadratic.test(k1)+k2+`}{`+k3+`}\\space
+			`+x+`^{}_2=\\,\\dfrac{`+(b)+`+`+math_visuals.quadratic.test(k1)+k2+`}{`+k3+`}`;
+		}
+		else if (k===0){
+			return x+`^{}_1=\\,`+math_visuals.fraction.str(-b,2*a);
+		}
+	},
+	
+	tex:function (a,b,c){
+		return tex(math_quadratic.str(a,b,c));
+	},
 };
 
 math_visuals['matrix'] = {
@@ -450,6 +452,36 @@ math_visuals['num_form'] = {
         return (x == 1) ? `` : x;
     },
 };
+
+math_visuals['polynomial'] = function(){
+    var array = Array.prototype.slice.call(arguments);
+    var array_to_str;
+    for (var j = 0; j < array.length - 1; j++) {
+        if (array[0] === 0) {
+            array.splice(0, 1);
+            if (typeof (array[0]) == 'string') {
+                array.splice(0, 1);
+            }
+        } else break;
+    }
+    array[0] = ((typeof (array[0]) == 'string') ? array[0] : math_visuals.num_form.head(array[0]));
+    for (var i = 1; i < array.length; i++) {
+        if (typeof (array[i]) == 'number') {
+            if (typeof (array[i + 1]) == `string`) {
+                if (array[i] === 0) {
+                    array[i] = ``;
+                    if (typeof (array[i + 1]) == 'string') {
+                        array[i + 1] = ``;
+                    }
+                } else array[i] = math_visuals.num_form.body(array[i]);
+ 
+            } else array[i] = math_visuals.num_form.end(array[i]);
+        }
+    }
+    array_to_str = array.join(``);
+    return array_to_str;
+}
+
 
 function tex(result, not_inline){
 	var i;
@@ -509,6 +541,7 @@ function tex(result, not_inline){
 	return result;
 }
 
+/*
 function shuffle_array(array) {
 	var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -526,6 +559,7 @@ function shuffle_array(array) {
 
 	return array;
 }
+*/
 
 function time(){
 	var d = new Date();
@@ -622,11 +656,6 @@ function compare_answers(input1, input2, prec, linear_multiples){
 		return max - min <= Math.abs(max)/Math.pow(10,precision);
 	}	
 	
-/*
-	if(typeof input1.value !== "undefined" && typeof input1.type !== "undefined" && typeof input2.value !== "undefined" && typeof input2.type !== "undefined"){
-		return (compare_answers(input1.value.re,input2.value.re, precision) && compare_answers(input1.value.im, input2.value.im. precision) && input1.type === input2.type);
-	}
-*/	
 	return false;
 }
 
@@ -644,39 +673,7 @@ function touch_start(e){
 	try {
 		if(typeof e.target.onclick === "function"){
 			e.preventDefault();
-			e.target.onclick();
+			e.target.onclick(e);
 		}
 	}catch(err) {};			
 }
-
-/*
-
-function get_aret_position (oField) {
-
-  // Initialize
-  var iCaretPos = 0;
-
-  // IE Support
-  if (document.selection) {
-
-    // Set focus on the element
-    oField.focus();
-
-    // To get cursor position, get empty selection range
-    var oSel = document.selection.createRange();
-
-    // Move selection start to 0 position
-    oSel.moveStart('character', -oField.value.length);
-
-    // The caret position is selection length
-    iCaretPos = oSel.text.length;
-  }
-
-  // Firefox support
-  else if (typeof oField.selectionStart==='number')
-    iCaretPos = oField.selectionStart;
-
-  // Return results
-  return iCaretPos;
-}
-*/
