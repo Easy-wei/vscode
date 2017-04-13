@@ -192,3 +192,4 @@ def demo(*x):
     return(max(x),reduce(lambda c,d:c+d,x))
 
 print (demo(1,2,3,5,6,3,32,56,67,34,5,876,654))
+`````''
