@@ -1,45 +1,59 @@
+var x_array=[`0`,`\\frac{\\pi}{6}`,`\\frac{\\pi}{4}`,`\\frac{\\pi}{3}`,`\\frac{\\pi}{2}`,`\\pi`];
+var xd_array=[`0`,`\\dfrac{\\pi}{6}`,`\\dfrac{\\pi}{4}`,`\\dfrac{\\pi}{3}`,`\\dfrac{\\pi}{2}`,`\\pi`];
+var sin_array=[`0`,`\\dfrac{1}{2}`,`\\dfrac{\\sqrt{2}}{2}`,`\\dfrac{\\sqrt{3}}{2}`,`1`,`0`];
+var sin_array_cal=[0,1/2,math.sqrt(2)/2,math.sqrt(3)/2,1,0];
+var cos_array=[`1`,`\\dfrac{\\sqrt{3}}{2}`,`\\dfrac{\\sqrt{2}}{2}`,`\\dfrac{1}{2}`,`0`,`-1`];
+var cos_array_cal=[1,math.sqrt(3)/2,math.sqrt(2)/2,1/2,0,-1];
 
-		if (x ==0 ) {return 0}
-		x = x / com;
-		y = y / com;
-		var j = math.abs(x) % math.abs(y);
-		var k = (math.abs(x) - math.abs(j)) / math.abs(y);
-		return (x * y > 0) ? (j === 0) ? (b == ``) ? k + a : `\\dfrac{` + k + a + `}{` + b + `}` :
-			`\\dfrac{` + math.abs(x) + a + `}{` + math.abs(y) + b + `}` :
-			(j === 0) ? (b == ``) ? `-` + k + a : `\\dfrac{` + k + a + `}{` + b + `}` : `-\\dfrac{` + math.abs(x) + `}{` + math.abs(y) + `}`;
+do{
+    var v1 = math_tools.rand_int(0, x_array.length-2);
+    var v2 = math_tools.rand_int(1, x_array.length-1);
+}
+while(v1>=v2);
+
+
+num_form = {
+	head: function (x) {
+		return (x == 1) ? `` : (x == -1) ? `-` : x;
 	},
-	tex: function (x, y) {
-		return tex(math_visuals.fraction.str(x, y));
+	body: function (x) {
+		return (x == 1) ? `+` : (x == -1) ? `-` : x.signed();
+	},
+	end: function (x) {
+		return x.signed();
+	},
+	index: function (x) {
+		return (x == 1) ? `` : x;
 	},
 };
 
-function polynomial() {
-	var array = Array.prototype.slice.call(arguments);
-	var array_to_str;
-	for (var j = 0; j < array.length - 1; j++) {
-		if (array[0] === 0) {
-			array.splice(0, 1);
-			if (typeof (array[0]) == 'string') {
-				array.splice(0, 1);
-			}
-		} else break;
-	}
-	array[0] = ((typeof (array[0]) == 'string') ? array[0] : math_visuals.num_form.head(array[0]));
-	for (var i = 1; i < array.length; i++) {
-		if (typeof (array[i]) == 'number') {
-			if (typeof (array[i + 1]) == `string`) {
-				if (array[i] === 0) {
-					array[i] = ``;
-					if (typeof (array[i + 1]) == 'string') {
-						array[i + 1] = ``;
-					}
-				} else {
-					array[i] = math_visuals.num_form.body(array[i]);
-				}
-			} else array[i] = math_visuals.num_form.end(array[i]);
-		}
-	}
-	array_to_str = array.join(``);
-	return array_to_str;
-}
+self.text = function () {
+	return `Evaluate
 
+~\\displaystyle\\int\\limits_{`+x_array[v1]+`}^{`+x_array[v2]+`}\\sin x\\,\\mathrm{d}x~
+	
+[answer keyboard='full_xy']`;
+};
+
+self.post_load = function () {};
+
+self.step_js = function (wrong_answer, step) {};
+
+self.step = function (wrong_answer, step) {
+	var steps = [
+		`~\\displaystyle\\int\\limits^{`+x_array[v2]+`}_{`+x_array[v1]+`}{\\sin x} \\,dx~`,
+		`~=\\Big[-\\cos x\\Big]^{`+x_array[v2]+`}_{`+x_array[v1]+`}~`,
+	  `~=-\\cos `+xd_array[v2]+`+ \\cos `+xd_array[v1]+`~`,
+	  `~=-`+cos_array[v2]+`+`+cos_array[v1]+`~`,
+	];
+	return steps[step];
+};
+
+self.misconception = function (answer) {
+	return 0; // Default
+};
+
+var ans = cos_array_cal[v1]-cos_array_cal[v2];
+self.correct_answers = function () {
+	return ans;
+};

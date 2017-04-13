@@ -801,19 +801,4 @@ math_visuals['polynomial'] = function(){
 	return array_to_str;
 }
 
-
-    <<
-    <<
-    <
-    HEAD: JS / 自己写的function.js
-
-    ===
-    ===
-    =
-    `(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)<br>` >>>
-    >>>
-    >
-    b2d81f0843cc0f726d904f0479dba047ae2f2ac1: 自己写的function.js >>>
-    >>>
-    >
-    12 f6551020ab1c5324b09c8d1e2d192852d3aaf6: JS / 自己写的function.js
+去他妈的神经病
