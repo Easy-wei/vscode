@@ -189,7 +189,7 @@ math_input = function (vars){
 			"frac": {"pre": "((", "comma": ")/(", "post": "))"},
 			"root": {"pre": " root[", "comma": ", ", "post": "]"},
 			"ln": {"pre": " log(", "comma": "", "post": ",e)"},
-			"log": {"pre": "log((", "comma": "),(", "post": "))"},
+			"log": {"pre": "log[", "comma": ",", "post": "]"},
 			"cos": {"pre": " cos(", "comma": "", "post": ")"},
 			"sin": {"pre": " sin(", "comma": "", "post": ")"},
 			"tan": {"pre": " tan(", "comma": "", "post": ")"},
@@ -268,13 +268,17 @@ math_input = function (vars){
 		var res = get_value(0, self.data);
 		
 		if(res[1] && temp_result !== "()"){
-			// We need to switch the logical order of fields to do roots. Example square of 2: root(2, 4) = pow(4, 1/2)
+			// We need to switch the logical order of fields to do roots and log. Example square of 2: root(2, 4) = pow(4, 1/2)
 			var regex = /root\[(.*?), (.*?)]/g;
-
 			while(temp_result.search(regex) >= 0){
 				temp_result = temp_result.replace(/root\[(.*?), ((.*?))]/g, "pow(($2), (1/$1))");
 			}
 
+			var regex = /log\[(.*?),(.*?)]/g;
+			while(temp_result.search(regex) >= 0){
+				temp_result = temp_result.replace(/log\[(.*?),((.*?))]/g, "log(($2), ($1))");
+			}
+console.log(temp_result)
 			var is_expression = (temp_result.indexOf('{') > -1); 
 			if(!is_expression){
 				return new term(math.eval(temp_result));

@@ -801,19 +801,15 @@ math_visuals['polynomial'] = function(){
 	return array_to_str;
 }
 
+math_tools['shuffle'] = function (items) {
+	var i, j, k;
+	for (i = items.length - 1; i > 0; i--) {
+		j = Math.floor(Math.random() * (i + 1));
+		k = items[i];//k is a 寄存变量，临时存储中转的空间。因为js不像python那样可以同时对向赋值，需要中间变量。
+		items[i] = items[j];
+		items[j] = k;
+	}
+}
 
-    <<
-    <<
-    <
-    HEAD: JS / 自己写的function.js
 
-    ===
-    ===
-    =
-    `(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)<br>` >>>
-    >>>
-    >
-    b2d81f0843cc0f726d904f0479dba047ae2f2ac1: 自己写的function.js >>>
-    >>>
-    >
-    12 f6551020ab1c5324b09c8d1e2d192852d3aaf6: JS / 自己写的function.js
+呵呵呵呵呵呵呵呵
