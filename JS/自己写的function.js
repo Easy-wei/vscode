@@ -801,4 +801,13 @@ math_visuals['polynomial'] = function(){
 	return array_to_str;
 }
 
-去他妈的神经病
+math_tools['shuffle'] = function (items) {
+	var i, j, k, l = items.length;
+	for (i = l - 1; i > 0; i--) {
+		j = Math.floor(Math.random() * (i + 1));
+		k = items[i];
+		items[i] = items[j];
+		items[j] = k;
+	}
+}
+
