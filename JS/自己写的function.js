@@ -802,10 +802,10 @@ math_visuals['polynomial'] = function(){
 }
 
 math_tools['shuffle'] = function (items) {
-	var i, j, k, l = items.length;
-	for (i = l - 1; i > 0; i--) {
+	var i, j, k;
+	for (i = items.length - 1; i > 0; i--) {
 		j = Math.floor(Math.random() * (i + 1));
-		k = items[i];
+		k = items[i];//k is a 寄存变量，临时存储中转的空间。因为js不像python那样可以同时对向赋值，需要中间变量。
 		items[i] = items[j];
 		items[j] = k;
 	}
