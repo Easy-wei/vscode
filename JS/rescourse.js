@@ -486,6 +486,13 @@ math_visuals['polynomial'] = function(){
 function tex(result, not_inline){
 	var i;
 	
+	// Custom "KaTex"
+	
+	result = result.replace(new RegExp('\\\\dx', 'g'), '\\mathrm{d}x');
+	result = result.replace(new RegExp('\\\\ddx', 'g'), '\\dfrac{\\mathrm{d}}{\\mathrm{d}x}');
+	result = result.replace(new RegExp('\\\\dint', 'g'), '\\displaystyle\\int');
+	result = result.replace(new RegExp('\\\\cosec', 'g'), '\\mathrm{cosec}');
+	
 	var keyboards = /\[answer( .*?)?\]/g.execAll(result);
 	result = result.replace(/\[answer( .*?)?\]/g, '[input]');
 
