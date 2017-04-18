@@ -28,18 +28,9 @@
       return (x - v1) * (x - v2);
   };
 
-  array = [
-      [v1, 0],
-      [v2, 0],
-      [0, f(0)],
-      [(v1 + v2) / 2, f((v1 + v2) / 2)]
-  ];
+  array = [[v1, 0],[v2, 0],[0, f(0)], [(v1 + v2) / 2, f((v1 + v2) / 2)]];
 
   equation = `\\mathrm{y}=(x` + (-v1).signed() + `)(x` + (-v2).signed() + `)`;
-
-
-
-  console.log(array_extremum(array));
 
   points = [`when y=0`, `when x=0`, `the value of y minmum`];
 
@@ -57,12 +48,9 @@
           'input_element': "graph",
           'low_x': -array_extremum(array)[0] - 1,
           'high_x': array_extremum(array)[0] + 1,
-          'low_y': -10,
-          'high_y': array_extremum(array)[1] + 1,
-      });
-      g.add_element({
-          'type': 'grid'
-      });
+          'low_y': -array_extremum(array)[1] - 1,
+          'high_y': array_extremum(array)[1] + 1,      });
+      g.add_element({          'type': 'grid'      });
       //g.add_element({'type': 'line_head_arrow', 'end': vec1, 'color': 'green'});
       //g.add_element({'type': 'line_head_arrow', 'end': vec2, 'color': 'red'});
       //g.add_element({'type': 'line_head_arrow', 'end': end});
@@ -126,12 +114,28 @@
   };
 
 
-  self.step_js = function (wrong_answer, step) {};
+  self.step_js = function (wrong_answer, step) {
+	var g1 = new graphic({
+          'input_element': "g1",
+          'low_x': -array_extremum(array)[0] - 1,
+          'high_x': array_extremum(array)[0] + 1,
+          'low_y': -array_extremum(array)[1] - 1,
+          'high_y': array_extremum(array)[1] + 1,      });
+    g1.add_element({'type': 'grid'});
+	g1.add_element({'type':'graph','function':f,'color':'#ff1744'});
+	g1.add_element({'type': 'circle', 'text': 'label', 'pos': array[0],'fill_color':'#76ff03','radius':'0.2'});
+	g1.add_element({'type': 'circle', 'text': 'label', 'pos': array[1],'fill_color':'#76ff03','radius':'0.2'});
+	g1.add_element({'type': 'circle', 'text': 'label', 'pos': array[2],'fill_color':'#76ff03','radius':'0.2'});
+	g1.add_element({'type': 'circle', 'text': 'label', 'pos': array[3],'fill_color':'#76ff03','radius':'0.2'});
+  };
 
   self.step = function (wrong_answer, step) {
       var steps = [
-          "First do this",
-          "Then do that",
+		"<div id='g1'></div>",
+          `as you see all the dots are pointed on the coordinate`,
+		`When ~y=0~,therefore ~`+equation+`=0~ it's easy to find ~x_{1}=`+v1+`, x_{2}=`+v2+`~`,
+		`When ~x=0~,therefore ~\\mathrm{y}=(0`+(-v1).signed()+`)(0`+(-v2).signed()+`)=`+v1*v2+``+`~`,
+		`When ~x=\\dfrac{(`+v1+v2.signed()+`)}{2}, \\mathrm{y}_{_min}=`+array[3][1]+`~`,
       ];
       return steps[step];
   };

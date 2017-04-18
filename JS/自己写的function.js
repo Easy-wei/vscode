@@ -812,4 +812,17 @@ math_tools['shuffle'] = function (items) {
 }
 
 
-呵呵呵呵呵呵呵呵
+  array_extremum = function (array) {
+      var x_abs_max = 5;
+      var y_abs_max = 5;
+      for (var i = 0; i < array.length; i++) {
+          if (x_abs_max < math.abs(array[i][0])) {
+              x_abs_max = math.abs(array[i][0]);
+          }
+          if (y_abs_max < math.abs(array[i][1])) {
+              y_abs_max = math.abs(array[i][1]);
+          }
+      }
+      return [x_abs_max, y_abs_max];
+  };
+
