@@ -1,20 +1,24 @@
   var v1 = math_tools.rand_int(1, 9);
-  var v2 = math_tools.rand_int(1, 9);
-
-  function inte(x, y = `x`, low = ``, hight = ``) {
-      return `\\displaystyle\\int_{` + low + `}^{` + hight + `}{` + x + `\\,\\,\\mathrm{d}` + y + `}`;
+  do {
+      var v2 = math_tools.rand_int(1, 9);
+      var v3 = math_tools.rand_int(1, 9);
   }
+  while (v3 - v2 > 4 || v2 > v3 || v3 == v2 || v3 - v2 == 3);
 
-  var part1 = `x`;
-  var part1_1 = `1`;
-  var part2 = `-\\dfrac{\\mathrm{e}^{` + (-v1) + `x}}{` + v1 + `}`;
-  var part2_1 = `\\mathrm{e}^{` + (-v1) + `x}`;
-  var part3 = `x^{2}`;
-  var part3_1 = `2x`;
+  f = function (x) {
+      return v1 * math.pow(x, 2);
+  };
+  var equation = `\\mathrm{y}=` + math_visuals.num_form.head(v1) + `x^{2}`;
 
+  var gaint = math.round((f(v3) / 10 - f(v2) / 10) / (v3 - v2), 2);
+
+
+  var ans_equation = `\\mathrm{y}=` + gaint + `x` + (math.round(f(v2 / 10) - gaint * (v2 / 10), 3)).signed();
   self.text = function () {
-      return `Find~` + inte(part1 + part2_1, `x`, 0, `\\infty`) + `~, and ~` + inte(part3 + part2_1, `x`, 0, `\\infty`) + `~,
-	[answer keyboard='{{"1","2","3","4","5","6","7","8","9","0"},{".","e","i","+","-","*","/"},{"^","frac","root","cos","sin","tan","()"},{"x_var","y_var","s_var","left","right","del"}}']`;
+      return `Find the gradient and the equation of the chord joining the points on the curve ~` + equation + `~
+with coordinates ~(` + v2 / 10 + `,` + f(v2) / 100 + `)~ and ~(` + v3 / 10 + `,` + f(v3) / 100 + `)~
+gradient~\\rightarrow~[answer]
+~\\mathrm{y}\\rightarrow~[answer keyboard='full_xy']`;
   };
 
   self.post_load = function () {};
@@ -23,11 +27,9 @@
 
   self.step = function (wrong_answer, step) {
       var steps = [
-          `Begin by finding the integral from ~0~ to ~\\mathrm{s}~, and then consider their limits as ~\\mathrm{s}\\rightarrow\\infty~.`,
-          `For both integrals take ~\\dfrac{\\mathrm{d}v}{\\mathrm{d}x}=\\mathrm{e}^{-ax}~, so ~v=` + part2 + `~.`,
-          `~` + inte(part1 + part2_1, `x`, 0, `\\mathrm{s}`) + `=\\big[` + part1 + `\\times` + part2 + `\\big]^{\\mathrm{s}}_{0}-` + inte(part1_1 + `\\times` + part2, `x`, 0, `\\mathrm{s}`) + `~`,
-          `~-\\dfrac{1}{` + v1 + `}\\mathrm{se}^{-as}-\\dfrac{1}{` + v1 * v1 + `}\\mathrm{e}^{` + (-v1) + `s}+\\dfrac{1}{` + v1 * v1 + `}~.`,
-          `~~`,
+          `The gradient of the chord is ~\\dfrac{` + f(v3) / 100 + (-f(v2) / 100) + `}{` + v3 / 10 + (-v2 / 10).signed() + `}=` + gaint + `~`,
+          `So the equation of the chord is ~\\mathrm{y}-` + math.round(f(v2 / 10), 2) + `=` + gaint + `(x-` + v2 / 10 + `)` + `~`,
+          `~` + ans_equation + `~`,
       ];
       return steps[step];
   };
@@ -37,8 +39,6 @@
       return 0; // Default
   };
 
-  var ans = new expression(`{x}+{y}`);
-
   self.correct_answers = function () {
-      return ans;
+      return;
   };
