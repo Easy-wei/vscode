@@ -1,45 +1,24 @@
-do{
-var v1 = math_tools.rand_int(1, 9);
-var v2 = math_tools.rand_int(1, 9);
-}
-while(v1>=v2);
-
-function inte(x,y=`x`,low=``,hight=``){return `\\displaystyle\\int_{`+low+`}^{`+hight+`}{`+x+`\\,\\,\\mathrm{d}`+y+`}` ;}
-
-var part1=math_visuals.fraction.str(1,2)+`x^{2}`;
-var part1_1=`x`;
-var part2=`\\ln{x}`;
-var part2_1=`\\dfrac{1}{x}`;
-var part3=((v1==1)?``:math_visuals.fraction.str(1,v1*v1))+`\\mathrm{e}^{`+math_visuals.num_form.head(v1)+`x}`;
-self.text = function() {
-	return `Find ~`+inte(part1_1+part2,`x`,v1,v2)+`~
-	[answer keyboard='equation_ekx']`;
-};
-
-self.post_load = function(){
-};
-
-self.step_js = function(wrong_answer, step){
-};
-
-self.step = function(wrong_answer, step){
-	var steps = [
-		`If you take ~u=x~, and find ~{v}~ to satisfy ~\\dfrac{\\mathrm{d}v}{\\mathrm{d}x}={}\\ln{x}~`,
-	  `But although section ~4.3~ gave the dervative of ~\\ln{x}~, its intergral is not yet known.`,
-	  `When this occur, try writing the product the other way round. Take ~u=\\ln{x}~,and find a ~v~ such that ~\\dfrac{\\mathrm{d}v}{\\mathrm{d}x}~`,
-	  `Which is ~v=`+part1+`~. The rule then gives`,
-	  `~`+inte(part1_1+part2)+`~`,
-
-	];
-	return steps[step];
-};
-
-self.misconception = function(answer){
-	return 0; // Default
-};
-
-var ans=new expression(1/v1+`*pow({e},`+v1+`*{x})*{x}`+(-1/v1/v1)+`*pow({e},`+v1+`*{x})+k`);
-
-self.correct_answers = function() {
-	return ans;
+math_visuals["quadratic"] = {
+	//when use the function of math_visuals.quadratic, you need test the number of answer : 1 or 2',
+	str: function (a, b, c) { //
+		var k = math.pow(b, 2) - 4 * a * c;
+		if (k > 0) {
+			var k1 = math_visuals.root.integer_part(k);
+			var k2 = math_visuals.root.sqrt_part(k);
+			var com = math.gcd(b, k1, 2 * a);
+			if (math.pow(k1, 2) == k) {
+				return [math_visuals.fraction.str((-b + k1), 2 * a), math_visuals.fraction.str((-b - k1), 2 * a)];
+			}
+			b = b / com;
+			k1 = k1 / com;
+			var k3 = math.abs(a * 2 / com);
+			return (a > 0) ? (k3 == 1) ? [(-b) + math_visuals.num_form.body(k1) + k2, (-b) + math_visuals.num_form.body(-k1) + k2] : [`\\dfrac{` + (-b) + math_visuals.num_form.body(k1) + k2 + `}{` + k3 + `}`, `\\dfrac{` + (-b) + math_visuals.num_form.body(-k1) + k2 + `}{` + k3 + `}`] :
+				(k3 == 1) ? [(b) + math_visuals.num_form.body(-k1) + k2, (b) + math_visuals.num_form.body(k1) + k2] : [`\\dfrac{` + (-b) + math_visuals.num_form.body(k1) + k2 + `}{` + k3 + `}`, `\\dfrac{` + (b) + math_visuals.num_form.body(k1) + k2 + `}{` + k3 + `}`];
+		} else if (k === 0) {
+			return [math_visuals.fraction.str(-b, 2 * a)];
+		}
+	},
+	tex: function (a, b, c) {
+		return tex(math_quadratic.str(a, b, c));
+	},
 };

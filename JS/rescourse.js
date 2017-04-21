@@ -342,10 +342,10 @@ math_visuals['fraction'] = {
  
 math_visuals.root = {
   process:function(n=` n`){
-      var a=1; 
+    var a=1; 
     var b=1;
     if (typeof n==="string"){
-      return [`\\sqrt{`+n+`}`,a,`\\sqrt{`+n+`}`];
+      return [`\\sqrt{`+n+`}`,a,`\\sqrt{`+n+`}`];//[根值，整数部分，开跟部分]
     }
       if (n==1){
         return [1,1,1+``]; 
