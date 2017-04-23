@@ -136,6 +136,8 @@ math_quadratic = {
 		var k = math.pow(b, 2) - 4 * a * c;
 		if (k > 0) {
 			var k1 = math_visuals.root.integer_part(k);
+
+            
 			var k2 = math_visuals.root.sqrt_part(k);
 			var com = math.gcd(b, k1, 2 * a);
 			if (math.pow(k1, 2) == k) {
