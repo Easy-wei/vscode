@@ -1,6 +1,5 @@
 math_visuals["quadratic"] = {
-	//when use the function of math_visuals.quadratic, you need test the number of answer : 1 or 2',
-	str: function (a, b, c) { //
+	ans_array: function (a, b, c) {
 		var k = math.pow(b, 2) - 4 * a * c;
 		if (k > 0) {
 			var k1 = math_visuals.root.integer_part(k);
@@ -18,7 +17,16 @@ math_visuals["quadratic"] = {
 			return [math_visuals.fraction.str(-b, 2 * a)];
 		}
 	},
-	tex: function (a, b, c) {
-		return tex(math_quadratic.str(a, b, c));
+	str: function (a, b, c, x = `x`) {
+		var j = math_visuals.quadratic.ans_array(a, b, c);
+		switch (j.length) {
+			case 1:
+				return x + `=` + j[0];
+			case 2:
+				return x + `^{}_{1}=` + j[0] + `, \\space ` + x + `^{}_{2}=` + j[1];
+		}
+	},
+	tex: function (a, b, c, x = `x`) {
+		return tex(math_visuals.quadratic.str(a, b, c, x = `x`));
 	},
 };
