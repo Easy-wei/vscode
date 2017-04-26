@@ -427,17 +427,19 @@ math_visuals["quadratic"] = {
         }
     },
     str: function (a, b, c, x = `x`) {
-        switch (math_visuals.quadratic.ans_array(a, b, c).length) {
+        var j = math_visuals.quadratic.ans_array(a, b, c);
+        switch (j.length) {
             case 1:
-                return x + `=` + ans_array[0];
+                return x + `=` + j[0];
             case 2:
-                return x + `^{}_{1}=` + ans_array[0] + `, \\space` + x + `^{}_{2}=` + ans_array[1];
+                return x + `^{}_{1}=` + j[0] + `, \\space ` + x + `^{}_{2}=` + j[1];
         }
     },
     tex: function (a, b, c, x = `x`) {
         return tex(math_visuals.quadratic.str(a, b, c, x = `x`));
     },
 };
+
 math_visuals['matrix'] = {
 	str: function(matrix){return `\\begin{bmatrix}` + matrix.map(function(line){return line.join(`&`);}).join(`\\cr`) + `\\end{bmatrix}`;},
 	tex: function(matrix){return tex(math_visuals.matrix.str(matrix));},

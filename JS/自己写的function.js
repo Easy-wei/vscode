@@ -823,3 +823,11 @@ math_tools['shuffle'] = function (items) {
       return [x_abs_max, y_abs_max];
   };
 
+math_tools["points_to_equation.function"] = function (ponits, x) {
+    var array = math_tools.points_to_equation(points);
+    var sum = 0;
+    for (key in array) {
+        sum += array[key] * math.pow(x, key)
+    }
+    return sum
+}

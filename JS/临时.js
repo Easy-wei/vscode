@@ -1,31 +1,63 @@
-math_quadratic = {
-    ans_array: function (a, b, c) { 
-        var k = math.pow(b, 2) - 4 * a * c;
-        if (k > 0) {
-            var k1 = math_visuals.root.integer_part(k);
-            var k2 = math_visuals.root.sqrt_part(k);
-            var com = math.gcd(b, k1, 2 * a);
-            if (math.pow(k1, 2) == k) {
-                return [math_visuals.fraction.str((-b + k1), 2 * a), math_visuals.fraction.str((-b - k1), 2 * a)];
+math_tools["points_to_equation"] = function (points) {
+    var matrix_rows = [];
+    for (var key in points) {
+        var i = points.length - 1;
+        var row = [];
+        while (i >= 0) {
+            row.push(Math.pow(points[key][0], i));
+            i += -1;
+        }
+        row.push(points[key][1]);
+        matrix_rows.push(row);
+    }
+
+    var i = 0;
+    var swap = false;
+    while (i < matrix_rows.length - 1) {
+        var i2 = i + 1;
+
+        if (matrix_rows[i][i] !== 0 || swap) {
+            swap = false;
+            while (i2 < matrix_rows.length) {
+                var ratio = matrix_rows[i2][i] / matrix_rows[i][i];
+                for (var key in matrix_rows[i2]) {
+                    matrix_rows[i2][key] += -ratio * matrix_rows[i][key];
+                }
+                i2 += 1;
             }
-            b = b / com;
-            k1 = k1 / com;
-            var k3 = math.abs(a * 2 / com);
-            return (a > 0) ? (k3 == 1) ? [(-b) + math_visuals.num_form.body(k1) + k2, (-b) + math_visuals.num_form.body(-k1) + k2] : [`\\dfrac{` + (-b) + math_visuals.num_form.body(k1) + k2 + `}{` + k3 + `}`, `\\dfrac{` + (-b) + math_visuals.num_form.body(-k1) + k2 + `}{` + k3 + `}`] :
-                (k3 == 1) ? [(b) + math_visuals.num_form.body(-k1) + k2, (b) + math_visuals.num_form.body(k1) + k2] : [`\\dfrac{` + (-b) + math_visuals.num_form.body(k1) + k2 + `}{` + k3 + `}`, `\\dfrac{` + (b) + math_visuals.num_form.body(k1) + k2 + `}{` + k3 + `}`];
-        } else if (k === 0) {
-            return [math_visuals.fraction.str(-b, 2 * a)];
+            i += 1;
+
+        } else {
+            var temp = JSON.stringify(matrix_rows[i]);
+            matrix_rows[i] = JSON.parse(JSON.stringify(matrix_rows[i + 1]));
+            matrix_rows[i + 1] = JSON.parse(temp);
+            swap = true;
         }
-    },
-    str: function (a, b, c, x = `x`) {
-        switch (math_quadratic.ans_array(a, b, c).length) {
-            case 1:
-                return x + `=` + ans_array[0];
-            case 2:
-                return x + `^{}_{1}=` + ans_array[0] + `, \\space` + x + `^{}_{2}=` + ans_array[1];
+    }
+
+    var results = [];
+    i = 0;
+    while (i < matrix_rows.length) {
+        var k = matrix_rows.length - 1 - i;
+        var last = matrix_rows.length;
+        var res = 0;
+        for (var key in results) {
+            key = parseInt(key);
+            res += matrix_rows[k][last - key - 1] * results[key];
         }
-    },
-    tex: function (a, b, c, x = `x`) {
-        return tex(math_quadratic.str(a, b, c, x = `x`));
-    },
-};
+        results.push((matrix_rows[k][last] - res) / matrix_rows[k][k]);
+        matrix_rows[matrix_rows.length - 1 - i];
+        i += 1;
+
+    }
+    return results;
+}
+
+math_tools["points_to_equation.function"] = function (ponits, x) {
+    var array = math_tools.points_to_equation(points);
+    var sum = 0;
+    for (key in array) {
+        sum += array[key] * math.pow(x, key)
+    }
+    return sum
+}
