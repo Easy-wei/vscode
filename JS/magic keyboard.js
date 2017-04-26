@@ -20,7 +20,7 @@ variable_2 = math_tools.rand_int(1, 99);
 // This function should return the question
 self.text = function () {
 	return `What is ` + variable_1 + ` + ` + variable_2 + `?
-	[answer  angle_measure="deg" answer keyboard='{{"1","2","3","4","5","6","7","8","9","0"},{".","e","i","+","-","*","/"},{"^","frac","root","cos","sin","tan","()"},{"left","right","del"}}' angle_measure="deg"]`;
+	[answer angle_measure="deg" answer keyboard='{{"1","2","3","4","5","6","7","8","9","0"},{".","e","i","+","-","*","/"},{"^","frac","root","cos","sin","tan","()"},{"left","right","del"}}' angle_measure="deg"]`;
 	// Notice the [answer] above will output an answer box. More info can be found in another documentation module.
 };
 
