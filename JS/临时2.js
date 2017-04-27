@@ -1,12 +1,4 @@
-function test(a, b) {
-	var x, y, z;
-	y = z = b = Math.pow(10, b);
-	x = a = a * b;
-	while (x > 0) {
-		z = x;
-		x = y % z;
-		y = z
-	};
-	return (a / z + "/" + b / z);
-}
-alert(test(0.75, 2));
+[answer keyboard='{{"1","2","3","4","5","6","7","8","9","0"},{".","e","i","+","-","*","/"},{"^","frac","root","cos","sin","tan","()"},{"x_var","y_var","left","right","del"}}' angle_measure="deg"]
+[answer keyboard='{{"1","2","3","4","5","6","7","8","9","0"},{".","e","i","+","-","*","/"},{"^","frac","root","cos","sin","tan","()"},{"left","right","del"}}' angle_measure="deg"];
+[answer keyboard='{{"1","2","3","4","5","6","7","8","9","0"},{".","e","i","+","-","*","/"},{"^","frac","root","cos","sin","tan","()"},{"y_var","s_var","left","right","del"}}' angle_measure="deg"]`;
+
