@@ -131,6 +131,23 @@ var root = {
     },
 };
 
+
+//上次开跟
+
+var cubic_root = function(x) {
+  var b=x;  var a=1;
+  var array=math_tools.primes_below(math.ceil(math.pow(x,1/3)+1));
+  for (var i=0;i<array.length; i++){
+	for (var j=0; j<array.length;j++){
+	  if(b%math.pow(array[i],3)===0){
+		a=a*array[i];
+		b=b/math.pow(array[i],3);
+	  }
+	}
+  }
+  return ((b==1)?a:math_visuals.num_form.head(a)+`\\sqrt[3]{`+b+`}`);
+};
+
 math_quadratic = {
     ans_array: function (a, b, c) { 
         var k = math.pow(b, 2) - 4 * a * c;
@@ -849,3 +866,11 @@ var line = function (x, time, vars) {
     return y;
 };
     //
+
+var f=function (x){
+  var mutiply=1;
+  for (var i=0; i<=x; i++){
+    mutiply=mutiply*i
+  }
+  return mutiply;
+}
