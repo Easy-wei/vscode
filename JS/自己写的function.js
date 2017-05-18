@@ -810,6 +810,6 @@ math_tools['shuffle'] = function (items) {
 		items[j] = k;
 	}
 }
-
+Math.random().toString(36).substr(2,3)
 
 呵呵呵呵呵呵呵呵
