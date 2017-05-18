@@ -810,6 +810,13 @@ math_tools['shuffle'] = function (items) {
 		items[j] = k;
 	}
 }
-Math.random().toString(36).substr(2,3)
+
+
+Math.random().toString(36).substr(2,3)//toString 负责将数字转化为字符(36是字符穿的)，substr（start，length）功能是提取字符串，
+
+function getRating(rating) {
+    if(rating > 5 || rating < 0) throw new Error('数字不在范围内');
+    return '★★★★★☆☆☆☆☆'.substring(5 - rating, 10 - rating );
+}
 
 呵呵呵呵呵呵呵呵
