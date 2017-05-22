@@ -17,33 +17,35 @@ math_input = function (vars){
 	if(math_input_instances.indexOf(this) == -1){
 		math_input_instances.push(this);
 	}
-		
+
 	keyboard_presets = {
-		"full": 	[["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "pi", "e", "i", "+", "-", "*", "/"], ["^", "frac", "root", "cos", "sin", "tan", "()"], ["left", "right", "del"]],
-		"full_xy": 	[["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "pi", "e", "i", "+", "-", "*", "/"], ["^", "frac", "root", "cos", "sin", "tan", "()"], ["x_var", "y_var", "left", "right", "del"]],
-		"full_xyk": 	[["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "pi", "e", "i", "+", "-", "*", "/"], ["^", "frac", "root", "cos", "sin", "tan", "()"], ["x_var", "y_var", "k_var", "left", "right", "del"]],
-		"polynomial_n": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["n_var", "left", "right", "del"]],
-		"polynomial_x": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["x_var", "left", "right", "del"]],
-		"polynomial_xy": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["x_var", "y_var", "left", "right", "del"]],
+		"full": 	[["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "pi", "e", "i", "+", "-", "*", "/"], ["^", "frac", "root", "cos", "sin", "tan", "()", "fact"], ["left", "right", "del"]],
+		"full_xy": 	[["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "pi", "e", "i", "+", "-", "*", "/"], ["^", "frac", "root", "cos", "sin", "tan", "()"], ["x_var", "y_var", "left", "right", "del"]],
+		"full_xyk": 	[["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "pi", "e", "i", "+", "-", "*", "/"], ["^", "frac", "root", "cos", "sin", "tan", "()"], ["x_var", "y_var", "k_var", "left", "right", "del"]],
+		"polynomial_n": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["n_var", "left", "right", "del"]],
+		"polynomial_x": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["x_var", "left", "right", "del"]],
+		"polynomial_xy": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["x_var", "y_var", "left", "right", "del"]],
 
-		"equation_theta": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["θ_var", "left", "right", "del"]],
-		"equation_ABx": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["A_var", "B", "x", "left", "right", "del"]],
-		"equation_ij": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["i_var", "j_var", "left", "right", "del"]],
-		"equation_cx": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["c_var", "x_var", "left", "right", "del"]],
-		"equation_a": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "left", "right", "del"]],
-		"equation_ab": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "b_var", "left", "right", "del"]],
-		"equation_abxy": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "b_var", "x_var", "y_var", "left", "right", "del"]],
-		"equation_abcxy": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "b_var", "c_var", "x_var", "y_var", "left", "right", "del"]],
-		"equation_AB": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["A_var", "B_var", "left", "right", "del"]],
-		"equation_ex": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["e_var", "x_var", "left", "right", "del"]],
-		"equation_exk": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["e_var", "x_var", "k_var", "left", "right", "del"]],
-		"equation_xyk": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["x_var", "y_var", "k_var", "left", "right", "del"]],
+		"equation_theta": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["θ_var", "left", "right", "del"]],
+		"equation_ABx": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["A_var", "B", "x", "left", "right", "del"]],
+		"equation_ij": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["i_var", "j_var", "left", "right", "del"]],
+		"equation_cx": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["c_var", "x_var", "left", "right", "del"]],
+		"equation_a": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "left", "right", "del"]],
+		"equation_ab": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "b_var", "left", "right", "del"]],
+		"equation_abxy": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "b_var", "x_var", "y_var", "left", "right", "del"]],
+		"equation_abcxy": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["a_var", "b_var", "c_var", "x_var", "y_var", "left", "right", "del"]],
+		"equation_AB": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["A_var", "B_var", "left", "right", "del"]],
+		"equation_ex": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["e_var", "x_var", "left", "right", "del"]],
+		"equation_exk": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["e_var", "x_var", "k_var", "left", "right", "del"]],
+		"equation_xyk": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["x_var", "y_var", "k_var", "left", "right", "del"]],
 
-		"equation_ln_x": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "ln", "root", "()"], ["x_var", "left", "right", "del"]],
-		"equation_log_x": [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "+", "-", "*", "/"], ["^", "frac", "log", "root", "()"], ["x_var", "left", "right", "del"]],
+		"equation_ln_x": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "ln", "root", "()"], ["x_var", "left", "right", "del"]],
+		"equation_log_x": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "+", "-", "*", "/"], ["^", "frac", "log", "root", "()"], ["x_var", "left", "right", "del"]],
 
-		"simple": 	[["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [".", "pi", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["left", "right", "del"]],
-		"num_int": 	[["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], ["left", "right", "del"]],
+		"equations": [["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "pi", "e", "i", "+", "-", "*", "/"], ["^", "frac", "root", "cos", "sin", "tan", "()", "fact"], ["equal", "great", "less", "great_equal", "less_equal", "left", "right", "del"]],
+
+		"simple": 	[["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "pi", "+", "-", "*", "/"], ["^", "frac", "root", "()"], ["left", "right", "del"]],
+		"num_int": 	[["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], ["left", "right", "del"]],
 		"up_down": 	[["decrease", "increase"]],
 	}
 	
@@ -54,7 +56,7 @@ math_input = function (vars){
 	if(!$.isArray(vars.keyboard)){
 		vars.keyboard = keyboard_presets[vars.keyboard];
 	}
-
+	
 	self.color = (typeof vars.color === undefined ? "#000000" : vars.color);
 	self.keyboard = vars.keyboard;
 	self.input_div_id = vars.input_div;
@@ -64,6 +66,8 @@ math_input = function (vars){
 	self.can_edit = (typeof vars.can_edit != "undefined" ? vars.can_edit : true);
 	self.range = vars.range;
 	self.hidden = false;
+	
+	self.angle_measure = (typeof vars.angle_measure != "undefined" ? vars.angle_measure : 'rad');
 
 	self.empty = function(){
 		self.data = ["main", false, true];
@@ -86,7 +90,7 @@ math_input = function (vars){
 		self.data = vars.value;
 	}
 
-	var reserved_values = ["main", "plus", "minus", "multi", "divide", "comma", "pow", "frac", "root", "ln", "log", "cos", "sin", "tan", "paren", "inv", "variable", "number"];
+	var reserved_values = ["main", "plus", "minus", "multi", "divide", "comma", "pow", "frac", "root", "ln", "log", "cos", "sin", "tan", "acos", "asin", "atan", "paren", "fact", "variable", "number", "=", ">", "<", "\\geqslant", "\\leqslant"]; //"inv"
 	var operators = ["plus", "minus", "multi", "divide"];
 	
 	// "Math types": 0 = string type, 1 = string and operators, 2 = functions
@@ -110,8 +114,8 @@ math_input = function (vars){
 		".": {"visual": ".", "visual_katex": true, "hotkey": ".", "value": ".", "type": 0},
 		"pi": {"visual": "\\pi", "visual_katex": true, "hotkey": "p", "value": "p", "type": 0},
 		"e": {"visual": "e", "visual_katex": true, "hotkey": "e", "value": "e", "type": 0},
-		"i": {"visual": "i", "visual_katex": true, "hotkey": "i", "value": "i", "type": 0},
-
+		"i": {"visual": "i", "visual_katex": true, "hotkey": "i", "value": "i", "type": 0},		
+		
 		"+": {"visual": "+", "visual_katex": true, "hotkey": "+", "value": ["plus", false], "type": 1, "move_cur": 1},
 		"-": {"visual": "-", "visual_katex": true, "hotkey": "-", "value": ["minus", false], "type": 1, "move_cur": 1},
 		"*": {"visual": "\\times", "visual_katex": true, "hotkey": "*", "value": ["multi", false], "type": 1, "move_cur": 1},
@@ -124,16 +128,27 @@ math_input = function (vars){
 		"log": {"visual": "\\log_{a}{b}", "visual_katex": true, "hotkey": "l", "value": ["log", ["number", "10", true], "comma", false, true], "type": 2, "with_selected": 3, "move_cur": 3, "eat_selected": false},
 		"cos": {"visual": "\\cos{(a)}", "visual_katex": true, "hotkey": "", "value": ["cos", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": false},
 		"sin": {"visual": "\\sin{(a)}", "visual_katex": true, "hotkey": "", "value": ["sin", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": false},
-		"tan": {"visual": "\\tan{(a)}", "visual_katex": true, "hotkey": "t", "value": ["tan", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": false},
+		"tan": {"visual": "\\tan{(a)}", "visual_katex": true, "hotkey": "", "value": ["tan", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": false},
+		"acos": {"visual": "\\cos^{-1}{(a)}", "visual_katex": true, "hotkey": "", "value": ["acos", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": false},
+		"asin": {"visual": "\\sin^{-1}{(a)}", "visual_katex": true, "hotkey": "", "value": ["asin", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": false},
+		"atan": {"visual": "\\tan^{-1}{(a)}", "visual_katex": true, "hotkey": "", "value": ["atan", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": false},
 		"()": {"visual": "()", "visual_katex": true, "hotkey": "(", "value": ["paren", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": false},
+		"fact": {"visual": "!{a}", "visual_katex": true, "hotkey": "!", "value": ["fact", false, true], "type": 2, "with_selected": 1, "move_cur": 1, "eat_selected": false},
 
 		"left": {"visual": "&#8592;", "visual_katex": false, "hotkey": 37, "value": function(element, instance){instance.cursor_seek(-1)}, "type": 3},
 		"right": {"visual": "&#8594;", "visual_katex": false, "hotkey": 39, "value": function(element, instance){instance.cursor_seek(1)}, "type": 3},
 		"del": {"visual": "&#9986;", "visual_katex": false, "hotkey": 8, "value": function(element, instance){instance.delete_selected()}, "type": 3},
 		"decrease": {"visual": "-", "visual_katex": true, "hotkey": "", "value": function(element, instance){instance.change_selected(-1);}, "type": 3},
 		"increase": {"visual": "+", "visual_katex": true, "hotkey": "", "value": function(element, instance){instance.change_selected(1);}, "type": 3},
+
+		"equal": {"visual": "=", "visual_katex": true, "hotkey": "=", "value": ["="], "type": 5},
+		"great": {"visual": ">", "visual_katex": true, "hotkey": ">", "value": [">"], "type": 5},
+		"less": {"visual": "<", "visual_katex": true, "hotkey": "<", "value": ["<"], "type": 5},
+		"great_equal": {"visual": "\\geqslant", "visual_katex": true, "hotkey": "", "value": ["\\geqslant"], "type": 5},
+		"less_equal": {"visual": "\\leqslant", "visual_katex": true, "hotkey": "", "value": ["\\leqslant"], "type": 5},
 	};
 	
+	var comparison_operrators = ["=", ">", "<", "\\geqslant", "\\leqslant"];
 	var possible_variables = ["A", "B", "C", "a", "b", "c", "e", "x", "y", "z", "n", "θ", "i", "j", "k"];
 	
 	for(key in possible_variables){
@@ -179,21 +194,26 @@ math_input = function (vars){
 	}
 
 	self.result = function(){
-
+		
 		if(self.hidden){return undefined};
 		
 		var operator_replacements = {"plus": " + ", "minus": " - ", "multi": " * ", "divide": " / "};
+		var angle_conversion_constants = {'rad': 1, 'deg': 57.2958};
 		var array_replacements = {
-			"main": {"pre": "(", "comma": "", "post": ")"},
+			"main": {"pre": "", "comma": "", "post": ""},
 			"pow": {"pre": " pow(", "comma": " , ", "post": ")"},
 			"frac": {"pre": "((", "comma": ")/(", "post": "))"},
 			"root": {"pre": " root[", "comma": ", ", "post": "]"},
 			"ln": {"pre": " log(", "comma": "", "post": ",e)"},
 			"log": {"pre": "log[", "comma": ",", "post": "]"},
-			"cos": {"pre": " cos(", "comma": "", "post": ")"},
-			"sin": {"pre": " sin(", "comma": "", "post": ")"},
-			"tan": {"pre": " tan(", "comma": "", "post": ")"},
+			"cos": {"pre": " cos(", "comma": "", "post": ")*"+angle_conversion_constants[self.angle_measure]},
+			"sin": {"pre": " sin(", "comma": "", "post": ")*"+angle_conversion_constants[self.angle_measure]},
+			"tan": {"pre": " tan(", "comma": "", "post": ")*"+angle_conversion_constants[self.angle_measure]},
+			"acos": {"pre": " acos(", "comma": "", "post": ")*"+angle_conversion_constants[self.angle_measure]},
+			"asin": {"pre": " asin(", "comma": "", "post": ")*"+angle_conversion_constants[self.angle_measure]},
+			"atan": {"pre": " atan(", "comma": "", "post": ")*"+angle_conversion_constants[self.angle_measure]},
 			"paren": {"pre": "(", "comma": "", "post": ")"},
+			"fact": {"pre": "factorial(", "comma": "", "post": ")"},
 
 			"plus": {"pre": "(", "comma": " + ", "post": ")"},
 			"minus": {"pre": "(", "comma": " - ", "post": ")"},
@@ -202,10 +222,14 @@ math_input = function (vars){
 
 			"variable": {"pre": "{", "comma": "", "post": "}"},
 			"number": {"pre": "", "comma": "", "post": ""},
+			
+			"=": {"pre": "=", "comma": "", "post": ""},
+			">": {"pre": "<", "comma": "", "post": ""},
+			"<": {"pre": ">", "comma": "", "post": ""},
+			"\\geqslant": {"pre": "<=", "comma": "", "post": ""},
+			"\\leqslant": {"pre": ">=", "comma": "", "post": ""},
 			};
-
-		var types = {};
-		temp_result = "";
+			
 		var get_value = function(i, input){
 			if($.isArray(input)){
 				types[input] = input[0];
@@ -249,7 +273,6 @@ math_input = function (vars){
 					}else if(typeof field == "number"){
 						temp_result += possible_variables[field];
 					}
-					
 					if($.isArray(field)){
 						res = get_value(i+1, field);
 						if(!res[1]){
@@ -264,9 +287,11 @@ math_input = function (vars){
 			}
 			return [i, true];
 		}
-
-		var res = get_value(0, self.data);
 		
+		
+		types = {};
+		temp_result = "";
+		var res = get_value(0, self.data);
 		if(res[1] && temp_result !== "()"){
 			// We need to switch the logical order of fields to do roots and log. Example square of 2: root(2, 4) = pow(4, 1/2)
 			var regex = /root\[(.*?), (.*?)]/g;
@@ -278,16 +303,21 @@ math_input = function (vars){
 			while(temp_result.search(regex) >= 0){
 				temp_result = temp_result.replace(/log\[(.*?),((.*?))]/g, "log(($2), ($1))");
 			}
-console.log(temp_result)
+			
+			var is_equation = ((temp_result.indexOf('=') > -1) || (temp_result.indexOf('>') > -1) || (temp_result.indexOf('<') > -1));
 			var is_expression = (temp_result.indexOf('{') > -1); 
-			if(!is_expression){
-				return new term(math.eval(temp_result));
-			}else{
+			if(is_equation){
+				return new equation(temp_result);
+			}else if(is_expression){
 				return new expression(temp_result);
+			}else{
+				return new term(math.eval(temp_result));
 			}
 		}else{
 			return false;
 		}
+		
+		
 	}
 
 	self.block = function(opp, index, input, input_block){
@@ -415,15 +445,27 @@ console.log(temp_result)
 				{"con": function(i){return block_peice === "cos"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\cos{(";}, "end": function(i){return ")}\\text{F"+(i-1)+"}"}},
 				{"con": function(i){return block_peice === "sin"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\sin{(";}, "end": function(i){return ")}\\text{F"+(i-1)+"}"}},
 				{"con": function(i){return block_peice === "tan"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\tan{(";}, "end": function(i){return ")}\\text{F"+(i-1)+"}"}},
+				{"con": function(i){return block_peice === "acos"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\cos^{-1}{(";}, "end": function(i){return ")}\\text{F"+(i-1)+"}"}},
+				{"con": function(i){return block_peice === "asin"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\sin^{-1}{(";}, "end": function(i){return ")}\\text{F"+(i-1)+"}"}},
+				{"con": function(i){return block_peice === "atan"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\tan^{-1}{(";}, "end": function(i){return ")}\\text{F"+(i-1)+"}"}},
 				{"con": function(i){return block_peice === "paren"}, "ins": function(i){return "\\text{S"+(i-1)+"}(";}, "end": function(i){return ")\\text{F"+(i-1)+"}"}},
+				{"con": function(i){return block_peice === "fact"}, "ins": function(i){return "\\text{S"+(i-1)+"}!";}, "end": function(i){return "\\text{F"+(i-1)+"}"}},
+
+				{"con": function(i){return block_peice === "="}, "ins": function(i){return "\\text{S"+(i-1)+"}=";}, "end": function(i){return "\\text{F"+(i-1)+"}"}},
+				{"con": function(i){return block_peice === ">"}, "ins": function(i){return "\\text{S"+(i-1)+"}>";}, "end": function(i){return "\\text{F"+(i-1)+"}"}},
+				{"con": function(i){return block_peice === "<"}, "ins": function(i){return "\\text{S"+(i-1)+"}<";}, "end": function(i){return "\\text{F"+(i-1)+"}"}},
+				{"con": function(i){return block_peice === "\\geqslant"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\geqslant";}, "end": function(i){return "\\text{F"+(i-1)+"}"}},
+				{"con": function(i){return block_peice === "\\leqslant"}, "ins": function(i){return "\\text{S"+(i-1)+"}\\leqslant";}, "end": function(i){return "\\text{F"+(i-1)+"}"}},
+
+				
 //				{"con": function(i){return block_peice === "inv"}, "ins": function(i){return "-"}},
 
-				{"con": function(i){return block_peice === "var_a"}, "ins": function(i){return ""}, "end": function(i){return "A"}},
-				{"con": function(i){return block_peice === "var_b"}, "ins": function(i){return ""}, "end": function(i){return "B"}},
-				{"con": function(i){return block_peice === "var_c"}, "ins": function(i){return ""}, "end": function(i){return "C"}},
-				{"con": function(i){return block_peice === "var_x"}, "ins": function(i){return ""}, "end": function(i){return "x"}},
-				{"con": function(i){return block_peice === "var_y"}, "ins": function(i){return ""}, "end": function(i){return "y"}},
-				{"con": function(i){return block_peice === "var_z"}, "ins": function(i){return ""}, "end": function(i){return "z"}},
+//				{"con": function(i){return block_peice === "var_a"}, "ins": function(i){return ""}, "end": function(i){return "A"}},
+//				{"con": function(i){return block_peice === "var_b"}, "ins": function(i){return ""}, "end": function(i){return "B"}},
+//				{"con": function(i){return block_peice === "var_c"}, "ins": function(i){return ""}, "end": function(i){return "C"}},
+//				{"con": function(i){return block_peice === "var_x"}, "ins": function(i){return ""}, "end": function(i){return "x"}},
+//				{"con": function(i){return block_peice === "var_y"}, "ins": function(i){return ""}, "end": function(i){return "y"}},
+//				{"con": function(i){return block_peice === "var_z"}, "ins": function(i){return ""}, "end": function(i){return "z"}},
 
 			];
 
@@ -584,7 +626,7 @@ console.log(temp_result)
 		var move_from_start = possible_math_inputs[key]["move_from_start"];
 		var eat_selected = possible_math_inputs[key]["eat_selected"];
 		
-		if(element === true && type != 3 && type != 1){
+		if(element === true && type != 1 && type != 3){
 			var check = self.block("get", self.cursor-2);
 			var check2 = self.block("get", self.cursor-3);
 			if(check != "number" && check != "variable"){
@@ -592,12 +634,15 @@ console.log(temp_result)
 				var type2 = self.block("type", self.cursor-1);
 				var same_array = (type1[1] === type2[1]);
 				
+				if(type === 5 && type1[1] !== "main"){
+					return;
+				}
+				
 				// Since true is always at the end of an array, we need to step out of it, unless we are at main (in which case there is nothing to step out of)
 				if(type1[1] !== "main"){
 					self.cursor += 1;
 				}
 				
-				// Findme
 				if(check2 !== "number" && check2 !== "variable" && !same_array){
 					self.cursor += 1;
 				}
@@ -607,6 +652,8 @@ console.log(temp_result)
 				self.cursor_seek(1);
 				self.new_input(key);
 				return;
+			}else if(type === 5){
+				self.cursor_seek(1);
 			}else if((((type !== 0 && check == "number") || check == "variable") && eat_selected !== true)){
 				var check = self.block("get", self.cursor+1);
 				if(!check == "comma"){
@@ -658,7 +705,12 @@ console.log(temp_result)
 					// check if previous thing is a number
 					if(self.block("get", self.cursor-2) == "number"){
 						var res = self.change_number_string(self.block("get", self.cursor-1), input, false);
-						self.block("set", self.cursor-1, res);
+						if(res === false){
+							self.cursor += -3;
+							self.block("set", self.cursor, false);
+						}else{
+							self.block("set", self.cursor-1, res);
+						}
 					}else{
 						self.block("ins", self.cursor, false);
 						self.block("ins", self.cursor, "multi");
@@ -691,7 +743,7 @@ console.log(temp_result)
 					ii += -1;
 				}
 			
-			// functions
+			// Special functions
 			}else if(type == 2){
 				// Check if they are of the same type
 				if(self.block("get", self.cursor+1) == input[0]){
@@ -748,6 +800,8 @@ console.log(temp_result)
 						self.block("ins", self.cursor, input);
 					}
 				}
+			
+			// Variables
 			}else if(type == 4){
 				if(element !== false){
 					self.block("ins", self.cursor, input);
@@ -755,6 +809,21 @@ console.log(temp_result)
 					self.cursor_seek(1);
 				}else{
 					self.block("set", self.cursor, input);
+				}
+			
+			// Comparison opperators
+			}else if(type == 5){
+				var type = self.block("type", self.cursor);
+				if(type[1] === "main"){
+					if(element === true){
+						self.block("ins", self.cursor, false);
+						self.block("ins", self.cursor, input);
+						self.cursor_seek(1);
+					}else if(element === false){
+						self.block("ins", self.cursor, input);
+						self.block("ins", self.cursor, false);
+						self.cursor_seek(1);
+					}
 				}
 			}
 			
@@ -827,7 +896,6 @@ console.log(temp_result)
 	
 	
 	self.delete_selected = function(){
-
 		var element = self.block("get", self.cursor);
 		if(self.cursor === 1){
 			if(element !== false && (type_of(element) != "array" || element[0] != "number")){
@@ -843,7 +911,24 @@ console.log(temp_result)
 		}
 		
 		var test = self.block("get", self.cursor-2);
-		if(test == "number"){
+		var element_1eft = self.block("get", self.cursor-1);
+		if(comparison_operrators.indexOf(element_1eft) > -1){
+			var element_right = self.block("get", self.cursor+1);
+			if(element === false && element_right === true){
+				self.block("del", self.cursor);
+				self.block("del", self.cursor-2);
+				self.cursor_seek(-1);
+				self.cursor_seek(-1);
+			}else{
+				if(element === false){
+					self.cursor_seek(1);
+				}
+				self.cursor_seek(1);
+				self.delete_selected();
+				return;
+			}
+
+		}else if(test == "number"){
 			element = self.block("get", self.cursor-1);
 			var number = element.replace(/[^0-9\.]/g, "");
 			
@@ -910,11 +995,12 @@ console.log(temp_result)
 	}
 
 	self.cursor_seek = function(direction){
+		var skip_vals = ["=", ">", "<", "\\geqslant", "\\leqslant"];
 		var length = self.block("len");
 		self.cursor = parseInt(self.cursor, 10);
 		self.cursor += direction;
 		var element = self.block("get", self.cursor);
-		while(element === null || (typeof element !== "object" && typeof element !== "boolean")){
+		while(element === null || (typeof element !== "object" && typeof element !== "boolean") || skip_vals.indexOf(element[0]) > -1){
 			self.cursor += direction;
 			if(self.cursor < 0){
 				self.cursor_seek(1);
