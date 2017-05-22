@@ -819,4 +819,27 @@ function getRating(rating) {
     return '★★★★★☆☆☆☆☆'.substring(5 - rating, 10 - rating );
 }
 
+var r = function (x) {
+    return `\\mathrm{` + x + `}`;
+};
+var d = function (y = r(`y`), x = `x`) {
+    return `\\dfrac{` + r(`d`) + y + `}{` + r(`d`) + x + `}`;
+};
+
+
+frac = {
+  form: function (a, b) {
+    if (a == b) {
+      return ``;
+    } else if (a == -b) {
+      return `-`;
+    } else if (a*b>0){
+	  return `+`+math_visuals.fraction.str(a,b);
+	}
+	else {
+      return math_visuals.fraction.str(a, b);
+    }
+  }
+};
+
 呵呵呵呵呵呵呵呵
