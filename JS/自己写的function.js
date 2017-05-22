@@ -131,38 +131,52 @@ var root = {
     },
 };
 
-math_visuals["quadratic"] = {
-    test: function (n) {
-        return (n == 1) ? `` : (n == -1) ? `-` : n;
-    },
-    str: function (a, b, c, x = `x`) { //
+
+//上次开跟
+
+var cubic_root = function(x) {
+  var b=x;  var a=1;
+  var array=math_tools.primes_below(math.ceil(math.pow(x,1/3)+1));
+  for (var i=0;i<array.length; i++){
+	for (var j=0; j<array.length;j++){
+	  if(b%math.pow(array[i],3)===0){
+		a=a*array[i];
+		b=b/math.pow(array[i],3);
+	  }
+	}
+  }
+  return ((b==1)?a:math_visuals.num_form.head(a)+`\\sqrt[3]{`+b+`}`);
+};
+
+math_quadratic = {
+    ans_array: function (a, b, c) { 
         var k = math.pow(b, 2) - 4 * a * c;
         if (k > 0) {
             var k1 = math_visuals.root.integer_part(k);
-            if (math.pow(k1, 2) == k) {
-                return x + `^{}_1=\\,` + math_visuals.fraction.str((-b + k1), 2 * a) +
-                    `\\space\\space ` + x + `^{}_2=\\,` + math_visuals.fraction.str((-b - k1), 2 * a);
-            }
             var k2 = math_visuals.root.sqrt_part(k);
-            var com = math_ngcd(b, k1, 2 * a);
+            var com = math.gcd(b, k1, 2 * a);
+            if (math.pow(k1, 2) == k) {
+                return [math_visuals.fraction.str((-b + k1), 2 * a), math_visuals.fraction.str((-b - k1), 2 * a)];
+            }
             b = b / com;
             k1 = k1 / com;
             var k3 = math.abs(a * 2 / com);
-            return (a > 0) ? (k3 == 1) ? x + `^{}_1=\\,` + (-b) + `+` + math_visuals.quadratic.test(k1) + k2 + `\\space
-
-                         ` + x + `^{}_2=\\,` + (-b) + `-` + math_visuals.quadratic.test(k1) + k2 :
-                x + `^{}_1=\\,\\dfrac{` + (-b) + `+` + math_visuals.quadratic.test(k1) + k2 + `}{` + k3 + `}\\space
-                         ` + x + `^{}_2=\\,\\dfrac{` + (-b) + `-` + math_visuals.quadratic.test(k1) + k2 + `}{` + k3 + `}` :
-                (k3 == 1) ? x + `^{}_1=\\,` + (b) + `-` + math_visuals.quadratic.test(k1) + k2 + `\\space
-                         ` + x + `^{}_2=\\,` + (b) + `+` + math_visuals.quadratic.test(k1) + k2 :
-                x + `^{}_1=\\,-\\dfrac{` + (-b) + `+` + math_visuals.quadratic.test(k1) + k2 + `}{` + k3 + `}\\space
-                         ` + x + `^{}_2=\\,\\dfrac{` + (b) + `+` + math_visuals.quadratic.test(k1) + k2 + `}{` + k3 + `}`;
+            return (a > 0) ? (k3 == 1) ? [(-b) + math_visuals.num_form.body(k1) + k2, (-b) + math_visuals.num_form.body(-k1) + k2] : [`\\dfrac{` + (-b) + math_visuals.num_form.body(k1) + k2 + `}{` + k3 + `}`, `\\dfrac{` + (-b) + math_visuals.num_form.body(-k1) + k2 + `}{` + k3 + `}`] :
+                (k3 == 1) ? [(b) + math_visuals.num_form.body(-k1) + k2, (b) + math_visuals.num_form.body(k1) + k2] : [`\\dfrac{` + (-b) + math_visuals.num_form.body(k1) + k2 + `}{` + k3 + `}`, `\\dfrac{` + (b) + math_visuals.num_form.body(k1) + k2 + `}{` + k3 + `}`];
         } else if (k === 0) {
-            return x + `^{}_1=\\,` + math_visuals.fraction.str(-b, 2 * a);
+            return [math_visuals.fraction.str(-b, 2 * a)];
         }
     },
-    tex: function (a, b, c) {
-        return tex(math_quadratic.str(a, b, c));
+    str: function (a, b, c, x = `x`) {
+        switch (math_quadratic.ans_array(a, b, c).length) {
+            case 1:
+                return x + `=` + ans_array[0];
+            case 2:
+                return x + `^{}_{1}=` + ans_array[0] + `, \\space` + x + `^{}_{2}=` + ans_array[1];
+        }
+    },
+    tex: function (a, b, c, x = `x`) {
+        return tex(math_quadratic.str(a, b, c, x = `x`));
     },
 };
 
@@ -843,3 +857,53 @@ frac = {
 };
 
 呵呵呵呵呵呵呵呵
+
+  array_extremum = function (array) {
+      var x_abs_max = 5;
+      var y_abs_max = 5;
+      for (var i = 0; i < array.length; i++) {
+          if (x_abs_max < math.abs(array[i][0])) {
+              x_abs_max = math.abs(array[i][0]);
+          }
+          if (y_abs_max < math.abs(array[i][1])) {
+              y_abs_max = math.abs(array[i][1]);
+          }
+      }
+      return [x_abs_max, y_abs_max];
+  };
+
+math_tools["points_to_equation.function"] = function (ponits, x) {
+    var array = math_tools.points_to_equation(points);
+    var sum = 0;
+    for (key in array) {
+        sum += array[key] * math.pow(x, key)
+    }
+    return sum
+}
+//手动添加magic keyboard方法
+[answer keyboard='{{"1","2","3","4","5","6","7","8","9","0"},{".","e","i","+","-","*","/"},{"^","frac","root","cos","sin","tan","()"},{"x_var","y_var","left","right","del"}}' angle_measure="deg"];
+
+
+//手动拖动点产生的方程。
+var line = function (x, time, vars) {
+    var points = [];
+    for (var key in vars) {
+        points.push(vars[key]);
+    }
+    var res = math_tools.points_to_equation(points);
+    var y = 0;
+    for (key in res) {
+        y += res[key] * Math.pow(x, parseInt(key));
+    }
+    return y;
+};
+    //
+
+var f=function (x){
+  var mutiply=1;
+  for (var i=0; i<=x; i++){
+    mutiply=mutiply*i
+  }
+  return mutiply;
+}
+
