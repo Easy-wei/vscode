@@ -1,9 +1,16 @@
+number_head_line_nr = false;
+
 Number.prototype.signed = function(){
     return (this<0?""+this:"+"+this);
 };
 
 Number.prototype.h = function(variable){
-	if(this == 0){return ''};
+	if(this == 0){
+		try { throw Error('') } catch(err) { temp = err.stack.split("\n")[2].split(':'); }
+		number_head_line_nr = temp[temp.length-2];
+		return '';
+	};
+	number_head_line_nr = false;
 	if(typeof variable === "undefined"){
 		return (this<0?""+this:"+"+this);
 	}else{
@@ -14,6 +21,12 @@ Number.prototype.h = function(variable){
 };
 
 Number.prototype.b = function(variable){
+	try { throw Error('') } catch(err) { temp = err.stack.split("\n")[2].split(':'); }
+	var line_nr = temp[temp.length-2];
+	if(number_head_line_nr == line_nr){
+		return this.h(variable);
+	}
+	number_head_line_nr = false;
 	if(this == 0){return ''};
 	if(typeof variable === "undefined"){
 		return (this<0?""+this:"+"+this);
@@ -392,22 +405,39 @@ math_tools["points_to_equation"] = function(points){
 var math_visuals = {}
 
 math_visuals['fraction'] = {
-  str:function(a,b){
-    var com=math_tools.gcd(math.abs(a),math.abs(b));
-    if(b===0){
+  str: function (a, b) {
+    var com = math_tools.gcd(math.abs(a), math.abs(b));
+    if (b === 0) {
       throw "the denominator can not be 0";
     }
-    a=a/com;b=b/com;
-    var j=math.abs(a)%math.abs(b);
-    var k=(math.abs(a)-math.abs(j))/math.abs(b);
-    return (a*b>=0)?(j===0)?``+k:`\\dfrac{`+math.abs(a)+`}{`+math.abs(b)+`}`:
-    (j===0)?`-`+k:`-\\dfrac{`+math.abs(a)+`}{`+math.abs(b)+`}`;
+    a = a / com;
+    b = b / com;
+    var j = math.abs(a) % math.abs(b);
+    var k = (math.abs(a) - math.abs(j)) / math.abs(b);
+    return (a * b >= 0) ? (j === 0) ? k : `\\dfrac{` + math.abs(a) + `}{` + math.abs(b) + `}` :
+      (j === 0) ? -k : `-\\dfrac{` + math.abs(a) + `}{` + math.abs(b) + `}`;
   },
-  tex:function(a,b){
-    return tex(math_visuals.fraction.str(a,b));
+  body: function (a, b) {
+    if (a == b) {
+      return `+`;
+    } else if (a == -b) {
+      return `-`;
+    } else if (a * b > 0) {
+      return `+` + math_visuals.fraction.str(a, b);
+    } else {
+      return math_visuals.fraction.str(a, b);
+    }
   },
-};
- 
+  end: function (a, b) {
+    if (a === 0) {
+      return ``;
+    } else if (a * b > 0) {
+      return `+` + math_visuals.fraction.str(a, b);
+    } else {
+      return math_visuals.fraction.str(a, b);
+    }
+  }
+}; 
 math_visuals.root = {
   process:function(n=` n`){
       var a=1; 
