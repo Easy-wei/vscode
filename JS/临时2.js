@@ -1,32 +1,34 @@
-var variable_1 = math_tools.rand_int(1, 99);
-var variable_2 = math_tools.rand_int(1, 99);
-
-self.text = function() {
-	return `What is `+variable_1/10+` + `+variable_2/10+`?`+
-  `[answers min='0' max='4' label_2='']`;
-};
-//关键在于这个位置的jsload
-self.post_load = function(){
-  dynamic_inputs = 2;
-  update_dynamic_inputs();
-};
-
-self.step_js = function(wrong_answer, step){
-};
-
-self.step = function(wrong_answer, step){
-	var steps = [
-		"First do this", 
-		"Then do that", 
-	];
-	return steps[step];
-};
-
-
-self.misconception = function(answer){
-	return 0; // Default
-};
-
-self.correct_answers = function() {
-	return (variable_1 + variable_2)/10;
+frac = {
+	str: function (a, b) {
+		var com = math_tools.gcd(math.abs(a), math.abs(b));
+		if (b === 0) {
+			throw "the denominator can not be 0";
+		}
+		a = a / com;
+		b = b / com;
+		var j = math.abs(a) % math.abs(b);
+		var k = (math.abs(a) - math.abs(j)) / math.abs(b);
+		return (a * b >= 0) ? (j === 0) ? k : `\\dfrac{` + math.abs(a) + `}{` + math.abs(b) + `}` :
+			(j === 0) ? -k : `-\\dfrac{` + math.abs(a) + `}{` + math.abs(b) + `}`;
+	},
+	body: function (a, b) {
+		if (a == b) {
+			return `+`;
+		} else if (a == -b) {
+			return `-`;
+		} else if (a * b > 0) {
+			return `+` + frac.str(a, b);
+		} else {
+			return frac.str(a, b);
+		}
+	},
+	end: function (a, b) {
+		if (a === 0) {
+			return ``;
+		} else if (a * b > 0) {
+			return `+` + frac.str(a, b);
+		} else {
+			return frac.str(a, b);
+		}
+	}
 };
