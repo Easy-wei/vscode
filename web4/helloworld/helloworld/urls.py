@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',view.hello),
     url(r'^fuck',view.fuck),
+    rul(r'^testdb$', testdb.testdb)
 ]
