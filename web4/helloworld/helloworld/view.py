@@ -2,8 +2,12 @@ from django.http import HttpResponse
 from django.shortcuts import render
  
 def hello(request):
-    return HttpResponse("Hello world ! ")
+    context = {}
+    context['hello']='helloworldcontext333'
+    return render(request, 'hello.html',context)
 
 
 def fuck (request):
-    return HttpResponse('U')
+    context = {}
+    context['hello']='helloworldcontext333'
+    return render(request, 'fuck.html',context)
