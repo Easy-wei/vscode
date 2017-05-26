@@ -1,48 +1,36 @@
-var v1 = math_tools.rand_int(1, 9);
-var v2 = math_tools.rand_int(-9, 9,[0]);
-var v4 = math_tools.rand_int(-9, 9);
+  do {
+  	var v1 = math_tools.rand_int(-8, 8, [0, 1, -1]);
+  	var v3 = math_tools.rand_int(2, 9);
+  }
+  while (v1 == v3);
 
-var r = function (x) {    return `\\mathrm{` + x + `}`;};
-var d = function (y = r(`y`), x = `x`) {    return `\\dfrac{` + r(`d`) + y + `}{` + r(`d`) + x + `}`;};
+  var v2 = math_tools.rand_int(2, 9);
 
+  var part1 = math_visuals.polynomial(v1) + `x` + (v2).signed();
 
-var f_1_equation = math_visuals.polynomial(v1,`x^{2}`,v2);
-var f_equation = math_visuals.polynomial(math_visuals.fraction.str(v1,3),`x^{3}`,v2,`x`,`+k`);
-var f= function(x){ return v1/3*Math.pow(x,3)+v2*x+v4;};
+  self.text = function () {
+  	return `Carry out the following indefinite integrations, and state the values of ~x~ for which your answer is valid. 
+~\\bold{d)}\\,\\,\\,\\displaystyle\\int{\\dfrac{` + v3 + `}{` + part1 + `}` + `}dx~
+		[answer keyoard='equation_ln_x']`;
+  };
 
-do{
-var v3 = math_tools.rand_int(-3, 3);
-}while(f(v3)%1!==0);
+  self.text_js = function () {};
 
-self.text = function() {
-	return `A curve passes through the point (`+v3+`,`+f(v3)+`) and satisfies ~`+d()+`=`+f_1_equation+`~. Find ~`+r(`y`)+`~ in terms of ~x~.
-	~`+r(`y`)+`=~ [answer keyboard='equation_xyk']`;
-};
+  self.step_js = function (wrong_answer, step) {};
 
-self.text_js = function(){
-};
+  self.step = function (wrong_answer, step) {
+  	var steps = [
+  		`~\\displaystyle\\int{\\dfrac{1}{` + part1 + `}x}dx~`,
+  		`~=\\,` + math_visuals.fraction.str(v3, v1) + `\\displaystyle\\int{\\dfrac{1}{` + part1 + `}d(` + part1 + `)}~`,
+  		`~=\\,` + ((v1 == -v3) ? `-` : math_visuals.fraction.str(v3, v1)) + `\\ln{(` + part1 + `)}~`,
+  	];
+  	return steps[step];
+  };
 
-self.step_js = function(misconception, step){
-};
-
-self.step = function(misconception, step){
-	var steps = [
-		`~f'(x)=`+f_1_equation+`~`,
-	  `So ~f(x)=`+f_equation+`~`,
-	  `because the graph pass through the point~(`+v3+`,`+f(v3)+`)~ `,
-	  `~f(`+v3+`)=`+math_visuals.polynomial(math_visuals.fraction.str(v1,3),`\\times`,v3+`^{3}`,v2,`\\times`+v3,`+k`)+`=`+f(v3)+`~`,
-	  `So ~k=`+v4+`~`,
-	  `So ~`+r(`y`)+`=`+math_visuals.polynomial(math_visuals.fraction.str(v1,3),`x^{3}`,v2,`x`,v4)+`~`,
-
-	];
-	return steps[step];
-};
-
-
-self.misconception = function(answer){
-	return 0; // Default
-};
-
-self.correct_answers = function() {
-	return new expression(v1/2+`*{x}*{x}`+v2.signed()+`*{x}`+v4.signed());
-};
+  self.misconception = function (answer) {
+  	return 0; // Default
+  };
+  var ans = v3 / v1 + `*ln(` + v1 + `*{x}` + v2.signed() + `))`;
+  self.correct_answers = function () {
+  	return [ans];
+  };
