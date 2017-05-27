@@ -491,11 +491,7 @@ math_tools["round"] = function (number, decimals) {
     return s_x;
 };
 
-<<
-<<
-<<
-<
-HEAD: 自己写的function.js `(Tabulate your intermediate steps[exercise_only] as shown[/exercise_only].  Input values to ` + tex(`3`) + ` decimal places when required)<br>`
+
 
 
 //求质数的方法1的错误，原因：在核心区域
