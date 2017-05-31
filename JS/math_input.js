@@ -1,4 +1,8 @@
 math_input = function (vars){
+	if(typeof vars === "undefined"){
+		throw('Error: Required arguments not given. See /static/docs/math_input.html');
+	}
+	
 	var self = this;
 	
 	// This only runs the first time we register a new input
@@ -18,7 +22,7 @@ math_input = function (vars){
 		math_input_instances.push(this);
 	}
 
-	keyboard_presets = {
+	self.keyboard_presets = {
 		"full": 	[["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "pi", "e", "i", "+", "-", "*", "/"], ["^", "frac", "root", "cos", "sin", "tan", "()", "fact"], ["left", "right", "del"]],
 		"full_xy": 	[["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "pi", "e", "i", "+", "-", "*", "/"], ["^", "frac", "root", "cos", "sin", "tan", "()"], ["x_var", "y_var", "left", "right", "del"]],
 		"full_xyk": 	[["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], [".", "pi", "e", "i", "+", "-", "*", "/"], ["^", "frac", "root", "cos", "sin", "tan", "()"], ["x_var", "y_var", "k_var", "left", "right", "del"]],
@@ -54,7 +58,7 @@ math_input = function (vars){
 	}
 
 	if(!$.isArray(vars.keyboard)){
-		vars.keyboard = keyboard_presets[vars.keyboard];
+		vars.keyboard = self.keyboard_presets[vars.keyboard];
 	}
 	
 	self.color = (typeof vars.color === undefined ? "#000000" : vars.color);
@@ -98,8 +102,8 @@ math_input = function (vars){
 	// with_selected is where in the array to move the currently selected input. 
 	// move_cur moves the cursor to a specific point in the array. Positive values counts from start of array, negative from end.
 
-	possible_math_inputs = {
-		"minus": {"value": "-", "type": 0},
+	self.possible_math_inputs = {
+		"minus": {"value": "-", "type": 0}, // This one is special as it doesn't appear in the keyboard
 
 		"0": {"visual": "0", "visual_katex": true, "hotkey": "0", "value": "0", "type": 0},
 		"1": {"visual": "1", "visual_katex": true, "hotkey": "1", "value": "1", "type": 0},
@@ -152,7 +156,7 @@ math_input = function (vars){
 	var possible_variables = ["A", "B", "C", "a", "b", "c", "e", "x", "y", "z", "n", "θ", "i", "j", "k"];
 	
 	for(key in possible_variables){
-		possible_math_inputs[possible_variables[key]+"_var"] = {"visual": possible_variables[key], "visual_katex": true, "hotkey": possible_variables[key], "value": ["variable", parseInt(key), true], "type": 4, "move_cur": 1};
+		self.possible_math_inputs[possible_variables[key]+"_var"] = {"visual": possible_variables[key], "visual_katex": true, "hotkey": possible_variables[key], "value": ["variable", parseInt(key), true], "type": 4, "move_cur": 1};
 	}
 
 	self.update_keyboard = function(enabled_inputs){
@@ -163,10 +167,10 @@ math_input = function (vars){
 		for (row in enabled_inputs){
 			for (id in enabled_inputs[row]){
 				input_id = enabled_inputs[row][id];
-				if(possible_math_inputs[input_id]["visual_katex"]){
-					html += '<span id="'+input_id+'" class="'+button_classes+'">'+katex.renderToString(possible_math_inputs[input_id]["visual"])+'</span>';
+				if(self.possible_math_inputs[input_id]["visual_katex"]){
+					html += '<span id="'+input_id+'" class="'+button_classes+'">'+katex.renderToString(self.possible_math_inputs[input_id]["visual"])+'</span>';
 				}else{
-					html += '<span id="'+input_id+'" class="'+button_classes+'">'+possible_math_inputs[input_id]["visual"]+'</span>';
+					html += '<span id="'+input_id+'" class="'+button_classes+'">'+self.possible_math_inputs[input_id]["visual"]+'</span>';
 				}
 			}
 			html += "<br />";
@@ -619,12 +623,12 @@ math_input = function (vars){
 	
 	self.new_input = function(key, instance){
 		var element = self.block("get", self.cursor);
-		var input = possible_math_inputs[key]["value"];
-		var type = possible_math_inputs[key]["type"];
-		var with_selected = possible_math_inputs[key]["with_selected"];
-		var move_cur = possible_math_inputs[key]["move_cur"];
-		var move_from_start = possible_math_inputs[key]["move_from_start"];
-		var eat_selected = possible_math_inputs[key]["eat_selected"];
+		var input = self.possible_math_inputs[key]["value"];
+		var type = self.possible_math_inputs[key]["type"];
+		var with_selected = self.possible_math_inputs[key]["with_selected"];
+		var move_cur = self.possible_math_inputs[key]["move_cur"];
+		var move_from_start = self.possible_math_inputs[key]["move_from_start"];
+		var eat_selected = self.possible_math_inputs[key]["eat_selected"];
 		
 		if(element === true && type != 1 && type != 3){
 			var check = self.block("get", self.cursor-2);
@@ -673,11 +677,11 @@ math_input = function (vars){
 					self.cursor += 1;
 					self.block("ins", self.cursor, false);
 					self.block("ins", self.cursor, false);
-					self.block("set", self.cursor, possible_math_inputs[key]["value"][0]);
+					self.block("set", self.cursor, self.possible_math_inputs[key]["value"][0]);
 					self.cursor_seek(1);
 				}else{
 					self.block("ins", self.cursor, false);
-					self.block("ins", self.cursor, possible_math_inputs[key]["value"][0]);
+					self.block("ins", self.cursor, self.possible_math_inputs[key]["value"][0]);
 					self.cursor_seek(1);
 				}
 				return;
@@ -1039,7 +1043,7 @@ math_input = function (vars){
 					var match = false;
 					for(var row in math_input_selected.keyboard){
 						for(var key in math_input_selected.keyboard[row]){
-							hotkey = possible_math_inputs[math_input_selected.keyboard[row][key]]["hotkey"];
+							hotkey = self.possible_math_inputs[math_input_selected.keyboard[row][key]]["hotkey"];
 							if((typeof hotkey == "string" && hotkey == e.key) || (typeof hotkey == "number" && hotkey == e.which)){
 								math_input_selected.new_input(math_input_selected.keyboard[row][key], math_input_selected);
 								match = true;

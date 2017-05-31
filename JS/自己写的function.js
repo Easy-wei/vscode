@@ -809,21 +809,6 @@ var d = function (y = r(`y`), x = `x`) {
 };
 
 
-frac = {
-  form: function (a, b) {
-    if (a == b) {
-      return ``;
-    } else if (a == -b) {
-      return `-`;
-    } else if (a*b>0){
-	  return `+`+math_visuals.fraction.str(a,b);
-	}
-	else {
-      return math_visuals.fraction.str(a, b);
-    }
-  }
-};
-
 呵呵呵呵呵呵呵呵
 
   array_extremum = function (array) {

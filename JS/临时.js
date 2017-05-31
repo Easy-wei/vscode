@@ -1,36 +1,46 @@
-  do {
-  	var v1 = math_tools.rand_int(-8, 8, [0, 1, -1]);
-  	var v3 = math_tools.rand_int(2, 9);
-  }
-  while (v1 == v3);
+var variable_1 = math_tools.rand_int(1, 99);
+var variable_2 = math_tools.rand_int(1, 99);
 
-  var v2 = math_tools.rand_int(2, 9);
+var circle = function (x) {
+  return Math.sqrt(16 - x * x);
+};
 
-  var part1 = math_visuals.polynomial(v1) + `x` + (v2).signed();
+self.text = function () {
+  return `What is ` + variable_1 / 10 + ` + ` + variable_2 / 10 + `?
+	[answer]`;
+};
 
-  self.text = function () {
-  	return `Carry out the following indefinite integrations, and state the values of ~x~ for which your answer is valid. 
-~\\bold{d)}\\,\\,\\,\\displaystyle\\int{\\dfrac{` + v3 + `}{` + part1 + `}` + `}dx~
-		[answer keyoard='equation_ln_x']`;
-  };
+self.text_js = function () {};
 
-  self.text_js = function () {};
+self.step_js = function (misconception, step) {
+  g = new graphic({
+    'input_element': "graph",
+    'low_x': -12,
+    'high_x': 13,
+    'low_y': -12,
+    'high_y': 12
+  });
+  g.add_element({
+    'type': 'grid'
+  });
+  g.add_element({
+    'type': 'graph',
+    'function': circle
+  });
+};
 
-  self.step_js = function (wrong_answer, step) {};
+self.step = function (misconception, step) {
+  var steps = [
+    `<div id= 'graph'></div>`,
+  ];
+  return steps[step];
+};
 
-  self.step = function (wrong_answer, step) {
-  	var steps = [
-  		`~\\displaystyle\\int{\\dfrac{1}{` + part1 + `}x}dx~`,
-  		`~=\\,` + math_visuals.fraction.str(v3, v1) + `\\displaystyle\\int{\\dfrac{1}{` + part1 + `}d(` + part1 + `)}~`,
-  		`~=\\,` + ((v1 == -v3) ? `-` : math_visuals.fraction.str(v3, v1)) + `\\ln{(` + part1 + `)}~`,
-  	];
-  	return steps[step];
-  };
 
-  self.misconception = function (answer) {
-  	return 0; // Default
-  };
-  var ans = v3 / v1 + `*ln(` + v1 + `*{x}` + v2.signed() + `))`;
-  self.correct_answers = function () {
-  	return [ans];
-  };
+self.misconception = function (answer) {
+  return 0; // Default
+};
+
+self.correct_answers = function () {
+  return (variable_1 + variable_2) / 10;
+};
