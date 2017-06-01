@@ -836,6 +836,7 @@ math_tools["points_to_equation.function"] = function (ponits, x) {
 //手动添加magic keyboard方法
 [answer keyboard='{{"1","2","3","4","5","6","7","8","9","0"},{".","e","i","+","-","*","/"},{"^","frac","root","cos","sin","tan","()"},{"x_var","y_var","left","right","del"}}' angle_measure="deg"];
 
+[answer keyboard='{{"1","2","3","4","5","6","7","8","9","0"},{".","e","i","+","-","*","/"},{"^","frac","cos","sin","tan","root","ln","()"},{"x_var","k_var","left","right","del"}}' angle_measure="deg"]
 
 //手动拖动点产生的方程。
 var line = function (x, time, vars) {
