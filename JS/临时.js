@@ -1,46 +1,6 @@
-var variable_1 = math_tools.rand_int(1, 99);
-var variable_2 = math_tools.rand_int(1, 99);
-
-var circle = function (x) {
-  return Math.sqrt(16 - x * x);
-};
-
-self.text = function () {
-  return `What is ` + variable_1 / 10 + ` + ` + variable_2 / 10 + `?
-	[answer]`;
-};
-
-self.text_js = function () {};
-
-self.step_js = function (misconception, step) {
-  g = new graphic({
-    'input_element': "graph",
-    'low_x': -12,
-    'high_x': 13,
-    'low_y': -12,
-    'high_y': 12
-  });
-  g.add_element({
-    'type': 'grid'
-  });
-  g.add_element({
-    'type': 'graph',
-    'function': circle
-  });
-};
-
-self.step = function (misconception, step) {
-  var steps = [
-    `<div id= 'graph'></div>`,
-  ];
-  return steps[step];
-};
-
-
-self.misconception = function (answer) {
-  return 0; // Default
-};
-
-self.correct_answers = function () {
-  return (variable_1 + variable_2) / 10;
-};
+  var g1= new g1raphic({'input_element':'g2','low_x':coord[0][0],'hig1h_x':coord[0][1],'low_y':coord[1][0],'hig1h_y':coord[1][1],});
+  g1.add_element({'type':'g1rid'});
+  g1.add_element({'type':'g1raph', 'function':f,'min_x':0});
+  g1.add_element({'type':'dot', 'pos':[v1,f(v1)]});
+  g1.add_element({'type':'label', 'text':'P','pos':[v1+0.7,f(v1)]});
+  g1.add_element({'type':'g1raph', 'function':f_1, 'max_x':v1,'min_x':0,'fill':'true','fill_baseline':f});  
