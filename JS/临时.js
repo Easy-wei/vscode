@@ -1,7 +1,12 @@
-  g1.add_element({'type':'label', 'text':1, 'pos':[1,-0.5]});
-  g1.add_element({'type':'label', 'text':'s', 'pos':[6,-0.5]});
-  
-  g1.add_element({'type':'graph', 'function':f,'min_x':1, 'max_x':6, 'fill':'true','fill_baseline':0,'color':'#CE93D8'});
-  g1.add_element({'type':'graph', 'function':f,'min_x':0});
-  g1.add_element({'type':'line', 'start':[1,0],'end':[1,f(1)]});
-  g1.add_element({'type':'line', 'start':[6,0],'end':[6,f(6)]});
+math.fraction = function (a, b) {
+    var com = math_tools.gcd(math.abs(a), math.abs(b));
+    if (b === 0) {
+        throw "the denominator can not be 0";
+    }
+    a = a / com;
+    b = b / com;
+    var j = math.abs(a) % math.abs(b);
+    var k = (math.abs(a) - math.abs(j)) / math.abs(b);
+    return (a * b >= 0) ? (j === 0) ? k : `\\frac{` + math.abs(a) + `}{` + math.abs(b) + `}` :
+        (j === 0) ? -k : `-\\frac{` + math.abs(a) + `}{` + math.abs(b) + `}`;
+}
