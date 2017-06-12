@@ -7,9 +7,9 @@ from time import sleep
 def main():
     url='https://www.zhihu.com/question/22591304/followers'
 #感觉这个话题下面美女多
-    headers={省略}
+    headers={}
     i=1
-    for x in xrange(20,3600,20):
+    for x in range(20,3600,20):
         data={'start':'0','offset':str(x),'_xsrf':'a128464ef225a69348cef94c38f4e428'}
         #知乎用offset控制加载的个数，每次响应加载20
 
@@ -26,12 +26,12 @@ def main():
                 #声明存储地址及图片名称
                 urllib.urlretrieve(pic,path)
                 #下载图片
-                #print u'download'+str(i)+u'张图片'
+                print (u'download'+str(i)+u'pit')
                 i+=1
                 sleep(random.uniform(0.5,1))
                 #睡眠函数用于防止爬取过快被封IP
             except:
-                print u'抓漏1张'p
+                print (u'1')
                 pass
         sleep(random.uniform(0.5,1))
 
