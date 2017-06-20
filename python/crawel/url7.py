@@ -4,7 +4,7 @@ import http.cookiejar
  
 
 def saveFile(data):
-    save_path = 'd:\\url.txt'
+    save_path = 'd:\\url.html'
     f_obj = open (save_path,'wb') #wb 表示打开方式
     f_obj.write(data)
     f_obj.close()

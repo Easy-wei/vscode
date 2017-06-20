@@ -878,3 +878,6 @@ var frac = function (a, b) {
     return (a * b >= 0) ? (j === 0) ? k : `\\frac{` + math.abs(a) + `}{` + math.abs(b) + `}` :
         (j === 0) ? -k : `-\\frac{` + math.abs(a) + `}{` + math.abs(b) + `}`;
 };
+
+
+var inte=function(x,a=``,b=``,y=`x`){ return `\\displaystyle\\int^{`+b+`}_{`+a+`}{`+x+`}\\,\\mathrm{d}`+y;};
