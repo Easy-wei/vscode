@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from Tkinter import *
+from tkinter import *
 
 class APP:
     
@@ -14,7 +14,7 @@ class APP:
         self.hi_nihao.pack()
 
     def say_hi(self):
-        print "大家吼啊?"
+        print ("大家吼啊?")
 
 
 root = Tk()
