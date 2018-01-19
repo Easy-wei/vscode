@@ -24,17 +24,22 @@ def prime1(x):
                 k = 0
                 break
             
-        if k==0:
+        if k==1:
             continue
         else:
             a.append(i)
     return a
 
 start = time.clock()
-a = prime (100)
-end = time.clock()
-b = (end-start)
-print (b)
+a = prime (100000)
+end = time.clock()-start
+print (end)
+
+start = time.clock()
+b = prime1 (100000)
+end = time.clock()-start
+print (end)
+print ( b )
 
 """
 t= time.time
