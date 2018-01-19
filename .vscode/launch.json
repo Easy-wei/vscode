@@ -3,20 +3,6 @@
     "configurations": [
         
         {
-<<<<<<< HEAD
-            "type": "chrome",
-            "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceRoot}"
-        },
-        {
-            "type": "chrome",
-            "request": "attach",
-            "name": "Attach to Chrome",
-            "port": 9222,
-            "webRoot": "${workspaceRoot}"
-=======
             "name": "Python",
             "type": "python",
             "request": "launch",
@@ -178,7 +164,6 @@
             "port": 3000,
             "secret": "my_secret",
             "host": "localhost"
->>>>>>> 12f6551020ab1c5324b09c8d1e2d192852d3aaf6
         }
     ]
 }

@@ -353,7 +353,7 @@ if __name__=='__main__':
 
 """
 
-"""def demo(t):
+def demo(t):
     array=[[1],[1,1]]
     for i in range (2,t):
         array1=[]
@@ -366,6 +366,6 @@ if __name__=='__main__':
                 array1.append(array[i-1][j-1]+array[i-1][j])
         array.append(array1)
     return array
-"""
+
 print ('a')
-#print ( lis = demo(10) , 'a')
+print ( lis = demo(10) )
