@@ -94,21 +94,20 @@ print (demo(lis))
 #杨辉三角
 
 def demo(t):
-    array=[[1],[1,1]]
-    for i in range (2,t):
-        array1=[]
+    array=[[1],[1,1]] # 先写好杨辉三角的前两行
+    for i in range (2,t):  # 
+        array1=[]    # 设置一个空数组 作为array一行一行的填充
         for j in range(0,i+1):
             if j==0:
-                array1.append(1)
+                array1.append(1) #左右均取1
             elif j==(i):
-                array1.append(1)
+                array1.append(1)  #左右均取1
             else:
-                array1.append(array[i-1][j-1]+array[i-1][j])
+                array1.append(array[i-1][j-1]+array[i-1][j])  # 某行的某列等于上一行的左列加相邻右列
         array.append(array1)
     return array
 
-lis=demo(10)
-
+lis = demo(10)
 for i in range (len(lis)):
     print (lis[i])
 
@@ -124,6 +123,7 @@ def prime(x):
             if i%j==0:
                 k=1
                 break
+            
         if k==1:
             continue
         else:
@@ -353,19 +353,3 @@ if __name__=='__main__':
 
 """
 
-def demo(t):
-    array=[[1],[1,1]]
-    for i in range (2,t):
-        array1=[]
-        for j in range(0,i+1):
-            if j==0:
-                array1.append(1)
-            elif j==(i):
-                array1.append(1)
-            else:
-                array1.append(array[i-1][j-1]+array[i-1][j])
-        array.append(array1)
-    return array
-
-print ('a')
-print ( lis = demo(10) )
