@@ -1,4 +1,8 @@
-from math import pi as PI
+import random
+
+# from math import pi as PI
+
+
 """
 def circleare(a):
     if isinstance(a,int) or isinstance(a,float):
@@ -195,7 +199,7 @@ print (demo(1,2,3,5,6,3,32,56,67,34,5,876,654))
 
 """
 # filename:myarray.py
-#function description: array and its operating
+# function description: array and its operating
 
 """
 
@@ -352,4 +356,28 @@ if __name__=='__main__':
     print ('Please use me as a module')
 
 """
+# 冒泡算法
 
+
+def sort(array):
+    n = len(array)
+    k = n
+    for i in range(n):
+        flag = 1
+        for j in range(1, k):
+            if array[j-1] > array[j]:
+                array[j-1], array[j] = array[j], array[j-1]
+                k = j
+                flag = 0
+            else:
+                pass
+        if flag == 1:
+            break
+    return array
+
+
+array_ex = [random.randint(1, 20) for i in range(random.randint(1, 20))]
+
+print(array_ex)
+
+print(sort(array_ex))
