@@ -1,13 +1,15 @@
-
-#encoding:UTF-8
-import urllib.request
+import requests
  
-url = "https://www.baidu.com"
-data = urllib.request.urlopen(url)
-
-print (type(data))
-
-print (data.geturl(),'s',data.getheader())
-
-print (data.info())
-#print(data)
+response  = requests.get("https://www.baidu.com")
+print(type(response))
+print(response.status_code)
+print(type(response.text))
+ 
+response.enconding = "utf-8"
+#print(response.text)
+print ('AA')
+print(response.cookies)
+ 
+print(response.content)
+print('BB')
+print(response.content.decode("utf-8"))

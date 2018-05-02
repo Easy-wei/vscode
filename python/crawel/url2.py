@@ -22,7 +22,7 @@ def main():
                 img=img.replace('\\','')
                 #去掉\字符这个干扰成分
                 pic=img+'.jpg'
-                path='d:\\bs4\\zhihu\\jpg\\'+str(i)+'.jpg'
+                path='e:\\bs4\\zhihu\\jpg\\'+str(i)+'.jpg'
                 #声明存储地址及图片名称
                 urllib.urlretrieve(pic,path)
                 #下载图片

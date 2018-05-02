@@ -1,4 +1,8 @@
-from math import pi as PI
+import random
+
+# from math import pi as PI
+
+
 """
 def circleare(a):                 #求直径
     if isinstance(a,int) or isinstance(a,float):
@@ -31,6 +35,8 @@ print (demo('aDaaaadsdfdfdsfasdFADSFASDFDSfdadsfafsDFADd '))
 
 
 # 找到一个list，从中第k个数截取，然后前k个数排序，后n-k个数排序，然后重组。
+# 给出下角标k，然后前k哥数逆序放到最后，后n-k逆序放到前面
+
 def demo(list,k):
     if k>len(list):
         print ('k is over the lenght of list')
@@ -56,7 +62,7 @@ def demo(t):
     while b<t:
         a=a+b
         array.append(a)
-        a,b=b,a+b#右侧ab两值都是比较old的那种，不会和左侧新值产生循环赋值问题（系统内部产生第三个变量作为寄存单位，如下例所示）
+        a,b=b,a+b  # 右侧ab两值都是比较old的那种，不会和左侧新值产生循环赋值问题（系统内部产生第三个变量作为寄存单位，如下例所示）
     return array
 
 print (demo(130))
@@ -79,7 +85,7 @@ print (demo(130))
 
 
 import random
-
+# 返回最小值的下角标
 def demo(lis):
     a=min(lis)
     for i in range (len(lis)-1):
@@ -97,20 +103,20 @@ print (demo(lis))
 #杨辉三角
 
 def demo(t):
-    array=[[1],[1,1]]
-    for i in range (2,t):
-        array1=[]
+    array=[[1],[1,1]] # 先写好杨辉三角的前两行
+    for i in range (2,t):  # 
+        array1=[]    # 设置一个空数组 作为array一行一行的填充
         for j in range(0,i+1):
             if j==0:
-                array1.append(1)
+                array1.append(1) #左右均取1
             elif j==(i):
-                array1.append(1)
+                array1.append(1)  #左右均取1
             else:
-                array1.append(array[i-1][j-1]+array[i-1][j])
+                array1.append(array[i-1][j-1]+array[i-1][j])  # 某行的某列等于上一行的左列加相邻右列
         array.append(array1)
     return array
 
-lis=demo(10)
+lis = demo(10)
 for i in range (len(lis)):
     print (lis[i])
 
@@ -126,6 +132,7 @@ def prime(x):
             if i%j==0:
                 k=1
                 break
+            
         if k==1:
             continue
         else:
@@ -199,13 +206,15 @@ print (demo(1,2,3,5,6,3,32,56,67,34,5,876,654))
 # filename:myarray.py
 # function description: array and its operating
 
+"""
+
 import types
 
 
 class MyArray:
-     all the elements in this array must be numbers
-    __value = []
-    __size = 0
+    #all the elements in this array must be numbers
+    __value=[]
+    __size=0
 
     def __IsNumber(self, n):
         if type(n) != types.ComplexType and type(n) != types.FloatType and type(n) != types.IntType and type(n) != types.LongType:
@@ -354,3 +363,29 @@ if __name__ == '__main__':
     print('Please use me as a module')
 """
 
+"""
+# 冒泡算法
+
+
+def sort(array):
+    n = len(array)
+    k = n
+    for i in range(n):
+        flag = 1
+        for j in range(1, k):
+            if array[j-1] > array[j]:
+                array[j-1], array[j] = array[j], array[j-1]
+                k = j
+                flag = 0
+            else:
+                pass
+        if flag == 1:
+            break
+    return array
+
+
+array_ex = [random.randint(1, 20) for i in range(random.randint(1, 20))]
+
+print(array_ex)
+
+print(sort(array_ex))
