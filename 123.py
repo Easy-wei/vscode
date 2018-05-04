@@ -1,21 +1,2 @@
-
-def demo(newitem,old_item=[]):
-    old_item.append(newitem)
-    return old_item
-
-print(demo('5',[1,2,3,4]))
-print(demo('aaa',['bb','cd']))
-print (demo('a'))
-print (demo('b'))
-
-
-def demo2(newitem, old_item=1):
-    if old_item ==1:
-        old_item= []
-    old_item.append(newitem)
-    return old_item
-
-print(demo2('5',[1,2,3,4]))
-print(demo2('aaa',['bb','cd']))
-print (demo2('a'))
-print (demo2('b'))
+ab8bd593817db867df2e0cbb1ee9dc5d gist_id
+ab0f9d7dd4dc4f29c6b454c74beeeb587d02dd7c  token 令牌
