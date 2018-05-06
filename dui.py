@@ -11,7 +11,7 @@ heapq.heapreplace(a,5)
 
 print (a)
 1524762811687
-"""
+
 class Root:
     __total = 0
     def __init__(self,v):
@@ -21,6 +21,7 @@ class Root:
     def show(self):
         print('self__value:',self.__value)
         print('Root.__total:',Root.__total)
+        
         print('self__total:',self.__total)
 
     @classmethod
@@ -39,3 +40,25 @@ rr= Root(5)
 
 r.show()
 rr.show()
+"""
+
+class Celsius:
+    def __init__(self, t = 0):
+        self.temperature = t
+
+    def get_temperature(self):
+        print("Getting value")
+        return self._temperature
+
+    def set_temperature(self, value=6):
+        if value < -273:
+            raise ValueError("Temperature below -273 is not possible")
+        print("Setting value")
+        self._temperature = value
+
+    temperature = property(get_temperature,set_temperature)
+
+c= Celsius()
+c.temperature
+print(c.temperature)
+print(Celsius.temperature)
