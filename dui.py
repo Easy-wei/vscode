@@ -56,7 +56,7 @@ class Celsius:
         print("Setting value")
         self._temperature = value
 
-    temperature = property(get_temperature,set_temperature)
+    temperature = property(get_temperature,set_temperature)#这个temperature是类属性吗？还是类方法
 
 c= Celsius()
 c.temperature
