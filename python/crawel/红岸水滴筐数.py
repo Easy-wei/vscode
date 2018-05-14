@@ -16,27 +16,62 @@
 以时间为键，获得的json作为值，写成字典，到时候十分钟统一写入text中
 """
 import requests
-import os
 import json
 import time
+import threading
 
+result = dict()
+url = 'http://tv.honganrobots.com/get_count'
+
+
+def getCount():
+    times = time.asctime()
+    response = requests.get(url).text
+    result[times] = response
+    with open ("红岸水滴筐数统计.txt",'a+') as f1:
+        f1.write(str(result))
+    t = threading.Timer(6,getCount)
+    t.start()
+    print (result)
+
+def storageText(a):
+    with open ('红岸水滴筐数统计.txt','a+') as f1:
+        f1.write(a)
+    """
+    t = threading.Timer(6,storageText)
+    # 10min中写入一次，否则硬盘占用太高了。
+    t.start()
+"""
+
+#if __name__ == "__main__":
+    getCount()
+
+
+
+
+
+
+#"""
 time = time.asctime()
 #引入时间，作为键,
 # 这是json的url
 url = 'http://tv.honganrobots.com/get_count'
 # 这是从js中拿到的json数据
+
 response = requests.get(url).json()
 """
 拿到json
 格式是{'total':1212,'day':1212,'month':1221}的字典型结构,而不是json结构，wtf！！
-不信你试试  print (isinstance(response,dict))
+不信你试试  
+
 用dict做值
 """
-result = dict()
+
+print (isinstance(response,dict))
 result[time] = response
 
 print(result)
+storageText(str(result))
 
-#print(aa)
+#"""
 
-#print(is_json(response))
