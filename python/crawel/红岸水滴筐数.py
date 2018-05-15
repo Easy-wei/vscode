@@ -15,6 +15,7 @@
 
 以时间为键，获得的json作为值，写成字典，到时候十分钟统一写入text中
 """
+
 import requests
 import json
 import time
@@ -22,7 +23,6 @@ import threading
 
 result = dict()
 url = 'http://tv.honganrobots.com/get_count'
-
 
 def getCount():
     times = time.asctime()
