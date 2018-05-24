@@ -40,7 +40,6 @@ rr= Root(5)
 
 r.show()
 rr.show()
-"""
 
 class Celsius:
     def __init__(self, t = 0):
