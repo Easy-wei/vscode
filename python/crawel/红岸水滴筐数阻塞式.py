@@ -17,11 +17,14 @@ def storageText(a):
         for key in result:    #print(type(result[key]))
             print('{0:<25}{1:<10}{2:<10}{3:<10}'.format(key,result[key]["day"],result[key]["month"],result[key]["total"]),file=f1)
 
-time = int(time.time())
+time_now = time.time()
+time_begin = time.time()
 
-while ((time.time()-time)>60):
-    time = time.time()
+while ((time.time()-time_now)<60.0):
+    time_now = time.time()
     getCount(url)
+    if (time.time()-time_begin)>130:
+        break
 
 storageText(result)
 
