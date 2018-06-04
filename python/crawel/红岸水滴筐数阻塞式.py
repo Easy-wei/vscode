@@ -20,10 +20,12 @@ def storageText(a):
 time_now = time.time()
 time_begin = time.time()
 
-while ((time.time()-time_now)<60.0):
-    time_now = time.time()
-    getCount(url)
+while True:
+    if ((time.time()-time_now)>60.0):
+        time_now = time.time()
+        getCount(url)
     if (time.time()-time_begin)>130:
+        print('end')
         break
 
 storageText(result)

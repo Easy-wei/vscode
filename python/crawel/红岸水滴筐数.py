@@ -23,18 +23,40 @@ import threading
 
 result = dict()
 url = 'http://tv.honganrobots.com/get_count'
+num_month = 0
+num_day = 0
+num_total = 0
 
-def getCount():
+def getCount(url):
     times = time.asctime()
-    response = requests.get(url).text
-    result[times] = response
+    response = requests.get(url).json()
+    return response
+
+def run():
+    while True:
+        if num_total == response['total'] :
+            getCount(url)
+        elif:
+            num_day = response['day']
+            num_month = response['month']
+            num_total = response['total']
+            
+
+
+num_day = response["day"]
+num_month = response["month"]
+    num_total = response['total']
+    
     storageText(str(result))
     t = threading.Timer(60,getCount)
     t.start()
 
+
+
 def storageText(a):
+    if num_day == response []
     with open ('红岸水滴筐数统计.txt','a+') as f1:
-        f1.write(a)
+        
 
 
 
