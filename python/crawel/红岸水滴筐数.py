@@ -1,72 +1,36 @@
-"""
-{
-    0px:0;
-    93px:1;
-    186px:2;
-    279px:3;
-    372px:4
-    290px:5;
-    558px:6;
-    651px:7;
-    744px:8;
-    522px:9;
-}
-这是原来的办法，后来在js中发现json来源，直接解析json就可以了
-
-以时间为键，获得的json作为值，写成字典，到时候十分钟统一写入text中
-"""
-
 import requests
-import json
 import time
-import threading
+import collections # 用有序字典
 
-result = dict()
+result = collections.OrderedDict()#有序字典
+
 url = 'http://tv.honganrobots.com/get_count'
-num_month = 0
-num_day = 0
-num_total = 0
 
-def getCount(url):
-    times = time.asctime()
-    response = requests.get(url).json()
-    return response
-
-def run():
-    while True:
-        if num_total == response['total'] :
-            getCount(url)
-        elif:
-            num_day = response['day']
-            num_month = response['month']
-            num_total = response['total']
-            
-
-
-num_day = response["day"]
-num_month = response["month"]
-    num_total = response['total']
-    
-    storageText(str(result))
-    t = threading.Timer(60,getCount)
-    t.start()
-
-
+#print (response)
 
 def storageText(a):
-    if num_day == response []
+    # 一种思路是写成字典，另外一种是写成矩阵[[时间，筐数，筐数，筐数][时间二，筐数，筐数，筐数]]
     with open ('红岸水滴筐数统计.txt','a+') as f1:
-        
+        for key in a:
+            print ("{0:<25}{1:<10}{2:<10}{3:<10}".format(key,result[key]["day"],result[key]["month"],result[key]["total"]),file = f1)
 
+def run():
+    response = requests.get(url).json()
+    num_total = 0
+    time_begin = time.time()
 
+    while True:
+        if num_total == response['total'] :
+            response = requests.get(url).json()
+        else:
+            num_total = response['total']
+            record_time = time.asctime()
+            result[record_time] = response
+            if (time.time()-time_begin) >= 60:
+                storageText(result)
+                time_begin = time.time()
 
-if __name__ == "__main__":
-    getCount()
-
-
-
-
-
+run()
 
 """
 time = time.asctime()
@@ -75,7 +39,7 @@ time = time.asctime()
 url = 'http://tv.honganrobots.com/get_count'
 # 这是从js中拿到的json数据
 
-response = requests.get(url).json()
+getCount(url) = requests.get(url).json()
 
 拿到json
 格式是{'total':1212,'day':1212,'month':1221}的字典型结构,而不是json结构，wtf！！
@@ -83,9 +47,8 @@ response = requests.get(url).json()
 
 用dict做值
 
-
-print (isinstance(response,dict))
-result[time] = response
+print (isinstance(getCount(url),dict))
+result[time] = getCount(url)
 
 print(result)
 storageText(str(result))
