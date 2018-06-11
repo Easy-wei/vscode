@@ -15,7 +15,7 @@ def getCount(url):
 def storageText(a):
     with open ('红岸水滴筐数统计.txt','a+') as f1:
         for key in result:    #print(type(result[key]))
-            print('{0:<25}{1:<10}{2:<10}{3:<10}'.format(key,result[key]["day"],result[key]["month"],result[key]["total"]),file=f1)
+            print('{0}{1}{2}{3}'.format(key,result[key]["day"],result[key]["month"],result[key]["total"]),file=f1)
 
 time_now = time.time()
 time_begin = time.time()
