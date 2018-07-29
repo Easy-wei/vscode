@@ -2,5 +2,6 @@
 {
     "python.linting.pylintEnabled": true,
     "python.formatting.provider": "autopep8",
-    "python.pythonPath": "D:\\Program Files\\Python 3.5\\python.exe"
+    "python.pythonPath": "D:\\Program Files\\Python 3.5\\python.exe",
+    "git.ignoreLimitWarning": true
 }
