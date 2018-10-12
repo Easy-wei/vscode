@@ -1,5 +1,4 @@
 import requests
-import json
 
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoint"
