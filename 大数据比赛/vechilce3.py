@@ -37,11 +37,11 @@ data_list = [list_time, list_longtitue, list_latitue]
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoint"
 
-i = 0
-while i <= 30000:
+i = 30108
+while i <= 100000:
     print(i)
     payload = {
-        'ak': 'bHSnEtWG0piz0zGTGF17CxVSG5En2yVX',
+        'ak': 'bHSnEtWG0piz0zGTGF17CxVSG5En2yVX',#杨絮
         "service_id": "205607",
         "entity_name": "3号车",
         "latitude": data_list[2][i],
@@ -54,14 +54,14 @@ while i <= 30000:
     print(response.text)
     try:
         # 如果'status' 不等于0 ，也就是写入不成功，那么久停止循环，先记下来i，然后break进程
-        if response.json()['status'] != 0:
-            with open('vechicle4_post_row_num.text', 'a+') as f1:
-                f1.write(str(i)+'\n'+response.text+'\n')
-                i -= 1
+        if response.json()['status'] != 0:                  
             if response.json()['status'] == 302:# 等于这个，则意味着今天测数数量用完了
-                with open('vechicle4_post_row_num.text', 'a+') as f1:
+                with open('vechicle3_post_row_num.text', 'a+') as f1:
                     f1.write(str(i)+'\n'+response.text+'\n')
                 break
+            with open('vechicle3_post_row_num.text', 'a+') as f1:
+                f1.write(str(i)+'\n'+response.text+'\n') 
+            i -= 1
     except:
         i -= 1
     i += 1

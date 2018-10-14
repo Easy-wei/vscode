@@ -23,7 +23,8 @@ def to_str(x):
 
     for i in x:
         i = round(i)
-        list_i.append(int(time.mktime(time.strptime(str(i), '%Y%m%d%H%M%S')))+20995200)
+        list_i.append(
+            int(time.mktime(time.strptime(str(i), '%Y%m%d%H%M%S')))+20995200)
         # 按照先后关系一次进行了，str（）数字化为字符型，然后strptime（）转化为structure_time 格式，最后mktime（）化为时间戳,int型的时间戳
     return list_i
 
@@ -34,11 +35,11 @@ data_list = [list_time, list_longtitue, list_latitue]
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoint"
 
-i = 25002
+i = 54890
 while i <= 100000:
     print(i)
     payload = {
-        "ak": "jUXBKfOGMqDoEI9cMrMVUuvKGxb8uOwx", # 于飞的账户
+        "ak": "jUXBKfOGMqDoEI9cMrMVUuvKGxb8uOwx",  # 于飞的账户
         "service_id": "205608",
         "entity_name": "4号车前10万",
         "latitude": data_list[2][i],
@@ -47,17 +48,18 @@ while i <= 100000:
         "coord_type_input": "wgs84"
     }
     response = requests.post(url, data=payload)
-    #print(payload)
+    # print(payload)
     print(response.text)
     try:
-        if response.json()['status'] != 0: # 如果'status' 不等于0 ，也就是写入不成功，那么久停止循环，先记下来i，然后break进程
-            with open ('vechicle4_post_row_num.text','a+') as f1:
-                f1.write(str(i)+'\n'+response.text+'\n')
-                i -= 1
-            if response.json()['status'] ==302 :# 等于这个，则意味着今天测数数量用完了
-                with open ('vechicle4_post_row_num.text','a+') as f1:
+        # 如果'status' 不等于0 ，也就是写入不成功，那么久停止循环，先记下来i，然后break进程
+        if response.json()['status'] != 0:
+            if response.json()['status'] == 302:  # 等于这个，则意味着今天测数数量用完了
+                with open('vechicle4_post_row_num.text', 'a+') as f1:
                     f1.write(str(i)+'\n'+response.text+'\n')
                 break
+            with open('vechicle4_post_row_num.text', 'a+') as f1:
+                f1.write(str(i)+'\n'+response.text+'\n')
+            i -= 1
     except:
-        i -=1
+        i -= 1
     i += 1

@@ -4,7 +4,7 @@ import requests
 
 
 def to_list(nrows):
-    data = xlrd.open_workbook(r'E:\code\vscode\大数据比赛\vechicle1.xlsx')
+    data = xlrd.open_workbook(r'E:\code\vscode\大数据比赛\vechicle4_2.xlsx')
     row_num = data.sheets()[0].nrows
     list = []
     for i in range(1, row_num):   # 不要列名字
@@ -23,7 +23,7 @@ def to_str(x):
 
     for i in x:
         i = round(i)
-        list_i.append(int(time.mktime(time.strptime(str(i), '%Y%m%d%H%M%S'))))
+        list_i.append(int(time.mktime(time.strptime(str(i), '%Y%m%d%H%M%S')))+20995200)
         # 按照先后关系一次进行了，str（）数字化为字符型，然后strptime（）转化为structure_time 格式，最后mktime（）化为时间戳,int型的时间戳
     return list_i
 
@@ -34,13 +34,13 @@ data_list = [list_time, list_longtitue, list_latitue]
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoint"
 
-i = 59170
-while i < 100000:
+i = 0
+while i <= 100000:
     print(i)
     payload = {
-        "ak": "9GctB73jNG4AGsH6RldMqnCvGzafFylt",
-        "service_id": "205445",
-        "entity_name": "1号车",
+        'ak':'TlTzw9HRtZiewa3Gre1udCiGrGU3tiAa', # 一跃
+        "service_id":'205618',
+        "entity_name": "4号车第二个10万",
         "latitude": data_list[2][i],
         "longitude": data_list[1][i],
         "loc_time": data_list[0][i],
@@ -51,11 +51,11 @@ while i < 100000:
     print(response.text)
     try:
         if response.json()['status'] != 0: # 如果'status' 不等于0 ，也就是写入不成功，那么久停止循环，先记下来i，然后break进程
-            if response.json()['status'] == 302:# 等于这个，则意味着今天测数数量用完了
-                with open ('vechicle1_post_row_num.text','a+') as f1:
+            if response.json()['status'] ==302 :# 等于这个，则意味着今天测数数量用完了
+                with open ('vechicle4_2_post_row_num.text','a+') as f1:
                     f1.write(str(i)+'\n'+response.text+'\n')
                 break
-            with open ('vechicle1_post_row_num.text','a+') as f1:
+            with open ('vechicle4_2_post_row_num.text','a+') as f1:
                 f1.write(str(i)+'\n'+response.text+'\n')
             i -= 1
     except:
