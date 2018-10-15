@@ -34,7 +34,7 @@ data_list = [list_time, list_longtitue, list_latitue]
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoint"
 
-i = 0
+i = 40223
 while i <= 100000:
     print(i)
     payload = {
@@ -46,7 +46,10 @@ while i <= 100000:
         "loc_time": data_list[0][i],
         "coord_type_input": "wgs84"
     }
-    response = requests.post(url, data=payload)
+    try:
+        response = requests.post(url, data=payload,timeout = 180)
+    except:
+        response = requests.post(url, data=payload,timeout = 180)
     #print(payload)
     print(response.text)
     try:

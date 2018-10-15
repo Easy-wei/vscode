@@ -35,8 +35,8 @@ data_list = [list_time, list_longtitue, list_latitue]
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoint"
 
-i = 54890
-while i <= 100000:
+i = 85366
+while i <= 90000:
     print(i)
     payload = {
         "ak": "jUXBKfOGMqDoEI9cMrMVUuvKGxb8uOwx",  # 于飞的账户
@@ -47,16 +47,23 @@ while i <= 100000:
         "loc_time": data_list[0][i],
         "coord_type_input": "wgs84"
     }
-    response = requests.post(url, data=payload)
+    try:
+        response = requests.post(url, data=payload, timeout=180)
+    except:
+        response = requests.post(url, data=payload, timeout=180)
     # print(payload)
     print(response.text)
     try:
         # 如果'status' 不等于0 ，也就是写入不成功，那么久停止循环，先记下来i，然后break进程
         if response.json()['status'] != 0:
+            print('这是4_1号车')
             if response.json()['status'] == 302:  # 等于这个，则意味着今天测数数量用完了
                 with open('vechicle4_post_row_num.text', 'a+') as f1:
                     f1.write(str(i)+'\n'+response.text+'\n')
                 break
+            if response.json()['status'] ==2: # 2是指某些点不符合要求pass掉
+                i+=1
+                continue
             with open('vechicle4_post_row_num.text', 'a+') as f1:
                 f1.write(str(i)+'\n'+response.text+'\n')
             i -= 1
