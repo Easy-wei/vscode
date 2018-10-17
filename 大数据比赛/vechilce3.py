@@ -37,8 +37,8 @@ data_list = [list_time, list_longtitue, list_latitue]
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoint"
 
-i = 60531
-while i <= 100000:
+i = 121129
+while i <= 186000:
     print(i)
     payload = {
         'ak': 'bHSnEtWG0piz0zGTGF17CxVSG5En2yVX',#杨絮

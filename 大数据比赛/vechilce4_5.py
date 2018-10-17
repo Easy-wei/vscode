@@ -4,7 +4,7 @@ import requests
 
 
 def to_list(nrows):
-    data = xlrd.open_workbook(r'E:\code\vscode\大数据比赛\vechicle4_1.xlsx')
+    data = xlrd.open_workbook(r'E:\code\vscode\大数据比赛\vechicle4_5.xlsx')
     row_num = data.sheets()[0].nrows
     list = []
     for i in range(1, row_num):   # 不要列名字
@@ -34,13 +34,13 @@ data_list = [list_time, list_longtitue, list_latitue]
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoint"
 
-i = 25002
+i = 17328
 while i <= 100000:
     print(i)
     payload = {
-        "ak": "jUXBKfOGMqDoEI9cMrMVUuvKGxb8uOwx", # 于飞的账户
-        "service_id": "205608",
-        "entity_name": "4号车前10万",
+        "ak": "9GctB73jNG4AGsH6RldMqnCvGzafFylt",#石磊的账户
+        "service_id": "205445",
+        "entity_name": "4_5",
         "latitude": data_list[2][i],
         "longitude": data_list[1][i],
         "loc_time": data_list[0][i],
@@ -51,10 +51,10 @@ while i <= 100000:
     print(response.text)
     try:
         if response.json()['status'] != 0: # 如果'status' 不等于0 ，也就是写入不成功，那么久停止循环，先记下来i，然后break进程
-            with open ('vechicle4_post_row_num.text','a+') as f1:
+            with open ('vechicle4_5_post_row_num.text','a+') as f1:
                 f1.write(str(i)+'\n'+response.text+'\n')
             if response.json()['status'] ==302 :# 等于这个，则意味着今天测数数量用完了
-                with open ('vechicle4_post_row_num.text','a+') as f1:
+                with open ('vechicle4_5_post_row_num.text','a+') as f1:
                     f1.write(str(i)+'\n'+response.text+'\n')
                 break
             i -= 1
