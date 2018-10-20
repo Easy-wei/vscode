@@ -36,9 +36,9 @@ entity_list = ['1号车',
 
 def day_dis(start_time):
     payload = {
-        "ak": "jUXBKfOGMqDoEI9cMrMVUuvKGxb8uOwx", # 于飞的账户
-        "service_id": "205608",
-        "entity_name": "4号车_4段",
+        'ak': 'bHSnEtWG0piz0zGTGF17CxVSG5En2yVX',#杨絮
+        "service_id": "205607",
+        "entity_name": "3号车",
         "is_processed": '1',       # 0,1.1是纠偏，0是关闭纠偏
         "supplement_mode": "driving",
         "start_time": start_time,  # unix时间戳格式
@@ -81,7 +81,7 @@ def all_dis(start_time, end_time):
     return [distance, i, list_dis, len(list_dis)]
 
 
-print(all_dis(20171118180400, 20171203232029))
+print(all_dis(20171001000015, 20171103203637))
 """
 with open('distance_save', 'a+') as f2:  # get报错，存储并且跳过
     f2.write(all_dis(20171018141302,20171103025735)+'\n')
