@@ -46,7 +46,6 @@ new_time = pd.DataFrame({'time': data['time'],
                          'hour_time': hour_time(data['time']),
                          'day_time': day_time(data['time'])})
 
-# print(new_time.head(),'\n',data.head(),'\n',new_time.tail())
 
 new_data = pd.merge(data, new_time, on=['time'], how='left')
 
@@ -54,5 +53,3 @@ new_data = pd.merge(data, new_time, on=['time'], how='left')
 print(new_data.head(10))
 
 #print(new_data.head(1000).groupby(['day_time','hour_time']).GPS_lon.max(),'\n',new_data.head(1000).groupby(['day_time','hour_time']).GPS_lon.min())
-
-print  (new_data.head(3000).groupby(['day_time','hour_time']).GPS_lon.max()-new_data.head(3000).groupby(['day_time','hour_time']).GPS_lon.min())
