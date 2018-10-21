@@ -36,9 +36,9 @@ entity_list = ['1号车',
 
 def day_dis(start_time):
     payload = {
-        "ak": "9GctB73jNG4AGsH6RldMqnCvGzafFylt",
-        "service_id": "205445",
-        "entity_name": "4_5",
+        'ak':'TlTzw9HRtZiewa3Gre1udCiGrGU3tiAa', # 一跃
+        "service_id":'205618',
+        "entity_name": "4_6",
         "is_processed": '1',       # 0,1.1是纠偏，0是关闭纠偏
         "supplement_mode": "driving",
         "start_time": start_time,  # unix时间戳格式
@@ -46,7 +46,6 @@ def day_dis(start_time):
     }
     try:
         response = requests.get(url, params=payload, timeout=120)
-        print(response.url)
     except:
         response = requests.get(url, params=payload, timeout=120)
     return response
@@ -82,7 +81,7 @@ def all_dis(start_time, end_time):
     return [distance, i, list_dis, len(list_dis)]
 
 
-print(all_dis(20171203232039, 20171219175423))
+print(all_dis(20171219175433, 20180105231945))
 """
 with open('distance_save', 'a+') as f2:  # get报错，存储并且跳过
     f2.write(all_dis(20171018141302,20171103025735)+'\n')

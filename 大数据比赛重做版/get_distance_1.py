@@ -5,35 +5,6 @@ import pandas as pd
 url = "http://yingyan.baidu.com/api/v3/track/getdistance?process_option=need_denoise=1,radius_threshold=20,need_mapmatch=1,transport_mode=driving"
 
 
-"""
-
-ak = [
-    ['TlTzw9HRtZiewa3Gre1udCiGrGU3tiAa',  # 艺跃
-     '205618'],
-    ["9GctB73jNG4AGsH6RldMqnCvGzafFylt",  # 石磊
-     "205445"],
-    ['DXt4xEUfWtpvKBaQhloIAPYeyCO4zFPn',  # 天怡
-     "205606"],
-    ['jUXBKfOGMqDoEI9cMrMVUuvKGxb8uOwx',  # 于飞
-     "205608"],
-    ['bHSnEtWG0piz0zGTGF17CxVSG5En2yVX',  # 杨絮
-     "205607"]
-]
-
-entity_list = ['1号车',
-               "3号车",
-               "4号车前10万",
-               "4号车第二个10万",
-               "4号车第三份",
-               "4号车_4段",
-               "4_5",
-               "4_6",
-               "4_7",
-               "4_8",
-               ]
-
-"""
-
 def day_dis(start_time):
     payload = {
         "ak": "9GctB73jNG4AGsH6RldMqnCvGzafFylt",
@@ -46,7 +17,6 @@ def day_dis(start_time):
     }
     try:
         response = requests.get(url, params=payload, timeout=120)
-        print(response.url)
     except:
         response = requests.get(url, params=payload, timeout=120)
     return response
@@ -82,7 +52,7 @@ def all_dis(start_time, end_time):
     return [distance, i, list_dis, len(list_dis)]
 
 
-print(all_dis(20180501000000, 20180504235956))
+print(all_dis(20180501000000, 20180630235956))
 """
 with open('distance_save', 'a+') as f2:  # get报错，存储并且跳过
     f2.write(all_dis(20171018141302,20171103025735)+'\n')

@@ -4,7 +4,7 @@ import requests
 
 
 def to_list(nrows):
-    data = xlrd.open_workbook(r'E:\code\vscode\大数据比赛\vehicle3_add.xlsx')
+    data = xlrd.open_workbook(r'd:\code\vscode\大数据比赛\vehicle3_add.xlsx')
     row_num = data.sheets()[0].nrows
     list = []
     for i in range(1, row_num):   # 不要列名字
