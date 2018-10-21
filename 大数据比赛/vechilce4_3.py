@@ -3,64 +3,51 @@ import time
 import requests
 
 
-def to_list(nrows):
-    data = xlrd.open_workbook(r'E:\code\vscode\大数据比赛\vechicle4_1.xlsx')
-    row_num = data.sheets()[0].nrows
-    list = []
-    for i in range(1, row_num):   # 不要列名字
-        list.append(data.sheets()[0].cell(rowx=i, colx=nrows).value)
-    return list
+data = xlrd.open_workbook(r'E:\code\vscode\大数据比赛\vechicle4_3.xlsx').sheets()[0]
+
+def data_split(x):
+    row_num = x.nrows #得到列数
+    list_return = []
+    for i in range(1,row_num):
+        struct_time = time.strptime(str(int(x.cell(i,0).value)),'%Y%m%d%H%M%S')
+        unix_time = time.mktime(struct_time) # 得到unix时间
+        hour = time.strftime('%H',struct_time)
+        if int(hour) >= 6 and int(hour) <23:  #剔除了晚上的无用数据 晚上10点以后和凌晨6点前的
+            list_return.append([int(unix_time),x.cell(i,2).value,x.cell(i,3).value]) #将这一行的time，经度，纬度组成一个数组加到另一个新数组中
+    return list_return
 
 
-list_time = to_list(0)
-list_state = to_list(1)
-list_longtitue = to_list(2)
-list_latitue = to_list(3)
-
-
-def to_str(x):
-    list_i = []
-
-    for i in x:
-        i = round(i)
-        list_i.append(int(time.mktime(time.strptime(str(i), '%Y%m%d%H%M%S')))+20995200)
-        # 按照先后关系一次进行了，str（）数字化为字符型，然后strptime（）转化为structure_time 格式，最后mktime（）化为时间戳,int型的时间戳
-    return list_i
-
-
-list_time = to_str(list_time)
-data_list = [list_time, list_longtitue, list_latitue]
-
+data = data_split(data)
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoint"
 
-i = 60718
-while i <= 100000:
-    print(i)
+j = 0 
+1113
+for i in data:
+    print(j)
     payload = {
-        "ak": "DXt4xEUfWtpvKBaQhloIAPYeyCO4zFPn", # tianyi的账户
-        "service_id": "205606",
-        "entity_name": "4号车第三份",
-        "latitude": data_list[2][i],
-        "longitude": data_list[1][i],
-        "loc_time": data_list[0][i],
+        "ak": "9GctB73jNG4AGsH6RldMqnCvGzafFylt",
+        "service_id": "205445",
+        "entity_name": "4_3",
+        "latitude": i[2],
+        "longitude": i[1],
+        "loc_time": i[0],
         "coord_type_input": "wgs84"
     }
     response = requests.post(url, data=payload)
-    #print(payload)
     print(response.text)
     try:
         if response.json()['status'] != 0: # 如果'status' 不等于0 ，也就是写入不成功，那么久停止循环，先记下来i，然后break进程      
             if response.json()['status'] ==302 :# 等于这个，则意味着今天测数数量用完了
                 with open ('vechicle4_3_post_row_num.text','a+') as f1:
-                    f1.write(str(i)+'\n'+response.text+'\n')
+                    f1.write(str(j)+'\n'+response.text+'\n')
                 break
             if response.json()['status'] ==2: # 2是指某些点不符合要求
-                i+=1
+                j+=1
                 continue
             with open ('vechicle4_3_post_row_num.text','a+') as f1:
-                f1.write(str(i)+'\n'+response.text+'\n')
-            i -= 1
+                f1.write(str(j)+'\n'+response.text+'\n')
+            j -= 1
     except:
-        i -=1
-    i += 1
+        j -=1
+    j += 1
