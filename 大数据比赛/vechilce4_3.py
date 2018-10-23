@@ -21,6 +21,7 @@ data = data_split(data)
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoint"
 
+
 for i in range (36685,len(data)):
     print(i)
     payload = {

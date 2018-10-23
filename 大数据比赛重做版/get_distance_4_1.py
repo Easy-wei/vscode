@@ -25,9 +25,9 @@ ak = [['ak':'TlTzw9HRtZiewa3Gre1udCiGrGU3tiAa',  # 一跃
 
 def day_dis(start_time):
     payload = {
-        'ak': 'TlTzw9HRtZiewa3Gre1udCiGrGU3tiAa',  # 一跃
-        "service_id": '205618',
-        "entity_name": "4号车第二个10万",
+        'ak':'TlTzw9HRtZiewa3Gre1udCiGrGU3tiAa', # 一跃
+        "service_id":'205618',
+        "entity_name": "4_6",
         "is_processed": '1',       # 0,1.1是纠偏，0是关闭纠偏
         "supplement_mode": "driving",
         "start_time": start_time,  # unix时间戳格式
