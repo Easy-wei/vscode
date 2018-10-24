@@ -3,7 +3,7 @@ import time
 import requests
 
 
-data = xlrd.open_workbook(r'd:\code\vscode\大数据比赛\vechicle4_3.xlsx').sheets()[0]
+data = xlrd.open_workbook(r'e:\code\vscode\大数据比赛\vechicle4_3.xlsx').sheets()[0]
 
 def data_split(x):
     row_num = x.nrows #得到列数
@@ -21,7 +21,8 @@ data = data_split(data)
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoint"
 
-for i in range (21429,len(data)):
+
+for i in range (66822,len(data)):
     print(i)
     payload = {
         "ak": "9GctB73jNG4AGsH6RldMqnCvGzafFylt",

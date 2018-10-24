@@ -38,7 +38,7 @@ def day_dis(start_time):
     payload = {
         "ak": "9GctB73jNG4AGsH6RldMqnCvGzafFylt",
         "service_id": "205445",
-        "entity_name": "3号车剩余",
+        "entity_name": "4_3",
         "is_processed": '1',       # 0,1.1是纠偏，0是关闭纠偏
         "supplement_mode": "driving",
         "start_time": start_time,  # unix时间戳格式
@@ -65,7 +65,7 @@ def all_dis(start_time, end_time):
     i = 0  # i的实际意义就是开车累计天数了
     distance = 0.0  # 返回值是float类型
     list_dis = []
-    while start_time <= get_unix(end_time):#+20995200:
+    while start_time <= get_unix(end_time):
         response = day_dis(start_time)
         if response.json()['status'] == 0:
             distance += response.json()['distance']
@@ -81,7 +81,7 @@ def all_dis(start_time, end_time):
     return [distance, i, list_dis, len(list_dis)]
 
 
-print(all_dis(20171103203637, 20180131111525))
+print(all_dis(20171103025745, 20171118180350))
 """
 with open('distance_save', 'a+') as f2:  # get报错，存储并且跳过
     f2.write(all_dis(20171018141302,20171103025735)+'\n')
