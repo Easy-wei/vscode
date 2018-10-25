@@ -23,7 +23,7 @@ data = data_split(data)
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoint"
 
-for i in range (0,200000):
+for i in range (7816,200000):
     print(i)
     payload = {
         "ak": "9GctB73jNG4AGsH6RldMqnCvGzafFylt",
