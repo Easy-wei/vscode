@@ -47,7 +47,7 @@ for i in range (66822,len(data)):
                 i += 1
                 continue
             with open ('vechicle4_3_post_row_num.text','a+') as f1:
-                f1.write(str(j)+'\n'+response.text+'\n')
+                f1.write(str(i)+'\n'+response.text+'\n')
                 i += 1
     except:
         pass 

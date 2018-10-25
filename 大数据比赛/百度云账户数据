@@ -1,12 +1,12 @@
 我的账户的：谷歌浏览器
-"ak": "9GctB73jNG4AGsH6RldMqnCvGzafFylt",
-        "service_id": "205445"
+"ak": "9GctB73jNG4AGsH6RldMqnCvGzafFylt", #15万额度
+        "service_id": "205445",
 杨絮的账户：edge浏览器
 'ak':'bHSnEtWG0piz0zGTGF17CxVSG5En2yVX'
 "service_id":205607
 天怡的账户：edge浏览器
-'ak':'DXt4xEUfWtpvKBaQhloIAPYeyCO4zFPn'
-"service_id":205606
+'ak':'DXt4xEUfWtpvKBaQhloIAPYeyCO4zFPn',# 也是15万额度
+"service_id":205606,
 于飞的账户：ie浏览器
 'ak':'jUXBKfOGMqDoEI9cMrMVUuvKGxb8uOwx'
 "service_id":205608
@@ -66,8 +66,14 @@ v4_6上传完毕
 上了一天课，今天走的时候上传完毕v3_toadd
 只剩下了v4_3重新上传一边即可
 
-
-
+10.25hao
+重构了数据读取代码，重构了上传代码
+额度用完了
+2_1额度946到1614
+2-2额度
+2-3额度3600到4199,还有额度5174到6174共计6169
+2-4额度4200到4582
+2-5额度4800到5174
 
 2号车是公交车，西安的，根据路段判断
 4号车是私家车，根据开车时间判断 北京平谷的,
