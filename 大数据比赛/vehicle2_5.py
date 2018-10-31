@@ -28,7 +28,8 @@ data = data_split(data)
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoints"
 # 5869
-for i in range(4800, 5400):  # i /100 因为一次上传100个
+i = 5174 
+while  i <5174:
     print(i)
     point_list = []
     j = i*100
@@ -52,21 +53,19 @@ for i in range(4800, 5400):  # i /100 因为一次上传100个
     print(response.text)
     try:
         if response.json()['status'] == 0:
-            i += 1
             if response.json()['success_num'] != 100:
-                with open('vehicle2_2_post_error.text', 'a+') as f4:
+                with open(__file__+'.text', 'a+') as f4:
                     f4.write(str(i)+'\n'+response.text+'\n')
+            i += 1
         else:
             if response.json()['status'] == 302:  # 等于这个，则意味着今天测数数量用完了
-                with open('vechicle2_2_post_error.text', 'a+') as f1:
+                with open(__file__+'.text', 'a+') as f1:
                     f1.write(str(i)+'\n'+response.text+'\n')
                 break
             if response.json()['status'] == 401:  # 401指并发量超过限制，限制访问，于是
-                i -= 1
-                time.sleep(6)
+                time.sleep(6)#没有i -=1因为不成功，干脆不+1
                 continue
-            with open('vechicle2_2_post_error.text', 'a+') as f1:
+            with open(__file__+'.text', 'a+') as f1:
                 f1.write(str(i)+'\n'+response.text+'\n')
-                i += 1
     except:
         pass

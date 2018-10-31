@@ -38,7 +38,7 @@ def day_dis(start_time):
     payload = {
         "ak": "9GctB73jNG4AGsH6RldMqnCvGzafFylt",
         "service_id": "205445",
-        "entity_name": "4_3",
+        "entity_name": "4_10",
         "is_processed": '1',       # 0,1.1是纠偏，0是关闭纠偏
         "supplement_mode": "driving",
         "start_time": start_time,  # unix时间戳格式
@@ -81,8 +81,4 @@ def all_dis(start_time, end_time):
     return [distance, i, list_dis, len(list_dis)]
 
 
-print(all_dis(20171103025745, 20171118180350))
-"""
-with open('distance_save', 'a+') as f2:  # get报错，存储并且跳过
-    f2.write(all_dis(20171018141302,20171103025735)+'\n')
-"""
+print(all_dis(20180101002559, 20180327230000))

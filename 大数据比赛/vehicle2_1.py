@@ -4,7 +4,7 @@ import requests
 import json
 
 
-data = xlrd.open_workbook(r'e:\code\vscode\大数据比赛重做版\vehicle2.xlsx').sheets()[0]
+data = xlrd.open_workbook(r'd:\code\vscode\大数据比赛重做版\vehicle2.xlsx').sheets()[0]
 
 
 def data_split(x):
@@ -27,8 +27,9 @@ data = data_split(data)
 # print (len(data)) = 616901
 
 url = "http://yingyan.baidu.com/api/v3/track/addpoints"
-# 5869
-for i in range(1614, 3000):  # i /100 因为一次上传100个
+    
+i = 1614
+while  i <3000:
     print(i)
     point_list = []
     j = i*100
@@ -53,20 +54,18 @@ for i in range(1614, 3000):  # i /100 因为一次上传100个
     try:
         if response.json()['status'] == 0:
             if response.json()['success_num'] != 100:
-                with open('vehicle2_1_post_error.text', 'a+') as f4:
+                with open(__file__+'.text', 'a+') as f4:
                     f4.write(str(i)+'\n'+response.text+'\n')
             i += 1
         else:
             if response.json()['status'] == 302:  # 等于这个，则意味着今天测数数量用完了
-                with open('vechicle2_1_post_error.text', 'a+') as f1:
+                with open(__file__+'.text', 'a+') as f1:
                     f1.write(str(i)+'\n'+response.text+'\n')
                 break
             if response.json()['status'] == 401:  # 401指并发量超过限制，限制访问，于是
-                i -= 1
-                time.sleep(6)
+                time.sleep(6)#没有i -=1因为不成功，干脆不+1
                 continue
-            with open('vechicle2_1_post_error.text', 'a+') as f1:
+            with open(__file__+'.text', 'a+') as f1:
                 f1.write(str(i)+'\n'+response.text+'\n')
-                i += 1
     except:
         pass
